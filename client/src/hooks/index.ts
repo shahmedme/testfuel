@@ -1,3 +1,1 @@
-export const test = () => {
-	return "test";
-};
+export { default as useAuth } from "./useAuth";

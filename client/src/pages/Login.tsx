@@ -1,14 +1,16 @@
 import React from "react";
 import GoogleIcon from "assets/images/google.png";
 import Logo from "assets/images/logo2.png";
+// import CoverImg from "assets/images/random.jpeg";
 
 export default function Login() {
 	return (
 		<section className="flex flex-col md:flex-row h-screen items-center">
 			<div className="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
 				<img
+					// src={CoverImg}
 					src="https://source.unsplash.com/random"
-					alt="logo"
+					alt="cover"
 					className="w-full h-full object-cover"
 				/>
 			</div>

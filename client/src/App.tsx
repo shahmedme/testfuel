@@ -1,12 +1,7 @@
-import Home from "pages/Home";
 import React from "react";
 
-function App() {
-	return (
-		<div>
-			<Home />
-		</div>
-	);
+function App({ children }: { children: React.ReactElement }) {
+	return <div>{children}</div>;
 }
 
 export default App;
