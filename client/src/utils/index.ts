@@ -1,3 +1,1 @@
-export const test = () => {
-	return "test";
-};
+export const APP_LAYOUT_ROUTES = ["/"];

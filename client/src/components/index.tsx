@@ -1,1 +1,4 @@
-export { default as Button } from "components/button";
+export { default as Button } from "./button";
+export { default as Navbar } from "./navbar";
+export { default as Layout } from "./layout";
+export { default as Icons } from "./Icons";

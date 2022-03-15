@@ -1,15 +1,21 @@
 import React from "react";
 import GoogleIcon from "assets/images/google.png";
 import Logo from "assets/images/logo2.png";
-// import CoverImg from "assets/images/random.jpeg";
+import { useAuth } from "hooks";
 
 export default function Login() {
+	const { login } = useAuth();
+
+	const handleLogin = (e: any) => {
+		e.preventDefault();
+		login();
+	};
+
 	return (
 		<section className="flex flex-col md:flex-row h-screen items-center">
 			<div className="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
 				<img
-					// src={CoverImg}
-					src="https://source.unsplash.com/random"
+					src="https://source.unsplash.com/random?tech,night,rocket"
 					alt="cover"
 					className="w-full h-full object-cover"
 				/>
@@ -27,13 +33,11 @@ export default function Login() {
 						Log in to your account
 					</h1>
 
-					<form className="mt-6" action="#" method="POST">
+					<form className="mt-6" onSubmit={handleLogin}>
 						<div>
 							<label className="block text-gray-700">Email Address</label>
 							<input
 								type="email"
-								name=""
-								id=""
 								placeholder="Enter Email Address"
 								className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border-2 focus:border-blue-500 focus:bg-white focus:outline-none"
 								required
@@ -44,8 +48,6 @@ export default function Login() {
 							<label className="block text-gray-700">Password</label>
 							<input
 								type="password"
-								name=""
-								id=""
 								placeholder="Enter Password"
 								className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border-2 focus:border-blue-500 focus:bg-white focus:outline-none"
 								required
