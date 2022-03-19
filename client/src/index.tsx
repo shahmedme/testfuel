@@ -1,11 +1,10 @@
+import "antd/dist/antd.css";
 import "assets/css/styles.scss";
 import PrivateRoute from "components/PrivateRoute";
-import Home from "pages/Home";
-import Login from "pages/Login";
-import Playground from "pages/Playground";
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ROUTES } from "utils/routes";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -14,23 +13,18 @@ ReactDOM.render(
 		<Router>
 			<App>
 				<Routes>
-					<Route
-						path="/"
-						element={
-							<PrivateRoute>
-								<Home />
-							</PrivateRoute>
-						}
-					/>
-					<Route path="/login" element={<Login />} />
-					<Route
-						path="/playground"
-						element={
-							<PrivateRoute>
-								<Playground />
-							</PrivateRoute>
-						}
-					/>
+					{ROUTES.map((route) => (
+						<Route
+							path={route.path}
+							element={
+								route.private ? (
+									<PrivateRoute>{route.element}</PrivateRoute>
+								) : (
+									route.element
+								)
+							}
+						/>
+					))}
 				</Routes>
 			</App>
 		</Router>

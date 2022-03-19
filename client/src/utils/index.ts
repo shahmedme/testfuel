@@ -1,1 +1,1 @@
-export const APP_LAYOUT_ROUTES = ["/"];
+export const DEFAULT_LAYOUT_ROUTES = ["/login", "/registration"];

@@ -1,0 +1,83 @@
+import classNames from "classnames";
+import { Icons } from "components";
+import { _projects } from "pages/Home";
+import Settings from "pages/Settings";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import Members from "./Members";
+import Releases from "./Releases";
+import Suites from "./Suites";
+
+export default function Project() {
+	const [activeTab, setActiveTab] = useState("releases");
+	const params = useParams();
+
+	return (
+		<div className="flex">
+			<div className="bg-slate-100 h-screen w-60 py-6 px-4">
+				<h2 className="font-semibold text-lg pl-2.5">
+					{_projects.find((project) => project.slug === params.slug)?.name}
+				</h2>
+				<div className="mt-7">
+					{_menuItems.map((item) => (
+						<MenuItem {...item} {...{ activeTab, setActiveTab }}>
+							{item.label}
+						</MenuItem>
+					))}
+				</div>
+			</div>
+
+			<div className="flex-1 py-7 px-9">
+				{activeTab === "releases" ? (
+					<Releases />
+				) : activeTab === "suites" ? (
+					<Suites />
+				) : activeTab === "members" ? (
+					<Members />
+				) : activeTab === "settings" ? (
+					<Settings />
+				) : null}
+			</div>
+		</div>
+	);
+}
+
+const _menuItems = [
+	{ id: "releases", label: "Releases", icon: <Icons.Collection /> },
+	{ id: "suites", label: "Suites", icon: <Icons.Briefcase /> },
+	{ id: "members", label: "Members", icon: <Icons.Users /> },
+	{ id: "settings", label: "Settings", icon: <Icons.Cog /> },
+];
+
+type MenuItemProps = {
+	children: any;
+	icon: any;
+	activeTab?: string;
+	setActiveTab: any;
+	id: string;
+};
+
+const MenuItem = ({
+	children,
+	icon,
+	activeTab,
+	setActiveTab,
+	id,
+}: MenuItemProps) => {
+	const isActive = activeTab === id;
+
+	return (
+		<div
+			className={classNames(
+				"flex items-center cursor-pointer py-2 my-0.5 rounded-md px-2.5",
+				{
+					"text-white bg-blue-600": isActive,
+				}
+			)}
+			onClick={() => setActiveTab(id)}
+		>
+			<span className="mr-1.5">{icon}</span>
+			{children}
+		</div>
+	);
+};

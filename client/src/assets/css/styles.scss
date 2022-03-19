@@ -7,3 +7,11 @@
 body {
 	font-family: "Inter", sans-serif;
 }
+
+a:hover {
+	color: initial;
+}
+
+.ant-popover-arrow {
+	display: none;
+}
