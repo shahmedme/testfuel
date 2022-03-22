@@ -1,13 +1,9 @@
 import { useAuth } from "hooks";
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-type PrivateRouteProps = {
-	children: React.ReactElement;
-};
-
-export default function PrivateRoute({ children }: PrivateRouteProps) {
+export default function PrivateRoute() {
 	const { user } = useAuth();
 
-	return user ? children : <Navigate to="/login" />;
+	return user ? <Outlet /> : <Navigate to="/login" />;
 }

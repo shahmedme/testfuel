@@ -8,7 +8,7 @@ export default function Releases() {
 		<div>
 			<Navbar.Horizontal
 				title="Releases"
-				extra={<Button>Create new release</Button>}
+				extra={<Button href="new">Create new release</Button>}
 			/>
 			<table className="items-center w-full">
 				<colgroup>
@@ -18,14 +18,16 @@ export default function Releases() {
 					<col span={1} style={{ width: "5%" }} />
 				</colgroup>
 				<thead className="thead-light">
-					<th className="py-3 text-xs font-medium text-left">Project name</th>
-					<th className="py-3 text-xs font-medium text-left">Status</th>
-					<th className="py-3 text-xs font-medium text-left">Team members</th>
-					<th className="py-3 text-xs font-medium text-left"></th>
+					<tr>
+						<th className="py-3 text-xs font-medium text-left">Project name</th>
+						<th className="py-3 text-xs font-medium text-left">Status</th>
+						<th className="py-3 text-xs font-medium text-left">Team members</th>
+						<th className="py-3 text-xs font-medium text-left"></th>
+					</tr>
 				</thead>
 				<tbody>
 					{_projects.map((item) => (
-						<TableRow key={item.slug} {...item} />
+						<TableRow key={item.releaseId} {...item} href={item.releaseId} />
 					))}
 				</tbody>
 			</table>
@@ -36,14 +38,14 @@ export default function Releases() {
 type TableRowProps = {
 	title: string;
 	subtitle: string;
-	slug: string;
+	href: string;
 };
 
-const TableRow = ({ title, subtitle, slug }: TableRowProps) => {
+const TableRow = ({ title, subtitle, href }: TableRowProps) => {
 	return (
 		<tr>
 			<td className="align-middle py-2.5 text-left">
-				<Link to={`/project/${slug}`} className="text-lg font-semibold">
+				<Link to={href} className="text-lg font-semibold">
 					{title}
 				</Link>
 				<small className="block">{subtitle}</small>
@@ -69,8 +71,8 @@ const TableRow = ({ title, subtitle, slug }: TableRowProps) => {
 			</td>
 			<td className="align-middle text-sm py-2.5">
 				<Avatar.Group>
-					{_avatars.map((avatar) => (
-						<Avatar src={avatar} />
+					{_avatars.map((avatar, idx) => (
+						<Avatar key={idx} src={avatar} />
 					))}
 				</Avatar.Group>
 			</td>
@@ -87,52 +89,52 @@ const _projects = [
 	{
 		title: "feat: added workspace",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "web-application",
+		releaseId: "5682",
 	},
 	{
 		title: "feat: new event filter",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "backend-platform",
+		releaseId: "73",
 	},
 	{
 		title: "ui: added app page",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "atlassin",
+		releaseId: "2342",
 	},
 	{
 		title: "feat: billing and pricing",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "demo-try",
+		releaseId: "231525",
 	},
 	{
 		title: "fix: chart ui update",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "bitbucket",
+		releaseId: "5431",
 	},
 	{
 		title: "Analytics Client",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "analytics-client",
+		releaseId: "678",
 	},
 	{
 		title: "Chrome Extension",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "chrome-extension",
+		releaseId: "77",
 	},
 	{
 		title: "Year End Review",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "year-end-review",
+		releaseId: "1234",
 	},
 	{
 		title: "PHP Backend",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "php-backend",
+		releaseId: "php-backend",
 	},
 	{
 		title: "Java Backend",
 		subtitle: "TIME-1244 - Ticket title here",
-		slug: "java-backend",
+		releaseId: "76833",
 	},
 ];
 

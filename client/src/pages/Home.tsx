@@ -12,10 +12,12 @@ export default function Home() {
 			/>
 			<table className="items-center w-full border-collapse text-blueGray-700">
 				<thead className="thead-light">
-					<th className="py-3 text-xs font-medium text-left">Project name</th>
-					<th className="py-3 text-xs font-medium text-left">Test runs</th>
-					<th className="py-3 text-xs font-medium text-left">Team members</th>
-					<th className="py-3 text-xs font-medium text-left"></th>
+					<tr>
+						<th className="py-3 text-xs font-medium text-left">Project name</th>
+						<th className="py-3 text-xs font-medium text-left">Test runs</th>
+						<th className="py-3 text-xs font-medium text-left">Team members</th>
+						<th className="py-3 text-xs font-medium text-left"></th>
+					</tr>
 				</thead>
 				<tbody>
 					{_projects.map((item) => (
@@ -36,7 +38,7 @@ const TableRow = ({ name, slug }: TableRowProps) => {
 	return (
 		<tr>
 			<td className="align-middle py-2.5 text-left">
-				<Link to={`/project/${slug}`} className="text-lg font-semibold">
+				<Link to={`/p/${slug}`} className="text-lg font-semibold">
 					{name}
 				</Link>
 				<small className="block">

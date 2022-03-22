@@ -10,6 +10,14 @@ import { ReactComponent as Users } from "assets/icons/users.svg";
 import { ReactComponent as Briefcase } from "assets/icons/briefcase.svg";
 import { ReactComponent as Collection } from "assets/icons/collection.svg";
 import { ReactComponent as Plus } from "assets/icons/plus.svg";
+import { ReactComponent as Play } from "assets/icons/play.svg";
+import { ReactComponent as Search } from "assets/icons/search.svg";
+import { ReactComponent as List } from "assets/icons/list.svg";
+import { ReactComponent as ArrowUp } from "assets/icons/arrow-up.svg";
+import { ReactComponent as Trash } from "assets/icons/trash.svg";
+import { ReactComponent as Check } from "assets/icons/check.svg";
+import { ReactComponent as Cross } from "assets/icons/cross.svg";
+import { ReactComponent as Warning } from "assets/icons/warning.svg";
 
 const Icons = {
 	Code,
@@ -24,6 +32,14 @@ const Icons = {
 	Briefcase,
 	Collection,
 	Plus,
+	Play,
+	Search,
+	List,
+	ArrowUp,
+	Trash,
+	Check,
+	Cross,
+	Warning,
 };
 
 export default Icons;
