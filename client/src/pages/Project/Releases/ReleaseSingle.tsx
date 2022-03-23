@@ -71,26 +71,37 @@ const SuiteMenuItem = ({ children, active, count }: any) => {
 	);
 };
 
-export const SuiteAccordion = ({ title, cases }: any) => {
+type SuiteAccordionProps = {
+	title?: string;
+	cases: any[];
+};
+
+export const SuiteAccordion = ({ title, cases }: SuiteAccordionProps) => {
 	return (
 		<div className="mb-1">
-			<div className="flex items-center bg-gray-100 rounded px-2.5 py-1 group">
-				<h3 className="font-semibold text-base">{title}</h3>
-				<div className="ml-6 flex items-center text-gray-500">
-					<Icons.Plus className="w-4 h-4 mr-2 cursor-pointer" />
-					<Icons.Trash className="w-4 h-4 cursor-pointer" />
+			{title ? (
+				<div className="flex items-center bg-gray-100 rounded px-2.5 py-1 group">
+					<h3 className="font-semibold text-base">{title}</h3>
+					<div className="ml-7 flex items-center text-gray-500">
+						<Icons.Pen className="w-4 h-4 mr-3 cursor-pointer" />
+						<Icons.Trash className="w-4 h-4 cursor-pointer" />
+					</div>
 				</div>
-			</div>
+			) : null}
 			<div className="ml-4 pt-2 pb-4">
-				<div className="border-b py-1 flex items-center">
-					<Icons.ArrowUp className="w-3 h-3 mr-2 text-red-500" /> Authorization
-				</div>
-				<div className="border-b py-1 flex items-center">
-					<Icons.ArrowUp className="w-3 h-3 mr-2 text-red-500" /> Sign Up
-				</div>
-				<div className="border-b py-1 flex items-center">
-					<Icons.ArrowUp className="w-3 h-3 mr-2 text-red-500" /> Password
-					restore
+				{cases.map((_case, idx) => (
+					<div key={idx} className="border-b py-1 flex items-center">
+						<Icons.ArrowUp className="w-3 h-3 mr-2 text-red-500" />{" "}
+						{_case.title}
+					</div>
+				))}
+				<div className="flex items-center mt-2.5">
+					<Icons.Plus className="text-gray-300 w-5 h-5 -mt-0.5 mr-0.5" />
+					<input
+						type="text"
+						placeholder="Create quick test"
+						className="py-0.5 focus:outline-none w-full"
+					/>
 				</div>
 			</div>
 		</div>

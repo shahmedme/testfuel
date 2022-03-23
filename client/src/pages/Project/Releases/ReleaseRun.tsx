@@ -1,4 +1,3 @@
-import { Tooltip } from "antd";
 import { Button, Icons, Navbar } from "components";
 import React from "react";
 import { SuiteAccordion, _suites } from "./ReleaseSingle";
@@ -10,10 +9,11 @@ export default function ReleaseRun() {
 				title="TIME-1790"
 				breadcrumb
 				extra={
-					<Tooltip
-						title={<span>13 Passed &bull; 4 Failed &bull; 7 Blocked</span>}
-					>
-						<div className="overflow-hidden w-32 h-2 flex rounded">
+					<div className="flex items-center">
+						<span className="mr-3.5 text-xs">
+							13 Passed &bull; 4 Failed &bull; 7 Blocked
+						</span>
+						<div className="overflow-hidden w-40 h-2 flex rounded">
 							<div
 								className="bg-green-400 h-full"
 								style={{ width: "67%" }}
@@ -24,7 +24,7 @@ export default function ReleaseRun() {
 								style={{ width: "10%" }}
 							></div>
 						</div>
-					</Tooltip>
+					</div>
 				}
 			/>
 			<div
@@ -36,23 +36,23 @@ export default function ReleaseRun() {
 						<SuiteAccordion key={idx} {...suite} />
 					))}
 				</div>
-				<div className="col-span-3 bg-slate-100 h-full rounded-lg p-5">
+				<div className="col-span-3 bg-slate-100 h-full overflow-y-auto rounded-lg p-5">
 					<h3 className="font-semibold text-lg mb-3">Authorization</h3>
 					<div className="grid grid-cols-3 gap-1 mb-7">
 						<Button
-							icon={<Icons.Check className="w-4 h-4" />}
+							icon={<Icons.Check className="w-4 h-4 -mt-0.5" />}
 							className="col-span-1 text-sm bg-green-400 hover:bg-green-500"
 						>
 							Passed
 						</Button>
 						<Button
-							icon={<Icons.Cross className="w-4 h-4" />}
+							icon={<Icons.Cross className="w-4 h-4 -mt-0.5" />}
 							className="col-span-1 text-sm bg-red-400 hover:bg-red-500"
 						>
 							Failed
 						</Button>
 						<Button
-							icon={<Icons.Warning className="w-4 h-4" />}
+							icon={<Icons.Warning className="w-4 h-4 -mt-0.5" />}
 							className="col-span-1 text-sm bg-yellow-400 hover:bg-yellow-500"
 						>
 							Blocked
@@ -62,6 +62,7 @@ export default function ReleaseRun() {
 						placeholder="Comment here"
 						rows={5}
 						className="border border-gray-200 focus:border-gray-300 w-full mb-7 bg-white p-3 rounded-lg text-sm focus:outline-none placeholder:text-xs"
+						style={{ minHeight: 126 }}
 					></textarea>
 					<div className="mb-5">
 						<h4 className="font-semibold text-sm mb-1">Case Description</h4>

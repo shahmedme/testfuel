@@ -18,6 +18,7 @@ import { ReactComponent as Trash } from "assets/icons/trash.svg";
 import { ReactComponent as Check } from "assets/icons/check.svg";
 import { ReactComponent as Cross } from "assets/icons/cross.svg";
 import { ReactComponent as Warning } from "assets/icons/warning.svg";
+import { ReactComponent as Pen } from "assets/icons/pen.svg";
 
 const Icons = {
 	Code,
@@ -40,6 +41,7 @@ const Icons = {
 	Check,
 	Cross,
 	Warning,
+	Pen,
 };
 
 export default Icons;

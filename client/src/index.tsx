@@ -12,9 +12,15 @@ import Profile from "pages/Profile";
 import Project from "pages/Project";
 import Members from "pages/Project/Members";
 import Releases from "pages/Project/Releases";
-import Suites from "pages/Project/Suites";
-import Settings from "pages/Settings";
+import NewRelease from "pages/Project/Releases/New";
+import ReleaseRun from "pages/Project/Releases/ReleaseRun";
+import ReleaseSingle from "pages/Project/Releases/ReleaseSingle";
 import { default as ProjectSettings } from "pages/Project/Settings";
+import Suites from "pages/Project/Suites";
+import SuiteArchived from "pages/Project/Suites/Archived";
+import SuiteDetails from "pages/Project/Suites/Details";
+import SuiteNew from "pages/Project/Suites/New";
+import Settings from "pages/Settings";
 import React from "react";
 import ReactDOM from "react-dom";
 import {
@@ -25,9 +31,6 @@ import {
 } from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import NewRelease from "pages/Project/Releases/New";
-import ReleaseSingle from "pages/Project/Releases/ReleaseSingle";
-import ReleaseRun from "pages/Project/Releases/ReleaseRun";
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -53,15 +56,20 @@ ReactDOM.render(
 									<Route path="run" element={<ReleaseRun />} />
 								</Route>
 							</Route>
-							<Route path="suites" element={<Suites />} />
+							<Route path="suites">
+								<Route index element={<Suites />} />
+								<Route path=":suiteId" element={<SuiteDetails />} />
+								<Route path="new" element={<SuiteNew />} />
+								<Route path="archived" element={<SuiteArchived />} />
+							</Route>
 							<Route path="members" element={<Members />} />
 							<Route path="settings" element={<ProjectSettings />} />
 						</Route>
-						<Route path="/settings" element={<Settings />} />
-						<Route path="/playground" element={<Playground />} />
+						<Route path="settings" element={<Settings />} />
+						<Route path="playground" element={<Playground />} />
 					</Route>
 					<Route>
-						<Route path="/login" element={<Login />} />
+						<Route path="login" element={<Login />} />
 					</Route>
 					<Route path="*" element={<NotFound />} />
 				</Routes>
