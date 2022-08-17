@@ -10,8 +10,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/books')
+  @Get('/ping')
   getBooks(): any {
-    return this.appService.getBooks();
+    return this.appService.ping();
   }
 }

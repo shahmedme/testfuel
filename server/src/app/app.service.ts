@@ -6,7 +6,7 @@ export class AppService {
     return 'Hello World!';
   }
 
-  getBooks(): string[] {
-    return ['Nestjs', 'ReactJS', 'Node'];
+  ping(): string {
+    return 'pong';
   }
 }
