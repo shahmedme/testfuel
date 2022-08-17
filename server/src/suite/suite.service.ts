@@ -17,8 +17,8 @@ export class SuiteService {
     return createdSuite.save();
   }
 
-  findAll() {
-    return this.suiteModel.find({});
+  findAll(projectId: string) {
+    return this.suiteModel.find({ project: projectId });
   }
 
   findOne(id: string) {

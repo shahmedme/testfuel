@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -20,8 +21,8 @@ export class ProjectController {
     return this.projectService.create(createProjectDto);
   }
 
-  @Get(':workspaceId')
-  findAll(@Param('workspaceId') workspaceId: string) {
+  @Get()
+  findAll(@Query('workspace') workspaceId: string) {
     return this.projectService.findAll(workspaceId);
   }
 

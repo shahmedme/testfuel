@@ -1,8 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
+import { MemberType } from 'core/models';
+import { ObjectId, Types } from 'mongoose';
 import { Member } from './member.schema';
 
 export type WorkspaceDocument = Workspace & Document;
+
+@Schema()
+class MemberSchema extends Member {
+  @Prop({ required: true })
+  role: MemberType;
+
+  @Prop({ required: true })
+  user: Types.ObjectId;
+}
 
 @Schema()
 export class Workspace {
@@ -16,7 +26,8 @@ export class Workspace {
   isActive: boolean;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.Array,
+    schema: MemberSchema,
     required: true,
   })
   members: Member[];

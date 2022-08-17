@@ -8,24 +8,16 @@ import { Model } from 'mongoose';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createUserDto);
-    return createdUser.save();
+  async create(createUserDto: CreateUserDto) {
+    const createdUser = await this.userModel.create(createUserDto);
+    return createdUser;
   }
 
   async findById(id: number) {
-    // return await User.findOne(id);
-
-    return 'found by id';
+    return await this.userModel.findById(id);
   }
 
   async findByEmail(email: string) {
-    // return await User.findOne({
-    //   where: {
-    //     email,
-    //   },
-    // });
-
-    return 'find my email';
+    return await this.userModel.findOne({ email });
   }
 }

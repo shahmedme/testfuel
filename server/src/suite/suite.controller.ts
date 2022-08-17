@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { SuiteService } from './suite.service';
 import { CreateSuiteDto } from './dto/create-suite.dto';
@@ -21,8 +22,8 @@ export class SuiteController {
   }
 
   @Get()
-  findAll() {
-    return this.suiteService.findAll();
+  findAll(@Query('project') projectId: string) {
+    return this.suiteService.findAll(projectId);
   }
 
   @Get(':id')

@@ -21,7 +21,7 @@ export class AccountController {
     return 'hello';
   }
 
-  @Post()
+  @Post('signup')
   async create(@Body() createUserDto: CreateUserDto) {
     const createdUser = await this.userService.create(createUserDto);
 
@@ -31,7 +31,6 @@ export class AccountController {
       members: [
         {
           role: MemberType.ADMIN,
-          // @ts-ignore
           user: createdUser._id,
         },
       ],
@@ -46,7 +45,7 @@ export class AccountController {
     return this.userService.findById(+id);
   }
 
-  @Post('login')
+  @Post('signin')
   async login(@Body() authLoginDto: AuthLoginDto) {
     return this.authService.login(authLoginDto);
   }
