@@ -1,6 +1,7 @@
 {
 	"scripts": {
+		"start": "cd server && npm run start:prod",
 		"postinstall": "if [ $CLIENT_ENV ]; then npm run postinstall-client; elif [ $SERVER_ENV ]; then npm run postinstall-server; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
-		"postinstall-server": "cd server && npm install"
+		"postinstall-server": "cd server && npm install && npm i -g @nestjs/cli && npm run build"
 	}
 }
