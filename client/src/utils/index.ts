@@ -1,1 +1,1 @@
-export const DEFAULT_LAYOUT_ROUTES = ["/login", "/registration"];
+export { default as coreAxios } from "./axios";

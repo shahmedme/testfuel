@@ -1,15 +1,14 @@
 import React from "react";
 import { Navbar } from "components";
+import { Outlet } from "react-router-dom";
 
-type AppLayoutProps = {
-	children: React.ReactElement;
-};
-
-export default function AppLayout({ children }: AppLayoutProps) {
+export default function AppLayout() {
 	return (
 		<div className="flex">
 			<Navbar.Vertical />
-			<div className="flex-1">{children}</div>
+			<div className="flex-1">
+				<Outlet />
+			</div>
 		</div>
 	);
 }

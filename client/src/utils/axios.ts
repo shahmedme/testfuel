@@ -1,0 +1,17 @@
+import axios from "axios";
+
+const coreAxios = axios.create({
+	baseURL: process.env.REACT_APP_SERVICE_URL,
+});
+
+export default coreAxios;
+
+coreAxios.interceptors.request.use(function (req: any) {
+	let token = localStorage.getItem("token");
+
+	if (token) {
+		req.headers!.authorization = "Token " + JSON.parse(token);
+	}
+
+	return req;
+});
