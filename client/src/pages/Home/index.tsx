@@ -1,14 +1,34 @@
 import { Avatar } from "antd";
 import { Button, Icons, Navbar } from "components";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchProjects } from "services/project";
+import { IProject } from "types";
+import ProjectCreateDrawer from "./views/ProjectCreateDrawer";
 
 export default function Home() {
+	const [projects, setProjects] = useState<IProject[]>();
+	const [projectDrawerVisible, setProjectDrawerVisible] = useState(false);
+
+	useEffect(() => {
+		initProjects();
+	}, []);
+
+	const initProjects = async () => {
+		const _projects = await fetchProjects();
+		// @ts-ignore
+		setProjects(_projects.data);
+	};
+
 	return (
 		<div className="py-7 px-9">
 			<Navbar.Horizontal
 				title="Projects"
-				extra={<Button>Create new project</Button>}
+				extra={
+					<Button onClick={() => setProjectDrawerVisible(true)}>
+						Create new project
+					</Button>
+				}
 			/>
 			<table className="items-center w-full border-collapse text-blueGray-700">
 				<thead className="thead-light">
@@ -20,11 +40,17 @@ export default function Home() {
 					</tr>
 				</thead>
 				<tbody>
-					{_projects.map((item) => (
-						<TableRow key={item.slug} {...item} />
+					{projects?.map((project: any) => (
+						<TableRow key={project._id} slug={project._id} {...project} />
 					))}
 				</tbody>
 			</table>
+
+			<ProjectCreateDrawer
+				visible={projectDrawerVisible}
+				setVisible={setProjectDrawerVisible}
+				initProjects={initProjects}
+			/>
 		</div>
 	);
 }

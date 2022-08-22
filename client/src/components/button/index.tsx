@@ -7,6 +7,7 @@ type ButtonProps = {
 	href?: string;
 	icon?: any;
 	className?: string;
+	onClick?: any;
 };
 
 export default function Button({
@@ -14,6 +15,7 @@ export default function Button({
 	href,
 	icon,
 	className: cn,
+	...props
 }: ButtonProps) {
 	const className = classNames(
 		"bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg hover:text-white flex items-center",
@@ -23,12 +25,12 @@ export default function Button({
 	return (
 		<>
 			{href ? (
-				<Link to={href} className={className}>
+				<Link to={href} className={className} {...props}>
 					{icon ? <span className="mr-1.5">{icon}</span> : null}
 					{children}
 				</Link>
 			) : (
-				<button className={className}>
+				<button className={className} {...props}>
 					{icon ? <span className="mr-1.5">{icon}</span> : null}
 					{children}
 				</button>
