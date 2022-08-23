@@ -3,6 +3,7 @@ import { Layout } from "components";
 import { useAuth } from "hooks";
 import { Link, useNavigate } from "react-router-dom";
 import { SignUpPayload } from "services/auth";
+import { LOGIN_CLASSES } from "utils/constants";
 
 export default function Signup() {
 	const { signup } = useAuth();
@@ -29,7 +30,7 @@ export default function Signup() {
 								<input
 									type="text"
 									placeholder="First name"
-									className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border-2 focus:border-blue-500 focus:bg-white focus:outline-none"
+									className={LOGIN_CLASSES}
 									required
 								/>
 							</Form.Item>
@@ -43,7 +44,7 @@ export default function Signup() {
 								<input
 									type="text"
 									placeholder="Last name"
-									className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border-2 focus:border-blue-500 focus:bg-white focus:outline-none"
+									className={LOGIN_CLASSES}
 									required
 								/>
 							</Form.Item>
@@ -57,7 +58,7 @@ export default function Signup() {
 						<input
 							type="email"
 							placeholder="Enter your email"
-							className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border-2 focus:border-blue-500 focus:bg-white focus:outline-none"
+							className={LOGIN_CLASSES}
 							required
 						/>
 					</Form.Item>
@@ -69,7 +70,7 @@ export default function Signup() {
 						<input
 							type="password"
 							placeholder="Enter password"
-							className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border-2 focus:border-blue-500 focus:bg-white focus:outline-none"
+							className={LOGIN_CLASSES}
 							required
 						/>
 					</Form.Item>

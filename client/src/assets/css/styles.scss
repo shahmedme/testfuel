@@ -12,6 +12,43 @@ a:hover {
 	color: initial;
 }
 
+input,
+textarea {
+	font-size: 14px;
+}
+
 .ant-popover-arrow {
 	display: none;
+}
+
+.drawer_project-create {
+	.ant-drawer-content-wrapper {
+		box-shadow: none;
+
+		.ant-drawer-content {
+			height: 96%;
+			border-radius: 10px;
+			overflow: hidden;
+			transform: translate(-18px, 18px);
+		}
+	}
+}
+
+.v-menu_extra {
+	.ant-popover-inner {
+		overflow: hidden;
+		border-radius: 7px;
+
+		.ant-popover-inner-content {
+			padding: 10px 8px;
+
+			ul {
+				border: none;
+
+				button {
+					box-shadow: none !important;
+				}
+			}
+		}
+	}
 }

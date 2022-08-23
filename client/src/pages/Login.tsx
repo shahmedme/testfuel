@@ -4,6 +4,7 @@ import { Layout } from "components";
 import { useAuth } from "hooks";
 import { Link } from "react-router-dom";
 import { SignInPayload } from "services/auth";
+import { LOGIN_CLASSES } from "utils/constants";
 
 export default function Login() {
 	const { login } = useAuth();
@@ -21,7 +22,7 @@ export default function Login() {
 						<input
 							type="email"
 							placeholder="Enter Email Address"
-							className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border-2 focus:border-blue-500 focus:bg-white focus:outline-none"
+							className={LOGIN_CLASSES}
 							required
 						/>
 					</Form.Item>
@@ -33,19 +34,19 @@ export default function Login() {
 						<input
 							type="password"
 							placeholder="Enter Password"
-							className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border-2 focus:border-blue-500 focus:bg-white focus:outline-none"
+							className={LOGIN_CLASSES}
 							required
 						/>
 					</Form.Item>
 				</div>
 
 				<div className="text-right mt-2">
-					<a
-						href="/"
+					<Link
+						to="/login"
 						className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700"
 					>
 						Forgot Password?
-					</a>
+					</Link>
 				</div>
 
 				<button

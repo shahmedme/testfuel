@@ -1,29 +1,29 @@
-import React from "react";
 import classNames from "classnames";
 
-export default function Input({ label, className, ...props }: any) {
+type LabelProps = {
+	htmlFor?: any;
+};
+
+type InputProps = {
+	label?: LabelProps;
+} & any;
+
+export default function Input({ label, className, ...props }: InputProps) {
 	return (
 		<div>
-			{label && (
-				<label
-					htmlFor={label.htmlFor}
-					className="text-sm font-medium text-gray-900 block mb-2 "
-				>
-					{label.text}
-				</label>
-			)}
-			{props.type === "textarea" ? (
-				<textarea
-					className={classNames(classes, className)}
-					{...props}
-				></textarea>
-			) : props.type === "select" ? (
-				<select className={classNames(classes, className)} {...props}>
-					{props.children}
-				</select>
-			) : (
-				<input className={classNames(classes, className)} {...props} />
-			)}
+			<label
+				htmlFor={label?.htmlFor}
+				className="block text-sm font-medium text-gray-700"
+			>
+				First name
+			</label>
+			<input
+				{...props}
+				className={classNames(
+					"mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md",
+					className
+				)}
+			></input>
 		</div>
 	);
 }

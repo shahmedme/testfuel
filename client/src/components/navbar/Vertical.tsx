@@ -1,12 +1,31 @@
-import React from "react";
-import { Icons, Menu } from "components";
-import { useAuth } from "hooks";
-import { Link, useNavigate } from "react-router-dom";
 import { Popover } from "antd";
+import { Icons } from "components";
+import { ListGroup } from "flowbite-react";
+import { useAuth } from "hooks";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserCircleIcon, CogIcon } from "@heroicons/react/outline";
 
 export default function Vertical() {
+	const [popoverVisible, setPopoverVisible] = useState(false);
 	const { logout } = useAuth();
 	const navigate = useNavigate();
+
+	const onPopoverMenuClick = (key: string) => () => {
+		switch (key) {
+			case "profile":
+				navigate("/profile");
+				break;
+			case "settings":
+				navigate("/settings");
+				break;
+			case "logout":
+				logout();
+				break;
+		}
+
+		setPopoverVisible(false);
+	};
 
 	return (
 		<div className="h-screen w-16 bg-blue-700 flex flex-col items-center justify-between py-5 text-white">
@@ -26,22 +45,26 @@ export default function Vertical() {
 					onClick={logout}
 				/>
 				<Popover
+					visible={popoverVisible}
 					placement="rightBottom"
 					trigger="click"
+					onVisibleChange={setPopoverVisible}
 					content={
-						<Menu>
-							<>
-								<Menu.Item onClick={() => navigate("/profile")}>
+						<div className="w-48">
+							<ListGroup>
+								<ListGroup.Item onClick={onPopoverMenuClick("profile")}>
 									View Profile
-								</Menu.Item>
-								<Menu.Item onClick={() => navigate("/settings")}>
+								</ListGroup.Item>
+								<ListGroup.Item onClick={onPopoverMenuClick("settings")}>
 									Settings
-								</Menu.Item>
-								<Menu.Item onClick={logout}>Logout</Menu.Item>
-							</>
-						</Menu>
+								</ListGroup.Item>
+								<ListGroup.Item onClick={onPopoverMenuClick("logout")}>
+									Logout
+								</ListGroup.Item>
+							</ListGroup>
+						</div>
 					}
-					overlayInnerStyle={{ borderRadius: 7, padding: 0 }}
+					overlayClassName="v-menu_extra"
 				>
 					<img
 						src="https://i.pinimg.com/280x280_RS/89/25/21/892521367eb8ad12465499931156e384.jpg"
