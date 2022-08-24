@@ -1,7 +1,9 @@
-import { Avatar } from "antd";
-import { Icons } from "components";
+import { Avatar, Menu } from "antd";
+import { ContextMenu } from "lib";
 import { Link } from "react-router-dom";
 import { _avatars } from "..";
+import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
+import { Dropdown } from "flowbite-react";
 
 type TableRowProps = {
 	name: string;
@@ -31,7 +33,19 @@ const TableRow = ({ name, slug }: TableRowProps) => {
 			</td>
 			<td className="align-middle text-base text-right py-2.5">
 				<div className="inline-block cursor-pointer">
-					<Icons.DotHorizontal />
+					<ContextMenu
+						trigger={["click"]}
+						menu={
+							<Menu style={{ width: 150 }}>
+								<Menu.Item key="0" icon={<PencilIcon className="w-4 h-4" />}>
+									Edit
+								</Menu.Item>
+								<Menu.Item key="1" icon={<TrashIcon className="w-4 h-4" />}>
+									Delete
+								</Menu.Item>
+							</Menu>
+						}
+					/>
 				</div>
 			</td>
 		</tr>

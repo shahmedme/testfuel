@@ -4,7 +4,6 @@ import { ListGroup } from "flowbite-react";
 import { useAuth } from "hooks";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserCircleIcon, CogIcon } from "@heroicons/react/outline";
 
 export default function Vertical() {
 	const [popoverVisible, setPopoverVisible] = useState(false);
