@@ -16,7 +16,7 @@ type MenuItemProps = {
 	onClick?: any;
 };
 
-Menu.Item = ({ icon, children, onClick }: MenuItemProps) => {
+Menu.Item = ({ children, onClick }: MenuItemProps) => {
 	return (
 		<div className="py-1.5 flex items-center cursor-pointer" onClick={onClick}>
 			{children}

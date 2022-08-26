@@ -19,9 +19,10 @@ export default function Project() {
 					}
 				</h2>
 				<div className="mt-7">
-					{_menuItems.map((item, idx) => (
+					{_menuItems.map((item) => (
 						<MenuItem
 							{...item}
+							key={item.key}
 							active={activeKey === item.key}
 							onClick={() => {
 								setActiveKey(item.key);

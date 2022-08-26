@@ -8,7 +8,9 @@
 		"react-hooks/exhaustive-deps": "off",
 		"no-undef": "off",
 		"no-unused-vars": "warn",
-		"no-constant-condition": "off"
+		"no-constant-condition": "off",
+		"react/display-name": "off",
+		"react/no-unescaped-entities": "off"
 	},
 	"plugins": ["@typescript-eslint"]
 }

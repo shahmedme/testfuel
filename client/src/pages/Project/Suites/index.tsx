@@ -19,6 +19,7 @@ export default function Suites() {
 				{_suites.map((suite) => (
 					<Link
 						to={suite.key}
+						key={suite.key}
 						className="col-span-2 bg-gray-200 rounded p-5 h-56 flex flex-col justify-end"
 					>
 						<h3 className="font-semibold text-lg">{suite.name}</h3>
