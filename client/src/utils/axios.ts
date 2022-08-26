@@ -10,7 +10,7 @@ coreAxios.interceptors.request.use(function (req: any) {
 	let token = localStorage.getItem("token");
 
 	if (token) {
-		req.headers!.authorization = "Token " + JSON.parse(token);
+		req.headers!.authorization = "Bearer " + JSON.parse(token);
 	}
 
 	return req;

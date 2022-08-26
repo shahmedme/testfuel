@@ -34,6 +34,8 @@ import {
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "react-redux";
+import store from "store";
 
 const queryClient = new QueryClient({
 	defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -44,52 +46,54 @@ const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 root.render(
 	<React.StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<Router>
-				<App>
-					<Routes>
-						<Route path="/" element={<PrivateRoute />}>
-							<Route element={<Layout.App />}>
-								<Route index element={<Home />} />
-								<Route path="navigation" element={<Navigation />} />
-								<Route path="chat" element={<Chat />} />
-								<Route path="billing" element={<Billing />} />
-								<Route path="profile" element={<Profile />} />
-								<Route path="p/:projectKey" element={<Project />}>
-									<Route
-										path="/p/:projectKey"
-										element={<Navigate replace to="releases" />}
-									/>
-									<Route path="releases">
-										<Route index element={<Releases />} />
-										<Route path="new" element={<NewRelease />} />
-										<Route path=":releaseId">
-											<Route index element={<ReleaseSingle />} />
-											<Route path="run" element={<ReleaseRun />} />
+		<Provider store={store}>
+			<QueryClientProvider client={queryClient}>
+				<Router>
+					<App>
+						<Routes>
+							<Route path="/" element={<PrivateRoute />}>
+								<Route element={<Layout.App />}>
+									<Route index element={<Home />} />
+									<Route path="navigation" element={<Navigation />} />
+									<Route path="chat" element={<Chat />} />
+									<Route path="billing" element={<Billing />} />
+									<Route path="profile" element={<Profile />} />
+									<Route path="p/:projectKey" element={<Project />}>
+										<Route
+											path="/p/:projectKey"
+											element={<Navigate replace to="releases" />}
+										/>
+										<Route path="releases">
+											<Route index element={<Releases />} />
+											<Route path="new" element={<NewRelease />} />
+											<Route path=":releaseId">
+												<Route index element={<ReleaseSingle />} />
+												<Route path="run" element={<ReleaseRun />} />
+											</Route>
 										</Route>
+										<Route path="suites">
+											<Route index element={<Suites />} />
+											<Route path=":suiteId" element={<SuiteDetails />} />
+											<Route path="new" element={<SuiteNew />} />
+											<Route path="archived" element={<SuiteArchived />} />
+										</Route>
+										<Route path="members" element={<Members />} />
+										<Route path="settings" element={<ProjectSettings />} />
 									</Route>
-									<Route path="suites">
-										<Route index element={<Suites />} />
-										<Route path=":suiteId" element={<SuiteDetails />} />
-										<Route path="new" element={<SuiteNew />} />
-										<Route path="archived" element={<SuiteArchived />} />
-									</Route>
-									<Route path="members" element={<Members />} />
-									<Route path="settings" element={<ProjectSettings />} />
+									<Route path="settings" element={<Settings />} />
+									<Route path="playground" element={<Playground />} />
 								</Route>
-								<Route path="settings" element={<Settings />} />
-								<Route path="playground" element={<Playground />} />
 							</Route>
-						</Route>
-						<Route>
-							<Route path="login" element={<Login />} />
-							<Route path="join" element={<Signup />} />
-						</Route>
-						<Route path="*" element={<NotFound />} />
-					</Routes>
-				</App>
-			</Router>
-		</QueryClientProvider>
+							<Route>
+								<Route path="login" element={<Login />} />
+								<Route path="join" element={<Signup />} />
+							</Route>
+							<Route path="*" element={<NotFound />} />
+						</Routes>
+					</App>
+				</Router>
+			</QueryClientProvider>
+		</Provider>
 	</React.StrictMode>
 );
 

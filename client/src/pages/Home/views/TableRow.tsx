@@ -1,9 +1,8 @@
+import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
 import { Avatar, Menu } from "antd";
 import { ContextMenu } from "lib";
 import { Link } from "react-router-dom";
 import { _avatars } from "..";
-import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
-import { Dropdown } from "flowbite-react";
 
 type TableRowProps = {
 	name: string;
@@ -11,6 +10,8 @@ type TableRowProps = {
 };
 
 const TableRow = ({ name, slug }: TableRowProps) => {
+	const onDelete = () => {};
+
 	return (
 		<tr>
 			<td className="align-middle py-2.5 text-left">
@@ -38,10 +39,14 @@ const TableRow = ({ name, slug }: TableRowProps) => {
 						menu={
 							<Menu style={{ width: 150 }}>
 								<Menu.Item key="0" icon={<PencilIcon className="w-4 h-4" />}>
-									Edit
+									<span className="ml-0.5">Edit</span>
 								</Menu.Item>
-								<Menu.Item key="1" icon={<TrashIcon className="w-4 h-4" />}>
-									Delete
+								<Menu.Item
+									key="1"
+									icon={<TrashIcon className="w-4 h-4" />}
+									onClick={onDelete}
+								>
+									<span className="ml-0.5">Delete</span>
 								</Menu.Item>
 							</Menu>
 						}

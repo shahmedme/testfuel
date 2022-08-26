@@ -1,7 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { Col, Drawer, Form, Row } from "antd";
-import { Button, Label, Textarea, TextInput } from "flowbite-react";
+import { Button, Label, Spinner, Textarea, TextInput } from "flowbite-react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { createProject } from "services/project";
+import { RootState } from "store";
 
 type Props = {
 	visible: boolean;
@@ -14,8 +17,10 @@ export default function ProjectCreateDrawer({
 	setVisible,
 	initProjects,
 }: Props) {
+	const [okLoading, setOkLoading] = useState(false);
 	const projectCreateHandler = useMutation(createProject);
 	const [form] = Form.useForm();
+	const { workspaces } = useSelector((state: RootState) => state.auth);
 
 	const onClose = () => {
 		setVisible(false);
@@ -23,10 +28,17 @@ export default function ProjectCreateDrawer({
 	};
 
 	const onCreateProject = async () => {
-		await projectCreateHandler.mutateAsync(form.getFieldsValue());
+		setOkLoading(true);
+		await projectCreateHandler.mutateAsync({
+			...form.getFieldsValue(),
+			workspace: workspaces?.[0]._id,
+		});
 		initProjects();
 		onClose();
-		setTimeout(form.resetFields, 500);
+		setTimeout(() => {
+			form.resetFields();
+			setOkLoading(false);
+		}, 500);
 	};
 
 	return (
@@ -47,6 +59,11 @@ export default function ProjectCreateDrawer({
 						Cancel
 					</Button>
 					<Button size="sm" onClick={onCreateProject}>
+						{okLoading ? (
+							<span className="mr-1.5">
+								<Spinner size="sm" light={true} />
+							</span>
+						) : null}
 						Create
 					</Button>
 				</div>

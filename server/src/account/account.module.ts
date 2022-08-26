@@ -3,11 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
-import {
-  Workspace,
-  WorkspaceM,
-  WorkspaceSchema,
-} from 'workspace/schemas/workspace.schema';
+import { Workspace, WorkspaceSchema } from 'workspace/schemas/workspace.schema';
 import { WorkspaceService } from 'workspace/workspace.service';
 import { AccountController } from './account.controller';
 import { UserSchemaHook } from './schemas/user.schema';

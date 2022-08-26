@@ -19,3 +19,7 @@ export type SignInPayload = {
 export const signin = async (values: SignInPayload) => {
 	return await coreAxios.post<{ token: string }>("/users/signin", values);
 };
+
+export const fetchAccount = async () => {
+	return await coreAxios.get<{ user: any; workspace: any }>("/users");
+};

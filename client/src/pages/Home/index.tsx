@@ -2,12 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "antd";
 import { Button, Navbar } from "components";
 import { useState } from "react";
+import { storage } from "services";
 import { fetchProjects } from "services/project";
 import ProjectCreateDrawer from "./views/ProjectCreateDrawer";
 import TableRow from "./views/TableRow";
 
 export default function Home() {
-	const { isLoading, data, refetch } = useQuery(["projects"], fetchProjects);
+	const { isLoading, data, refetch } = useQuery(["projects"], async () => {
+		const workspaces = storage.get("workspaces");
+		return await fetchProjects(workspaces[0]._id);
+	});
 	const [projectDrawerVisible, setProjectDrawerVisible] = useState(false);
 
 	return (

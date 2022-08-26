@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { MemberType } from 'core/models';
-import { ObjectId, Types } from 'mongoose';
+import { Types } from 'mongoose';
 import { Member } from './member.schema';
 
 export type WorkspaceDocument = Workspace & Document;

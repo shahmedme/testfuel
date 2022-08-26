@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { MemberType } from 'core/models';
 import { WorkspaceService } from 'workspace/workspace.service';
 import { CreateUserDto } from './dto';
@@ -17,8 +25,8 @@ export class AccountController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  getUser() {
-    return 'hello';
+  getUser(@Request() req) {
+    return this.userService.getAccount(req.user);
   }
 
   @Post('signup')

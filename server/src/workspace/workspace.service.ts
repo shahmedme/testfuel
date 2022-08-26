@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { User } from 'account/schemas/user.schema';
+import { Model, Types } from 'mongoose';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import { Workspace, WorkspaceDocument } from './schemas/workspace.schema';
@@ -35,6 +36,14 @@ export class WorkspaceService {
 
   getWorkspaces() {
     return 'getting workspaces';
+  }
+
+  async getWorkspaceByUser(userId: string) {
+    const workspace = await this.workspaceModel.find({
+      'members.user': new Types.ObjectId(userId),
+    });
+
+    return workspace;
   }
 
   // async createProject(workspaceId: string, project: Project) {
