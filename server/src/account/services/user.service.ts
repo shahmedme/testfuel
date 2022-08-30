@@ -26,10 +26,6 @@ export class UserService {
   }
 
   async getAccount(user: User & { _id: string }) {
-    console.log(
-      '🚀 ~ file: user.service.ts ~ line 29 ~ UserService ~ getAccount ~ user',
-      user,
-    );
     const workspace = await this.workspaceService.getWorkspaceByUser(user._id);
     return { workspace, user };
   }

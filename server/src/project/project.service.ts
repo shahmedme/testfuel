@@ -24,11 +24,14 @@ export class ProjectService {
     return `This action returns a #${id} project`;
   }
 
-  update(id: number, updateProjectDto: UpdateProjectDto) {
-    return `This action updates a #${id} project`;
+  async update(_id: string, updateProjectDto: UpdateProjectDto) {
+    return await this.projectModel.findOneAndUpdate({ _id }, updateProjectDto, {
+      upsert: true,
+      new: true,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} project`;
+  async remove(_id: string): Promise<any> {
+    return await this.projectModel.deleteOne({ _id });
   }
 }

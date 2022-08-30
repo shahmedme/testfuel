@@ -8,18 +8,20 @@ type Props = {
 };
 
 export default function ContextMenu({ children, menu, ...props }: Props & any) {
-	const [visible, setVisible] = useState(false);
+	// const [visible, setVisible] = useState(false);
 
 	return (
 		<Dropdown
-			visible={visible}
+			// visible={visible}
 			overlay={menu}
-			onVisibleChange={setVisible}
+			// onVisibleChange={setVisible}
 			{...props}
 		>
 			{children ?? (
 				<div>
-					<BtnMore active={visible} />
+					<BtnMore
+					//  active={visible}
+					/>
 				</div>
 			)}
 		</Dropdown>
@@ -28,11 +30,13 @@ export default function ContextMenu({ children, menu, ...props }: Props & any) {
 
 ContextMenu.defaultProps = {
 	menu: (
-		<Menu>
-			<Menu.Item key="0">1st menu item</Menu.Item>
-			<Menu.Item key="1">2nd menu item</Menu.Item>
-			<Menu.Divider />
-			<Menu.Item key="3">3rd menu item</Menu.Item>
-		</Menu>
+		<Menu
+			items={[
+				{ label: "1st menu item", key: "0" },
+				{ label: "2nd menu item", key: "1" },
+				{ type: "divider" },
+				{ label: "3rd menu item", key: "2" },
+			]}
+		/>
 	),
 };

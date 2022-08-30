@@ -7,11 +7,11 @@ import { _avatars } from "..";
 type TableRowProps = {
 	name: string;
 	slug: string;
+	onEdit: any;
+	onDelete: any;
 };
 
-const TableRow = ({ name, slug }: TableRowProps) => {
-	const onDelete = () => {};
-
+const TableRow = ({ name, slug, onEdit, onDelete }: TableRowProps) => {
 	return (
 		<tr>
 			<td className="align-middle py-2.5 text-left">
@@ -37,18 +37,23 @@ const TableRow = ({ name, slug }: TableRowProps) => {
 					<ContextMenu
 						trigger={["click"]}
 						menu={
-							<Menu style={{ width: 150 }}>
-								<Menu.Item key="0" icon={<PencilIcon className="w-4 h-4" />}>
-									<span className="ml-0.5">Edit</span>
-								</Menu.Item>
-								<Menu.Item
-									key="1"
-									icon={<TrashIcon className="w-4 h-4" />}
-									onClick={onDelete}
-								>
-									<span className="ml-0.5">Delete</span>
-								</Menu.Item>
-							</Menu>
+							<Menu
+								style={{ width: 150 }}
+								items={[
+									{
+										label: <span className="ml-0.5">Edit</span>,
+										key: "edit",
+										icon: <PencilIcon className="w-4 h-4" />,
+										onClick: () => onEdit(slug),
+									},
+									{
+										label: <span className="ml-0.5">Delete</span>,
+										key: "delete",
+										icon: <TrashIcon className="w-4 h-4" />,
+										onClick: () => onDelete(slug),
+									},
+								]}
+							/>
 						}
 					/>
 				</div>

@@ -7,7 +7,6 @@ class Storage {
 		try {
 			return JSON.parse(localStorage.getItem(key as string) ?? "null");
 		} catch (err) {
-			console.log(err);
 			return null;
 		}
 	};

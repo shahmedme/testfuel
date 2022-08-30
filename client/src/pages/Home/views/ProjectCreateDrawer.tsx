@@ -1,26 +1,35 @@
 import { useMutation } from "@tanstack/react-query";
 import { Col, Drawer, Form, Row } from "antd";
 import { Button, Label, Spinner, Textarea, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { createProject } from "services/project";
+import { createProject, updateProject } from "services/project";
 import { RootState } from "store";
+import { IProject } from "types";
 
 type Props = {
 	visible: boolean;
 	setVisible: any;
-	initProjects: any;
+	updateData: IProject;
+	refetch: any;
 };
 
 export default function ProjectCreateDrawer({
 	visible,
 	setVisible,
-	initProjects,
+	updateData,
+	refetch,
 }: Props) {
 	const [okLoading, setOkLoading] = useState(false);
 	const projectCreateHandler = useMutation(createProject);
 	const [form] = Form.useForm();
 	const { workspaces } = useSelector((state: RootState) => state.auth);
+
+	useEffect(() => {
+		if (updateData) {
+			form.setFieldsValue(updateData);
+		}
+	}, [updateData]);
 
 	const onClose = () => {
 		setVisible(false);
@@ -29,11 +38,17 @@ export default function ProjectCreateDrawer({
 
 	const onCreateProject = async () => {
 		setOkLoading(true);
-		await projectCreateHandler.mutateAsync({
-			...form.getFieldsValue(),
-			workspace: workspaces?.[0]._id,
-		});
-		initProjects();
+
+		if (updateData) {
+			await updateProject(updateData._id, form.getFieldsValue());
+		} else {
+			await projectCreateHandler.mutateAsync({
+				...form.getFieldsValue(),
+				workspace: workspaces?.[0]._id,
+			});
+		}
+
+		refetch();
 		onClose();
 		setTimeout(() => {
 			form.resetFields();
@@ -64,7 +79,7 @@ export default function ProjectCreateDrawer({
 								<Spinner size="sm" light={true} />
 							</span>
 						) : null}
-						Create
+						{updateData ? "Update" : "Create"}
 					</Button>
 				</div>
 			}

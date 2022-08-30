@@ -7,10 +7,14 @@ export const fetchProjects = async (workspace: string) => {
 	});
 };
 
-export const createProject = async (payload: {
-	name: string;
-	description: string;
-	workspace: string;
-}) => {
+export const createProject = async (payload: IProject) => {
 	return await coreAxios.post<IProject>("/project", payload);
+};
+
+export const updateProject = async (id: string, payload: Partial<IProject>) => {
+	return await coreAxios.put(`/project/${id}`, payload);
+};
+
+export const deleteProject = async (id: string) => {
+	return await coreAxios.delete(`/project/${id}`);
 };

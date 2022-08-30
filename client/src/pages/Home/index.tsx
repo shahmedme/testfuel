@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { Skeleton } from "antd";
+import { Empty, Skeleton } from "antd";
 import { Button, Navbar } from "components";
 import { useState } from "react";
 import { storage } from "services";
-import { fetchProjects } from "services/project";
+import { deleteProject, fetchProjects } from "services/project";
 import ProjectCreateDrawer from "./views/ProjectCreateDrawer";
 import TableRow from "./views/TableRow";
 
@@ -12,14 +12,21 @@ export default function Home() {
 		const workspaces = storage.get("workspaces");
 		return await fetchProjects(workspaces[0]._id);
 	});
-	const [projectDrawerVisible, setProjectDrawerVisible] = useState(false);
+	const [projectUpdateData, setProjectUpdateData] = useState<string | null>(
+		null
+	);
+
+	const onDelete = async (id: string) => {
+		await deleteProject(id);
+		refetch();
+	};
 
 	return (
 		<div className="py-7 px-9">
 			<Navbar.Horizontal
 				title="Projects"
 				extra={
-					<Button onClick={() => setProjectDrawerVisible(true)}>
+					<Button onClick={() => setProjectUpdateData("true")}>
 						Create new project
 					</Button>
 				}
@@ -36,9 +43,18 @@ export default function Home() {
 				</thead>
 				<tbody>
 					{!isLoading ? (
-						data?.data?.map((project: any) => (
-							<TableRow key={project._id} slug={project._id} {...project} />
-						))
+						data?.data.length ? (
+							data?.data?.map((project: any) => (
+								<TableRow
+									key={project._id}
+									slug={project._id}
+									refetch={refetch}
+									onDelete={onDelete}
+									onEdit={setProjectUpdateData}
+									{...project}
+								/>
+							))
+						) : null
 					) : (
 						<tr>
 							<td>
@@ -49,10 +65,17 @@ export default function Home() {
 				</tbody>
 			</table>
 
+			{data?.data.length === 0 ? (
+				<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} className="mt-16" />
+			) : null}
+
 			<ProjectCreateDrawer
-				visible={projectDrawerVisible}
-				setVisible={setProjectDrawerVisible}
-				initProjects={refetch}
+				visible={!!projectUpdateData}
+				setVisible={setProjectUpdateData}
+				updateData={
+					data?.data.find((project) => project._id === projectUpdateData)!
+				}
+				refetch={refetch}
 			/>
 		</div>
 	);
