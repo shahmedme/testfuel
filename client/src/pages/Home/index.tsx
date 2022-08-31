@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Empty, Skeleton } from "antd";
-import { Button, Navbar } from "components";
+import { Navbar } from "components";
+import { Button } from "lib";
 import { useState } from "react";
 import { storage } from "services";
 import { deleteProject, fetchProjects } from "services/project";

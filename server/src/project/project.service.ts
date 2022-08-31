@@ -20,8 +20,8 @@ export class ProjectService {
     return this.projectModel.find({ workspace: workspaceId });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} project`;
+  async findOne(_id: string) {
+    return await this.projectModel.findOne({ _id });
   }
 
   async update(_id: string, updateProjectDto: UpdateProjectDto) {

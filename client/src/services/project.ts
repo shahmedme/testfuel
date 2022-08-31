@@ -1,10 +1,14 @@
-import { IProject } from "types";
+import { IProject, ISuite } from "types";
 import { coreAxios } from "utils";
 
 export const fetchProjects = async (workspace: string) => {
 	return await coreAxios.get<IProject[]>("/project", {
 		params: { workspace },
 	});
+};
+
+export const fetchProject = async (id: string) => {
+	return await coreAxios.get<IProject>(`/project/${id}`);
 };
 
 export const createProject = async (payload: IProject) => {
@@ -17,4 +21,10 @@ export const updateProject = async (id: string, payload: Partial<IProject>) => {
 
 export const deleteProject = async (id: string) => {
 	return await coreAxios.delete(`/project/${id}`);
+};
+
+export const fetchSuites = async (project: string) => {
+	return await coreAxios.get<ISuite[]>("/suite", {
+		params: { project },
+	});
 };

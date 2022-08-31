@@ -1,14 +1,26 @@
-import { Button, Icons, Navbar } from "components";
+import { useQuery } from "@tanstack/react-query";
+import { Icons, Navbar } from "components";
+import { Button } from "lib";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { fetchSuites } from "services/project";
 
 export default function Suites() {
+	const { projectKey } = useParams();
+	const { isLoading, data, refetch } = useQuery(
+		["projects"],
+		async () => await fetchSuites(projectKey!)
+	);
+
+	console.log("🚀 ~ file: index.tsx ~ line 11 ~ Suites ~ data", data);
+
 	return (
 		<div>
 			<Navbar.Horizontal
 				title="Suites"
 				extra={<Button href="archived">View archived</Button>}
 			/>
+
 			<div className="grid grid-cols-12 gap-6">
 				<Link
 					to="new"
@@ -16,27 +28,19 @@ export default function Suites() {
 				>
 					<Icons.Plus className="border-2 border-blue-500 text-blue-500 rounded-md w-7 h-7" />
 				</Link>
-				{_suites.map((suite) => (
-					<Link
-						to={suite.key}
-						key={suite.key}
-						className="col-span-2 bg-gray-200 rounded p-5 h-56 flex flex-col justify-end"
-					>
-						<h3 className="font-semibold text-lg">{suite.name}</h3>
-						<small>{suite.caseCount} test cases</small>
-					</Link>
-				))}
+				{!isLoading
+					? data?.data.map((suite) => (
+							<Link
+								to={suite._id}
+								key={suite._id}
+								className="col-span-2 bg-gray-200 rounded p-5 h-56 flex flex-col justify-end"
+							>
+								<h3 className="font-semibold text-lg">{suite.name}</h3>
+								<small>{suite.cases?.length} test cases</small>
+							</Link>
+					  ))
+					: null}
 			</div>
 		</div>
 	);
 }
-
-const _suites = [
-	{ name: "Dashboard", key: "dashboard", caseCount: 21 },
-	{ name: "Exporter", key: "exporter", caseCount: 56 },
-	{ name: "Insight", key: "insight", caseCount: 33 },
-	{ name: "Meeting Health", key: "meeting-health", caseCount: 10 },
-	{ name: "App page", key: "app-page", caseCount: 18 },
-	{ name: "Workspace", key: "workspace", caseCount: 8 },
-	{ name: "Onboarding", key: "onboarding", caseCount: 36 },
-];

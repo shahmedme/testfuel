@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import { Button, Icons, Navbar } from "components";
+import { Icons, Navbar } from "components";
+import { Button } from "lib";
 import React from "react";
 
 export default function ReleaseSingle() {
@@ -100,7 +101,7 @@ export const SuiteAccordion = ({ title, cases }: SuiteAccordionProps) => {
 					<input
 						type="text"
 						placeholder="Create quick test"
-						className="py-0.5 focus:outline-none w-full"
+						className="py-0.5 focus:outline-none border-0 focus:ring-0 w-full"
 					/>
 				</div>
 			</div>

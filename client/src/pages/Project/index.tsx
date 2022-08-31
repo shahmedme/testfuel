@@ -1,22 +1,30 @@
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "antd";
 import classNames from "classnames";
 import { Icons } from "components";
-import { _projects } from "pages/Home";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { fetchProject } from "services/project";
 
 export default function Project() {
+	const { projectKey } = useParams();
+	const { isLoading, data } = useQuery(
+		["project"],
+		async () => await fetchProject(projectKey!),
+		{ cacheTime: 0 }
+	);
 	const [activeKey, setActiveKey] = useState("releases");
-	const params = useParams();
 	const navigate = useNavigate();
 
 	return (
 		<div className="flex">
 			<div className="bg-slate-100 h-screen w-60 py-6 px-4">
 				<h2 className="font-semibold text-lg pl-2.5">
-					{
-						_projects.find((project) => project.slug === params.projectKey)
-							?.name
-					}
+					{!isLoading ? (
+						data?.data.name
+					) : (
+						<Skeleton.Button block={true} style={{ height: 28 }} />
+					)}
 				</h2>
 				<div className="mt-7">
 					{_menuItems.map((item) => (
@@ -26,7 +34,7 @@ export default function Project() {
 							active={activeKey === item.key}
 							onClick={() => {
 								setActiveKey(item.key);
-								navigate(`/p/web-application/${item.key}`);
+								navigate(`/p/${projectKey}/${item.key}`);
 							}}
 						>
 							{item.label}

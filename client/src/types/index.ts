@@ -11,6 +11,18 @@ export interface IProject {
 	createdAt: string;
 }
 
+export interface ISuite {
+	_id: string;
+	name: string;
+	cases: ICase[];
+	project: string;
+	createdAt: string;
+}
+
+export interface ICase {
+	title: string;
+}
+
 export interface IWorkspace {
 	_id: string;
 	name: string;

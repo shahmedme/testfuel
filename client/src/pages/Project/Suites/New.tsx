@@ -1,4 +1,5 @@
-import { Button, Navbar } from "components";
+import { Navbar } from "components";
+import { Button } from "lib";
 import React from "react";
 import { SuiteAccordion, _suites } from "../Releases/ReleaseSingle";
 

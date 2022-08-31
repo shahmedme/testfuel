@@ -10,7 +10,8 @@
 		"no-unused-vars": "warn",
 		"no-constant-condition": "off",
 		"react/display-name": "off",
-		"react/no-unescaped-entities": "off"
+		"react/no-unescaped-entities": "off",
+		"no-mixed-spaces-and-tabs": "off"
 	},
 	"plugins": ["@typescript-eslint"]
 }
