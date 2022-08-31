@@ -9,9 +9,8 @@ import { fetchProject } from "services/project";
 export default function Project() {
 	const { projectKey } = useParams();
 	const { isLoading, data } = useQuery(
-		["project"],
-		async () => await fetchProject(projectKey!),
-		{ cacheTime: 0 }
+		["project", projectKey],
+		async () => await fetchProject(projectKey!)
 	);
 	const [activeKey, setActiveKey] = useState("releases");
 	const navigate = useNavigate();

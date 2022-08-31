@@ -7,12 +7,10 @@ import { fetchSuites } from "services/project";
 
 export default function Suites() {
 	const { projectKey } = useParams();
-	const { isLoading, data, refetch } = useQuery(
-		["projects"],
+	const { isLoading, data } = useQuery(
+		["suites", projectKey],
 		async () => await fetchSuites(projectKey!)
 	);
-
-	console.log("🚀 ~ file: index.tsx ~ line 11 ~ Suites ~ data", data);
 
 	return (
 		<div>
