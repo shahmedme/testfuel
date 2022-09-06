@@ -1,3 +1,4 @@
+import { BellIcon } from "@heroicons/react/outline";
 import { Popover } from "antd";
 import { Icons } from "components";
 import { ListGroup } from "flowbite-react";
@@ -37,12 +38,36 @@ export default function Vertical() {
 				<MenuItem to="/chat" icon={Icons.Chat} />
 				<MenuItem to="/billing" icon={Icons.Wallet} />
 			</div>
+
+			{/* jsx-1004058353 mr-3 p-1 rounded-full text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white */}
+
 			<div className="flex flex-col items-center">
-				<Icons.Logout
-					className="w-6 h-6 my-7 text-gray-200 hover:text-white cursor-pointer"
-					style={{ marginLeft: 4 }}
-					onClick={logout}
-				/>
+				<Popover
+					// visible
+					placement="rightBottom"
+					trigger="click"
+					overlayClassName="v-menu_notification"
+					content={
+						<div className="w-80">
+							<div className="flex items-center justify-between">
+								<span className="font-medium ml-0.5">Notifications</span>
+								<Link
+									to="#"
+									className="inline-flex items-center text-xs hover:underline"
+								>
+									See all
+								</Link>
+							</div>
+							<div className="flex flex-col gap-2 mt-2">
+								{NOTIFICATIONS.map((notification, idx) => (
+									<NotificationItem key={idx} {...notification} />
+								))}
+							</div>
+						</div>
+					}
+				>
+					<BellIcon className="w-6 h-6 my-7 ml-1 text-gray-200 hover:text-white cursor-pointer" />
+				</Popover>
 				<Popover
 					visible={popoverVisible}
 					placement="rightBottom"
@@ -92,3 +117,35 @@ const MenuItem = ({ icon: Icon, style, to }: MenuItemProps) => {
 		</Link>
 	);
 };
+
+const NotificationItem = ({ title, description }: any) => {
+	return (
+		<div className="p-3.5 bg-white rounded border border-gray-200 shadow-sm">
+			<h5 className="mb-1 text-gray-900">{title}</h5>
+			<p className="mb-1.5 text-xs text-gray-500">{description}</p>
+			<Link
+				to="#"
+				className="inline-flex items-center text-blue-600 hover:underline"
+			>
+				Learn more
+			</Link>
+		</div>
+	);
+};
+
+const NOTIFICATIONS = [
+	{
+		title: "Preserving pull request approvals",
+		description:
+			"We are introducing a new premium merge condition in the repository settings",
+	},
+	{
+		title: "More reliable merge checks",
+		description:
+			"We are introducing a change to the pull request merge checks that will make them more reliable",
+	},
+	{
+		title: "Default Pull Request Tasks",
+		description: "There are multiple ways to create a task on a pull request",
+	},
+];

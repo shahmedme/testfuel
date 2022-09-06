@@ -52,3 +52,17 @@ textarea {
 		}
 	}
 }
+.v-menu_notification {
+	.ant-popover-content {
+		transform: translateX(6px);
+
+		.ant-popover-inner {
+			overflow: hidden;
+			border-radius: 7px;
+
+			.ant-popover-inner-content {
+				padding: 14px;
+			}
+		}
+	}
+}

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Icons, Navbar } from "components";
+import { Icons, Navbar, Suite } from "components";
 import { Button } from "lib";
 import React from "react";
 
@@ -48,7 +48,7 @@ export default function ReleaseSingle() {
 				<div className="h-auto bg-gray-200 mx-2.5" style={{ width: 1 }} />
 				<div className="flex-1">
 					{_suites.map((suite, idx) => (
-						<SuiteAccordion key={idx} {...suite} />
+						<Suite key={idx} {...suite} />
 					))}
 				</div>
 			</div>
@@ -68,43 +68,6 @@ const SuiteMenuItem = ({ children, active, count }: any) => {
 			<span className="font-semibold bg-gray-200 p-0.5 text-xs rounded">
 				{count}
 			</span>
-		</div>
-	);
-};
-
-type SuiteAccordionProps = {
-	title?: string;
-	cases: any[];
-};
-
-export const SuiteAccordion = ({ title, cases }: SuiteAccordionProps) => {
-	return (
-		<div className="mb-1">
-			{title ? (
-				<div className="flex items-center bg-gray-100 rounded px-2.5 py-1 group">
-					<h3 className="font-semibold text-base">{title}</h3>
-					<div className="ml-7 flex items-center text-gray-500">
-						<Icons.Pen className="w-4 h-4 mr-3 cursor-pointer" />
-						<Icons.Trash className="w-4 h-4 cursor-pointer" />
-					</div>
-				</div>
-			) : null}
-			<div className="ml-4 pt-2 pb-4">
-				{cases.map((_case, idx) => (
-					<div key={idx} className="border-b py-1 flex items-center">
-						<Icons.ArrowUp className="w-3 h-3 mr-2 text-red-500" />{" "}
-						{_case.title}
-					</div>
-				))}
-				<div className="flex items-center mt-2.5">
-					<Icons.Plus className="text-gray-300 w-5 h-5 -mt-0.5 mr-0.5" />
-					<input
-						type="text"
-						placeholder="Create quick test"
-						className="py-0.5 focus:outline-none border-0 focus:ring-0 w-full"
-					/>
-				</div>
-			</div>
 		</div>
 	);
 };

@@ -1,9 +1,10 @@
 import classNames from "classnames";
+import useBreadcrumb from "hooks/useBreadcrumb";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 type HorizontalProps = {
-	title: React.ReactElement | string;
+	title?: React.ReactElement | string;
 	extra?: React.ReactElement;
 	breadcrumb?: boolean;
 };
@@ -13,6 +14,8 @@ export default function Horizontal({
 	extra,
 	breadcrumb,
 }: HorizontalProps) {
+	// const { items } = useBreadcrumb();
+
 	return (
 		<div
 			className={classNames("flex justify-between mb-4", {
@@ -27,7 +30,7 @@ export default function Horizontal({
 						&nbsp;<Link to="/">Releases</Link>
 					</div>
 				)}
-				<h2 className="text-2xl font-semibold">{title}</h2>
+				{title && <h2 className="text-2xl font-semibold">{title}</h2>}
 			</div>
 			{extra}
 		</div>

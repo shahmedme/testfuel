@@ -12,11 +12,11 @@ export interface IProject {
 }
 
 export interface ISuite {
-	_id: string;
+	_id?: string;
 	name: string;
 	cases: ICase[];
 	project: string;
-	createdAt: string;
+	createdAt?: string;
 }
 
 export interface ICase {

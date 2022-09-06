@@ -1,7 +1,7 @@
-import { Icons, Navbar } from "components";
+import { Icons, Navbar, Suite } from "components";
 import { Button } from "lib";
 import React from "react";
-import { SuiteAccordion, _suites } from "./ReleaseSingle";
+import { _suites } from "./ReleaseSingle";
 
 export default function ReleaseRun() {
 	return (
@@ -34,7 +34,7 @@ export default function ReleaseRun() {
 			>
 				<div className="col-span-9">
 					{_suites.map((suite, idx) => (
-						<SuiteAccordion key={idx} {...suite} />
+						<Suite key={idx} {...suite} />
 					))}
 				</div>
 				<div className="col-span-3 bg-slate-100 h-full overflow-y-auto rounded-lg p-5">

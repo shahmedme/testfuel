@@ -28,3 +28,7 @@ export const fetchSuites = async (project: string) => {
 		params: { project },
 	});
 };
+
+export const createSuite = async (payload: ISuite) => {
+	return await coreAxios.post<IProject>("/suite", payload);
+};

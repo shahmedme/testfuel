@@ -29,6 +29,7 @@ export default function Suites() {
 				{!isLoading
 					? data?.data.map((suite) => (
 							<Link
+								// @ts-ignore
 								to={suite._id}
 								key={suite._id}
 								className="col-span-2 bg-gray-200 rounded p-5 h-56 flex flex-col justify-end"

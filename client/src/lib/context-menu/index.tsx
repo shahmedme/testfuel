@@ -1,6 +1,5 @@
 import { Dropdown, Menu } from "antd";
-import { useState } from "react";
-import BtnMore from "./BtnMore";
+import { Icons } from "components";
 
 type Props = {
 	children?: any;
@@ -8,20 +7,11 @@ type Props = {
 };
 
 export default function ContextMenu({ children, menu, ...props }: Props & any) {
-	// const [visible, setVisible] = useState(false);
-
 	return (
-		<Dropdown
-			// visible={visible}
-			overlay={menu}
-			// onVisibleChange={setVisible}
-			{...props}
-		>
+		<Dropdown overlay={menu} {...props}>
 			{children ?? (
 				<div>
-					<BtnMore
-					//  active={visible}
-					/>
+					<BtnMore />
 				</div>
 			)}
 		</Dropdown>
@@ -40,3 +30,14 @@ ContextMenu.defaultProps = {
 		/>
 	),
 };
+
+function BtnMore() {
+	return (
+		<button
+			className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-2 focus:outline-none focus:ring-gray-50 focus:bg-gray-100"
+			type="button"
+		>
+			<Icons.DotHorizontal />
+		</button>
+	);
+}
