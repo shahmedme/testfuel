@@ -1,5 +1,16 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { useParams } from "react-router-dom";
+import { fetchSuite } from "services/project";
+import SuiteNew from "./new";
 
 export default function SuiteDetails() {
-	return <div>suites Details</div>;
+	const { suiteId } = useParams();
+	const { data } = useQuery(
+		["suite", suiteId],
+		async () => suiteId && (await fetchSuite(suiteId))
+	);
+
+	// @ts-ignore
+	return <SuiteNew suite={data?.data} />;
 }
