@@ -1,12 +1,11 @@
-import { Dropdown, Menu } from "antd";
+import { Dropdown, DropdownProps, Menu } from "antd";
 import { Icons } from "components";
 
-type Props = {
-	children?: any;
-	menu?: any;
-};
-
-export default function ContextMenu({ children, menu, ...props }: Props & any) {
+export default function ContextMenu({
+	children,
+	menu,
+	...props
+}: DropdownProps & any) {
 	return (
 		<Dropdown overlay={menu} {...props}>
 			{children ?? (

@@ -34,5 +34,13 @@ export const fetchSuite = async (id: string) => {
 };
 
 export const createSuite = async (payload: ISuite) => {
-	return await coreAxios.post<IProject>("/suite", payload);
+	return await coreAxios.post<ISuite>("/suite", payload);
+};
+
+export const updateSuite = async ({ _id, ...payload }: ISuite) => {
+	return await coreAxios.put<ISuite>(`/suite/${_id}`, payload);
+};
+
+export const deleteSuite = async (id: string) => {
+	return await coreAxios.delete(`/suite/${id}`);
 };

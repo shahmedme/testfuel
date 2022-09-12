@@ -15,7 +15,7 @@ export interface ISuite {
 	_id?: string;
 	name: string;
 	cases: ICase[];
-	project: string;
+	project?: string;
 	createdAt?: string;
 }
 

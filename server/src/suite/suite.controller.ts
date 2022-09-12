@@ -1,16 +1,16 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
   Query,
 } from '@nestjs/common';
-import { SuiteService } from './suite.service';
 import { CreateSuiteDto } from './dto/create-suite.dto';
 import { UpdateSuiteDto } from './dto/update-suite.dto';
+import { SuiteService } from './suite.service';
 
 @Controller('suite')
 export class SuiteController {
@@ -31,13 +31,13 @@ export class SuiteController {
     return this.suiteService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateSuiteDto: UpdateSuiteDto) {
-    return this.suiteService.update(+id, updateSuiteDto);
+    return this.suiteService.update(id, updateSuiteDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.suiteService.remove(+id);
+    return this.suiteService.remove(id);
   }
 }

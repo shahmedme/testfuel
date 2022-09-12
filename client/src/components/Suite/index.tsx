@@ -3,13 +3,15 @@ import { Icons } from "components";
 import { useState } from "react";
 import CaseLine from "./CaseLine";
 
-type PropsType = {
+type Props = {
 	title?: string;
 	cases: any[];
 	onCreate?: Function;
+	onUpdate?: Function;
+	onDelete?: Function;
 };
 
-const Suite = ({ title, cases, onCreate }: PropsType) => {
+const Suite = ({ title, cases, onCreate, onUpdate, onDelete }: Props) => {
 	const [newCase, setNewCase] = useState<string>("");
 
 	const handleCaseCreate = (e: any) => {
@@ -32,26 +34,16 @@ const Suite = ({ title, cases, onCreate }: PropsType) => {
 			) : null}
 
 			<div className="pt-2 pb-4">
-				{
-					cases.length
-						? cases.map((_case, idx) => (
-								<CaseLine
-									key={idx}
-									{..._case}
-									onUpdate={(e: any) => console.log(e.target.value)}
-								/>
-						  ))
-						: null
-					// (
-					// 	<div className="flex p-4 mt-1.5 text-sm text-gray-700 bg-gray-100 rounded-lg">
-					// 		<InformationCircleIcon className="w-5 h-5 mr-2.5" />
-					// 		<div className="transform translate-y-0.5">
-					// 			<span className="font-medium">No test case found!</span> Create a
-					// 			test case for this suite.
-					// 		</div>
-					// 	</div>
-					// )
-				}
+				{cases.length
+					? cases.map((_case, idx) => (
+							<CaseLine
+								key={_case.title + idx}
+								{..._case}
+								onUpdate={() => onUpdate?.(idx)}
+								onDelete={() => onDelete?.(idx)}
+							/>
+					  ))
+					: null}
 				<div className="flex items-center mt-3">
 					<Icons.Plus className="text-gray-300 w-5 h-5 -mt-0.5 mr-0.5" />
 					<input

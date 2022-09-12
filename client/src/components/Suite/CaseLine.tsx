@@ -2,7 +2,13 @@ import { TrashIcon } from "@heroicons/react/outline";
 import { Input } from "antd";
 import Icons from "components/Icons";
 
-export default function CaseLine({ title, onUpdate }: any) {
+type Props = {
+	title: string;
+	onUpdate: Function | any;
+	onDelete: Function | any;
+};
+
+export default function CaseLine({ title, onUpdate, onDelete }: Props) {
 	return (
 		<div className="group border-b py-1 flex items-center justify-between">
 			<div className="flex items-center">
@@ -14,7 +20,7 @@ export default function CaseLine({ title, onUpdate }: any) {
 				/>
 			</div>
 			<div className="invisible group-hover:visible">
-				<TrashIcon className="w-4 h-4 cursor-pointer" />
+				<TrashIcon className="w-4 h-4 cursor-pointer" onClick={onDelete} />
 			</div>
 		</div>
 	);

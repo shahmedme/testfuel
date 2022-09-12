@@ -25,11 +25,16 @@ export class SuiteService {
     return this.suiteModel.findOne({ _id: id });
   }
 
-  update(id: number, updateSuiteDto: UpdateSuiteDto) {
-    return `This action updates a #${id} suite`;
+  async update(_id: string, updateSuiteDto: UpdateSuiteDto) {
+    // return `This action updates a #${id} suite`;
+
+    return await this.suiteModel.findOneAndUpdate({ _id }, updateSuiteDto, {
+      upsert: true,
+      new: true,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} suite`;
+  async remove(_id: string): Promise<any> {
+    return await this.suiteModel.deleteOne({ _id });
   }
 }
