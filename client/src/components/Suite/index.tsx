@@ -39,7 +39,7 @@ const Suite = ({ title, cases, onCreate, onUpdate, onDelete }: Props) => {
 							<CaseLine
 								key={_case.title + idx}
 								{..._case}
-								onUpdate={() => onUpdate?.(idx)}
+								onUpdate={(value: string) => onUpdate?.(idx, value)}
 								onDelete={() => onDelete?.(idx)}
 							/>
 					  ))

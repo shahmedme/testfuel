@@ -17,6 +17,7 @@ export default function CaseLine({ title, onUpdate, onDelete }: Props) {
 					defaultValue={title}
 					className="p-0 text-[15px] border-none outline-none focus:ring-0"
 					onPressEnter={onUpdate}
+					onBlur={(e) => onUpdate(e.target.value)}
 				/>
 			</div>
 			<div className="invisible group-hover:visible">

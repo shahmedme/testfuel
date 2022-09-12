@@ -28,7 +28,7 @@ export default function Vertical() {
 	};
 
 	return (
-		<div className="h-screen w-16 bg-blue-700 flex flex-col items-center justify-between py-5 text-white">
+		<div className="h-screen px-3.5 bg-blue-700 flex flex-col items-center justify-between py-5 text-white">
 			<Link to="/">
 				<Icons.Code className="w-7 h-auto text-white hover:text-white" />
 			</Link>
