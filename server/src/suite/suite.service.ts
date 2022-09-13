@@ -26,8 +26,6 @@ export class SuiteService {
   }
 
   async update(_id: string, updateSuiteDto: UpdateSuiteDto) {
-    // return `This action updates a #${id} suite`;
-
     return await this.suiteModel.findOneAndUpdate({ _id }, updateSuiteDto, {
       upsert: true,
       new: true,
@@ -36,5 +34,9 @@ export class SuiteService {
 
   async remove(_id: string): Promise<any> {
     return await this.suiteModel.deleteOne({ _id });
+  }
+
+  async findByIds(ids: string[]) {
+    return await this.suiteModel.find({ _id: { $in: ids } });
   }
 }

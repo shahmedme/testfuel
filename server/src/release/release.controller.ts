@@ -1,15 +1,16 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
 } from '@nestjs/common';
-import { ReleaseService } from './release.service';
 import { CreateReleaseDto } from './dto/create-release.dto';
 import { UpdateReleaseDto } from './dto/update-release.dto';
+import { ReleaseService } from './release.service';
 
 @Controller('release')
 export class ReleaseController {
@@ -21,8 +22,8 @@ export class ReleaseController {
   }
 
   @Get()
-  findAll() {
-    return this.releaseService.findAll();
+  findAll(@Query('project') projectId: string) {
+    return this.releaseService.findAll(projectId);
   }
 
   @Get(':id')
@@ -30,13 +31,13 @@ export class ReleaseController {
     return this.releaseService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateReleaseDto: UpdateReleaseDto) {
-    return this.releaseService.update(+id, updateReleaseDto);
+    return this.releaseService.update(id, updateReleaseDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.releaseService.remove(+id);
+    return this.releaseService.remove(id);
   }
 }

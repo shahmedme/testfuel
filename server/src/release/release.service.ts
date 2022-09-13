@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { SuiteService } from 'suite/suite.service';
 import { CreateReleaseDto } from './dto/create-release.dto';
 import { UpdateReleaseDto } from './dto/update-release.dto';
 import { Release, ReleaseDocument } from './schemas/release.schema';
@@ -10,26 +11,35 @@ export class ReleaseService {
   constructor(
     @InjectModel(Release.name)
     private releaseModel: Model<ReleaseDocument>,
+    private suiteService: SuiteService,
   ) {}
 
-  create(createReleaseDto: CreateReleaseDto) {
-    const createdRelease = new this.releaseModel(createReleaseDto);
+  async create(createReleaseDto: CreateReleaseDto) {
+    const suites = await this.suiteService.findByIds(createReleaseDto.suites);
+
+    const createdRelease = new this.releaseModel({
+      ...createReleaseDto,
+      suites,
+    });
     return createdRelease.save();
   }
 
-  findAll() {
-    return `This action returns all release`;
+  findAll(projectId: string) {
+    return this.releaseModel.find({ project: projectId });
   }
 
   findOne(id: number) {
     return `This action returns a #${id} release`;
   }
 
-  update(id: number, updateReleaseDto: UpdateReleaseDto) {
-    return `This action updates a #${id} release`;
+  async update(_id: string, updateReleaseDto: UpdateReleaseDto) {
+    return await this.releaseModel.findOneAndUpdate({ _id }, updateReleaseDto, {
+      upsert: true,
+      new: true,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} release`;
+  async remove(_id: string): Promise<any> {
+    return await this.releaseModel.deleteOne({ _id });
   }
 }

@@ -11,11 +11,10 @@ export class Release {
   title: string;
 
   @Prop({
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: Suite.name,
+    type: mongoose.Schema.Types.Array,
     required: true,
   })
-  suites: [Suite];
+  suites: any[];
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
