@@ -80,7 +80,7 @@ root.render(
 										<Route path="members" element={<Members />} />
 										<Route path="settings" element={<ProjectSettings />} />
 									</Route>
-									<Route path="settings" element={<Settings />} />
+									<Route path="settings/*" element={<Settings />} />
 									<Route path="playground" element={<Playground />} />
 								</Route>
 							</Route>
