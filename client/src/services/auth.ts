@@ -23,3 +23,7 @@ export const signin = async (values: SignInPayload) => {
 export const fetchAccount = async () => {
 	return await coreAxios.get<{ user: any; workspace: any }>("/users");
 };
+
+export const toggleBetaMode = async (payload: any) => {
+	return await coreAxios.put("/users", { isBeta: payload });
+};

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Icons, Navbar } from "components";
+import Beta from "components/Beta";
 import { Button } from "lib";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
@@ -16,7 +17,11 @@ export default function Suites() {
 		<div>
 			<Navbar.Horizontal
 				title="Suites"
-				extra={<Button href="archived">View archived</Button>}
+				extra={
+					<Beta>
+						<Button href="archived">View archived</Button>
+					</Beta>
+				}
 			/>
 
 			<div className="grid grid-cols-12 gap-6">

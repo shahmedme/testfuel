@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateUserDto } from 'account/dto';
+import { CreateUserDto, UpdateUserDto } from 'account/dto';
 import { User, UserDocument } from 'account/schemas/user.schema';
 import { Model } from 'mongoose';
 import { WorkspaceService } from 'workspace/workspace.service';
@@ -17,7 +17,7 @@ export class UserService {
     return createdUser;
   }
 
-  async findById(id: number) {
+  async findById(id: string) {
     return await this.userModel.findById(id);
   }
 
@@ -25,8 +25,16 @@ export class UserService {
     return await this.userModel.findOne({ email });
   }
 
-  async getAccount(user: User & { _id: string }) {
-    const workspace = await this.workspaceService.getWorkspaceByUser(user._id);
+  async getAccount(_user: User & { _id: string }) {
+    const workspace = await this.workspaceService.getWorkspaceByUser(_user._id);
+    const user = await this.findById(_user._id);
     return { workspace, user };
+  }
+
+  async update(_id: string, UpdateUserDto: UpdateUserDto) {
+    return await this.userModel.findOneAndUpdate({ _id }, UpdateUserDto, {
+      upsert: true,
+      new: true,
+    });
   }
 }

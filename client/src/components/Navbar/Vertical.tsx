@@ -1,6 +1,7 @@
 import { BellIcon } from "@heroicons/react/outline";
 import { Popover } from "antd";
 import { Icons } from "components";
+import Beta from "components/Beta";
 import { ListGroup } from "flowbite-react";
 import { useAuth } from "hooks";
 import React, { useState } from "react";
@@ -34,40 +35,44 @@ export default function Vertical() {
 			</Link>
 			<div>
 				<MenuItem to="/" icon={Icons.Category} />
-				<MenuItem to="/navigation" icon={Icons.Compass} />
-				<MenuItem to="/chat" icon={Icons.Chat} />
-				<MenuItem to="/billing" icon={Icons.Wallet} />
+				<Beta>
+					<MenuItem to="/navigation" icon={Icons.Compass} />
+					<MenuItem to="/chat" icon={Icons.Chat} />
+					<MenuItem to="/billing" icon={Icons.Wallet} />
+				</Beta>
 			</div>
 
 			{/* jsx-1004058353 mr-3 p-1 rounded-full text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white */}
 
 			<div className="flex flex-col items-center">
-				<Popover
-					// visible
-					placement="rightBottom"
-					trigger="click"
-					overlayClassName="v-menu_notification"
-					content={
-						<div className="w-80">
-							<div className="flex items-center justify-between">
-								<span className="font-medium ml-0.5">Notifications</span>
-								<Link
-									to="#"
-									className="inline-flex items-center text-xs hover:underline"
-								>
-									See all
-								</Link>
+				<Beta>
+					<Popover
+						// visible
+						placement="rightBottom"
+						trigger="click"
+						overlayClassName="v-menu_notification"
+						content={
+							<div className="w-80">
+								<div className="flex items-center justify-between">
+									<span className="font-medium ml-0.5">Notifications</span>
+									<Link
+										to="#"
+										className="inline-flex items-center text-xs hover:underline"
+									>
+										See all
+									</Link>
+								</div>
+								<div className="flex flex-col gap-2 mt-2">
+									{NOTIFICATIONS.map((notification, idx) => (
+										<NotificationItem key={idx} {...notification} />
+									))}
+								</div>
 							</div>
-							<div className="flex flex-col gap-2 mt-2">
-								{NOTIFICATIONS.map((notification, idx) => (
-									<NotificationItem key={idx} {...notification} />
-								))}
-							</div>
-						</div>
-					}
-				>
-					<BellIcon className="w-6 h-6 my-7 ml-1 text-gray-200 hover:text-white cursor-pointer" />
-				</Popover>
+						}
+					>
+						<BellIcon className="w-6 h-6 my-7 ml-1 text-gray-200 hover:text-white cursor-pointer" />
+					</Popover>
+				</Beta>
 				<Popover
 					visible={popoverVisible}
 					placement="rightBottom"
@@ -76,9 +81,11 @@ export default function Vertical() {
 					content={
 						<div className="w-48">
 							<ListGroup>
-								<ListGroup.Item onClick={onPopoverMenuClick("profile")}>
-									View Profile
-								</ListGroup.Item>
+								<Beta>
+									<ListGroup.Item onClick={onPopoverMenuClick("profile")}>
+										View Profile
+									</ListGroup.Item>
+								</Beta>
 								<ListGroup.Item onClick={onPopoverMenuClick("settings")}>
 									Settings
 								</ListGroup.Item>

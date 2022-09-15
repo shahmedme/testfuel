@@ -4,12 +4,13 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { MemberType } from 'core/models';
 import { WorkspaceService } from 'workspace/workspace.service';
-import { CreateUserDto } from './dto';
+import { CreateUserDto, UpdateUserDto } from './dto';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { UserService } from './services';
@@ -27,6 +28,12 @@ export class AccountController {
   @Get()
   getUser(@Request() req) {
     return this.userService.getAccount(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put()
+  update(@Request() req, @Body() updateProjectDto: UpdateUserDto) {
+    return this.userService.update(req.user._id, updateProjectDto);
   }
 
   @Post('signup')
@@ -50,7 +57,7 @@ export class AccountController {
 
   @Get(':id')
   get(@Param('id') id: string) {
-    return this.userService.findById(+id);
+    return this.userService.findById(id);
   }
 
   @Post('signin')

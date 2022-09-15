@@ -61,7 +61,7 @@ root.render(
 									<Route path="p/:projectKey" element={<Project />}>
 										<Route
 											path="/p/:projectKey"
-											element={<Navigate replace to="releases" />}
+											element={<Navigate replace to="suites" />}
 										/>
 										<Route path="releases">
 											<Route index element={<Releases />} />

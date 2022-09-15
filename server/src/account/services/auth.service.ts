@@ -15,7 +15,7 @@ export class AuthService {
     const user = await this.validateUser(email, password);
 
     if (user) {
-      const { _id, firstName, lastName, username, email } = user;
+      const { _id, firstName, lastName, username, email, isBeta } = user;
 
       return {
         token: this.jwtService.sign({
@@ -24,6 +24,7 @@ export class AuthService {
           lastName,
           username,
           email,
+          isBeta,
         }),
       };
     } else {

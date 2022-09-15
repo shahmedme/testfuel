@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Empty, Skeleton } from "antd";
 import { Navbar } from "components";
+import Beta from "components/Beta";
 import { Button } from "lib";
 import { useState } from "react";
 import { storage } from "services";
@@ -37,8 +38,12 @@ export default function Home() {
 				<thead className="thead-light">
 					<tr>
 						<th className="py-3 text-xs font-medium text-left">Project name</th>
-						<th className="py-3 text-xs font-medium text-left">Test runs</th>
-						<th className="py-3 text-xs font-medium text-left">Team members</th>
+						<Beta>
+							<th className="py-3 text-xs font-medium text-left">Test runs</th>
+							<th className="py-3 text-xs font-medium text-left">
+								Team members
+							</th>
+						</Beta>
 						<th className="py-3 text-xs font-medium text-left"></th>
 					</tr>
 				</thead>

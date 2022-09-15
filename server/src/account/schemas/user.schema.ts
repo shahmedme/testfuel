@@ -23,6 +23,9 @@ export class User {
   @Prop()
   isActive: boolean;
 
+  @Prop({ default: false })
+  isBeta: boolean;
+
   @Prop()
   createdAt: string;
 

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "antd";
 import classNames from "classnames";
 import { Icons } from "components";
+import Beta from "components/Beta";
 import { useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { fetchProject } from "services/project";
@@ -26,19 +27,35 @@ export default function Project() {
 					)}
 				</h2>
 				<div className="mt-7">
-					{_menuItems.map((item) => (
-						<MenuItem
-							{...item}
-							key={item.key}
-							active={activeKey === item.key}
-							onClick={() => {
-								setActiveKey(item.key);
-								navigate(`/p/${projectKey}/${item.key}`);
-							}}
-						>
-							{item.label}
-						</MenuItem>
-					))}
+					{_menuItems.map((item) =>
+						item.beta ? (
+							<Beta>
+								<MenuItem
+									{...item}
+									key={item.key}
+									active={activeKey === item.key}
+									onClick={() => {
+										setActiveKey(item.key);
+										navigate(`/p/${projectKey}/${item.key}`);
+									}}
+								>
+									{item.label}
+								</MenuItem>
+							</Beta>
+						) : (
+							<MenuItem
+								{...item}
+								key={item.key}
+								active={activeKey === item.key}
+								onClick={() => {
+									setActiveKey(item.key);
+									navigate(`/p/${projectKey}/${item.key}`);
+								}}
+							>
+								{item.label}
+							</MenuItem>
+						)
+					)}
 				</div>
 			</div>
 
@@ -54,10 +71,11 @@ const _menuItems = [
 		key: "releases",
 		label: "Releases",
 		icon: <Icons.Collection />,
+		beta: true,
 	},
-	{ key: "suites", label: "Suites", icon: <Icons.Briefcase /> },
-	{ key: "members", label: "Members", icon: <Icons.Users /> },
-	{ key: "settings", label: "Settings", icon: <Icons.Cog /> },
+	{ key: "suites", label: "Suites", icon: <Icons.Briefcase />, beta: false },
+	{ key: "members", label: "Members", icon: <Icons.Users />, beta: true },
+	{ key: "settings", label: "Settings", icon: <Icons.Cog />, beta: true },
 ];
 
 type MenuItemProps = {

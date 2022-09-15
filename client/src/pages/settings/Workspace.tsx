@@ -1,11 +1,11 @@
 import { Divider } from "antd";
 import Option from "./_views/Option";
 
-export default function Profile() {
+export default function Workspace() {
 	return (
 		<div>
 			<div>
-				<h3 className="font-medium text-lg">Profile</h3>
+				<h3 className="font-medium text-lg">Workspace</h3>
 				<p className="text-sm">
 					We may still send you important notificaions about your account
 					outside your notification settings

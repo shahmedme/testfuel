@@ -1,5 +1,6 @@
 import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
 import { Avatar, Menu } from "antd";
+import Beta from "components/Beta";
 import { ContextMenu } from "lib";
 import { Link } from "react-router-dom";
 import { _avatars } from "..";
@@ -18,20 +19,24 @@ const TableRow = ({ name, slug, onEdit, onDelete }: TableRowProps) => {
 				<Link to={`/p/${slug}`} className="text-lg font-semibold">
 					{name}
 				</Link>
-				<small className="block">
-					52 test cases | 21 suites | 29 active runs
-				</small>
+				<Beta>
+					<small className="block">
+						52 test cases | 21 suites | 29 active runs
+					</small>
+				</Beta>
 			</td>
-			<td className="align-middle text-sm py-2.5 text-blue-600">
-				42 test runs
-			</td>
-			<td className="align-middle text-sm py-2.5">
-				<Avatar.Group>
-					{_avatars.map((avatar, idx) => (
-						<Avatar key={idx} src={avatar} />
-					))}
-				</Avatar.Group>
-			</td>
+			<Beta>
+				<td className="align-middle text-sm py-2.5 text-blue-600">
+					42 test runs
+				</td>
+				<td className="align-middle text-sm py-2.5">
+					<Avatar.Group>
+						{_avatars.map((avatar, idx) => (
+							<Avatar key={idx} src={avatar} />
+						))}
+					</Avatar.Group>
+				</td>
+			</Beta>
 			<td className="align-middle text-base text-right py-2.5">
 				<div className="inline-block cursor-pointer">
 					<ContextMenu
