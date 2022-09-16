@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { storage } from "services";
 import { fetchAccount } from "services/auth";
-import { IWorkspace } from "types";
+import { IUser, IWorkspace } from "types";
 
 export interface AuthState {
-	user?: any;
+	user?: IUser;
 	authRequired: boolean;
 	workspaces?: IWorkspace[];
 }
@@ -29,10 +29,15 @@ const authSlice = createSlice({
 			state.workspaces = { ...state.workspaces, ...action.payload };
 			storage.set("workspaces", state.workspaces);
 		},
+		setBetaMode: (state, action) => {
+			// @ts-ignore
+			state.user.isBeta = action.payload;
+		},
 	},
 });
 
-export const { setUser, requireAuth, setWorkspaces } = authSlice.actions;
+export const { setUser, requireAuth, setWorkspaces, setBetaMode } =
+	authSlice.actions;
 
 export default authSlice.reducer;
 

@@ -1,6 +1,11 @@
-export type TestT = {
-	any: String;
-};
+export interface IUser {
+	_id: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	isBeta: boolean;
+}
 
 export interface IProject {
 	_id: string;

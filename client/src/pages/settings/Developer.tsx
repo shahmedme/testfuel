@@ -3,7 +3,7 @@ import Beta from "components/Beta";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleBetaMode } from "services/auth";
 import { RootState } from "store";
-import { loadUser } from "store/auth";
+import { setBetaMode } from "store/auth";
 import Option from "./_views/Option";
 
 export default function Developer() {
@@ -11,8 +11,8 @@ export default function Developer() {
 	const dispatch = useDispatch();
 
 	const toggleBeta = async (value: boolean) => {
+		dispatch(setBetaMode(value));
 		await toggleBetaMode(value);
-		dispatch(loadUser());
 	};
 
 	return (
