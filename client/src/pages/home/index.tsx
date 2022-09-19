@@ -64,7 +64,7 @@ export default function Home() {
 					) : (
 						<tr>
 							<td>
-								<Skeleton />
+								<Skeleton className="max-w-[595px]" />
 							</td>
 						</tr>
 					)}

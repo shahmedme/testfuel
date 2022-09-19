@@ -1,5 +1,4 @@
-import classNames from "classnames";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 type Props = {
 	children: any;

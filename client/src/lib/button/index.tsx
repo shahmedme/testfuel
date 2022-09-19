@@ -16,7 +16,7 @@ export default function Button({
 	icon,
 	className: cn,
 	...props
-}: ButtonProps) {
+}: ButtonProps | any) {
 	const className = classNames(
 		"bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg hover:text-white flex items-center",
 		cn

@@ -5,10 +5,13 @@ import { Icons, Navbar, Suite } from "components";
 import { Spinner } from "flowbite-react";
 import { Button, ContextMenu } from "lib";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { createSuite, deleteSuite, updateSuite } from "services/project";
 import { ICase, ISuite } from "types";
 import _ from "lodash";
+import useBreadcrumbs from "use-react-router-breadcrumbs";
+
+const DynamicBreadcrumb = ({ name }: any) => <span>{name}</span>;
 
 export default function SuiteNew({ suite }: { suite?: ISuite }) {
 	const [name, setName] = useState("");
@@ -17,6 +20,25 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 	const suiteUpdateHandler = useMutation(updateSuite);
 	const { projectKey } = useParams();
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	const routes = [
+		{ path: "/", breadcrumb: "Projects" },
+		{
+			path: "/:projectId",
+			breadcrumb: DynamicBreadcrumb,
+			// @ts-ignore
+			props: { name: location.state?.project.name },
+		},
+		{
+			path: "/:projectId/suites/:suiteId",
+			breadcrumb: DynamicBreadcrumb,
+			// @ts-ignore
+			props: { name: location.state?.suite?.name ?? "new" },
+		},
+	];
+
+	const breadcrumbs = useBreadcrumbs(routes);
 
 	useEffect(() => {
 		if (suite) {
@@ -36,7 +58,7 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 			project: projectKey ?? "",
 		});
 
-		navigate(`/p/${projectKey}/suites`);
+		navigate(`/${projectKey}/suites`);
 	};
 
 	const onUpdateSuite = async () => {
@@ -48,9 +70,14 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 		});
 	};
 
+	const onArchiveSuite = async () => {
+		await updateSuite({ _id: suite?._id, isArchive: true });
+		navigate(`/${projectKey}/suites`);
+	};
+
 	const onDelete = async () => {
 		await deleteSuite(suite?._id as string);
-		navigate(`/p/${projectKey}/suites`);
+		navigate(`/${projectKey}/suites`);
 	};
 
 	const onCaseDelete = (idx: number) => {
@@ -68,7 +95,24 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 	return (
 		<div>
 			<Navbar.Horizontal
-				breadcrumb
+				breadcrumb={
+					<>
+						{breadcrumbs.map(({ match, breadcrumb }, idx: number) => (
+							<span key={match.pathname} className="text-xs mb-0.5">
+								{idx < breadcrumbs.length - 1 ? (
+									<>
+										<NavLink to={match.pathname} className="hover:text-black">
+											{breadcrumb}
+										</NavLink>
+										&nbsp;/&nbsp;
+									</>
+								) : (
+									breadcrumb
+								)}
+							</span>
+						))}
+					</>
+				}
 				extra={
 					<div className="flex items-center gap-2">
 						<SaveOrUpdateBtn
@@ -92,7 +136,7 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 												label: <span className="ml-0.5">Archive</span>,
 												key: "archive",
 												icon: <PencilIcon className="w-4 h-4" />,
-												// onClick: () => onEdit(slug),
+												onClick: onArchiveSuite,
 											},
 											{
 												label: <span className="ml-0.5">Delete</span>,

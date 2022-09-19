@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "antd/dist/antd.css";
 import "assets/css/styles.scss";
 import { Layout } from "components";
@@ -11,31 +12,15 @@ import Navigation from "pages/navigation";
 import Playground from "pages/playground";
 import Profile from "pages/profile";
 import Project from "pages/project";
-import Members from "pages/project/Members";
-import Releases from "pages/project/releases";
-import NewRelease from "pages/project/releases/New";
-import ReleaseRun from "pages/project/releases/ReleaseRun";
-import ReleaseSingle from "pages/project/releases/ReleaseSingle";
-import { default as ProjectSettings } from "pages/project/Settings";
-import Suites from "pages/project/suites";
-import SuiteArchived from "pages/project/suites/archived";
-import SuiteDetails from "pages/project/suites/details";
-import SuiteNew from "pages/project/suites/new";
-import Signup from "pages/signup";
 import Settings from "pages/settings";
+import Signup from "pages/signup";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {
-	BrowserRouter as Router,
-	Navigate,
-	Route,
-	Routes,
-} from "react-router-dom";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import store from "store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Provider } from "react-redux";
-import store from "store";
 
 const queryClient = new QueryClient({
 	defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -58,30 +43,9 @@ root.render(
 									<Route path="chat" element={<Chat />} />
 									<Route path="billing" element={<Billing />} />
 									<Route path="profile" element={<Profile />} />
-									<Route path="p/:projectKey" element={<Project />}>
-										<Route
-											path="/p/:projectKey"
-											element={<Navigate replace to="suites" />}
-										/>
-										<Route path="releases">
-											<Route index element={<Releases />} />
-											<Route path="new" element={<NewRelease />} />
-											<Route path=":releaseId">
-												<Route index element={<ReleaseSingle />} />
-												<Route path="run" element={<ReleaseRun />} />
-											</Route>
-										</Route>
-										<Route path="suites">
-											<Route index element={<Suites />} />
-											<Route path=":suiteId" element={<SuiteDetails />} />
-											<Route path="new" element={<SuiteNew />} />
-											<Route path="archived" element={<SuiteArchived />} />
-										</Route>
-										<Route path="members" element={<Members />} />
-										<Route path="settings" element={<ProjectSettings />} />
-									</Route>
 									<Route path="settings/*" element={<Settings />} />
 									<Route path="playground" element={<Playground />} />
+									<Route path=":projectKey/*" element={<Project />} />
 								</Route>
 							</Route>
 							<Route>

@@ -4,5 +4,6 @@ import { Types } from 'mongoose';
 export class CreateSuiteDto {
   name: string;
   cases: Case[];
+  isArchive: boolean;
   project: Types.ObjectId;
 }

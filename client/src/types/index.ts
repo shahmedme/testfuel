@@ -20,6 +20,7 @@ export interface ISuite {
 	_id?: string;
 	name: string;
 	cases: ICase[];
+	isArchive: boolean;
 	project?: string;
 	createdAt?: string;
 }

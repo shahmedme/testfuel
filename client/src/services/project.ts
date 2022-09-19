@@ -33,11 +33,11 @@ export const fetchSuite = async (id: string) => {
 	return await coreAxios.get<ISuite>(`/suite/${id}`);
 };
 
-export const createSuite = async (payload: ISuite) => {
+export const createSuite = async (payload: Partial<ISuite>) => {
 	return await coreAxios.post<ISuite>("/suite", payload);
 };
 
-export const updateSuite = async ({ _id, ...payload }: ISuite) => {
+export const updateSuite = async ({ _id, ...payload }: Partial<ISuite>) => {
 	return await coreAxios.put<ISuite>(`/suite/${_id}`, payload);
 };
 

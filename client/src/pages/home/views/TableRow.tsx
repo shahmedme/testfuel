@@ -16,7 +16,7 @@ const TableRow = ({ name, slug, onEdit, onDelete }: TableRowProps) => {
 	return (
 		<tr>
 			<td className="align-middle py-2.5 text-left">
-				<Link to={`/p/${slug}`} className="text-lg font-semibold">
+				<Link to={`/${slug}`} className="text-lg font-semibold">
 					{name}
 				</Link>
 				<Beta>

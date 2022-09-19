@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Case } from 'case/schemas/case.schema';
-import mongoose, { Types } from 'mongoose';
+import mongoose, { PromiseProvider, Types } from 'mongoose';
 
 export type SuiteDocument = Suite & Document;
 
@@ -21,6 +21,11 @@ export class Suite {
     required: true,
   })
   project: Types.ObjectId;
+
+  @Prop({
+    default: false,
+  })
+  isArchive: boolean;
 
   @Prop({ default: Date.now() })
   createdAt: string;
