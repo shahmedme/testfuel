@@ -162,14 +162,12 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 				className="text-2xl font-medium focus:outline-none mt-1 w-full"
 				onChange={(e) => setName(e.target.value)}
 			/>
-			{
-				<Suite
-					cases={cases}
-					onCreate={createCase}
-					onUpdate={onCaseUpdate}
-					onDelete={onCaseDelete}
-				/>
-			}
+			<Suite
+				cases={cases}
+				onCreate={createCase}
+				onUpdate={onCaseUpdate}
+				onDelete={onCaseDelete}
+			/>
 		</div>
 	);
 }

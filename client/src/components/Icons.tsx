@@ -19,6 +19,7 @@ import { ReactComponent as Check } from "assets/icons/check.svg";
 import { ReactComponent as Cross } from "assets/icons/cross.svg";
 import { ReactComponent as Warning } from "assets/icons/warning.svg";
 import { ReactComponent as Pen } from "assets/icons/pen.svg";
+import { ReactComponent as Close } from "assets/icons/close.svg";
 
 const Icons = {
 	Code,
@@ -42,6 +43,7 @@ const Icons = {
 	Cross,
 	Warning,
 	Pen,
+	Close,
 };
 
 export default Icons;

@@ -1,14 +1,17 @@
-import { BellIcon } from "@heroicons/react/outline";
+import { BellIcon, UserCircleIcon } from "@heroicons/react/outline";
 import { Popover } from "antd";
 import { Icons } from "components";
 import Beta from "components/Beta";
 import { ListGroup } from "flowbite-react";
 import { useAuth } from "hooks";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { RootState } from "store";
 
 export default function Vertical() {
 	const [popoverVisible, setPopoverVisible] = useState(false);
+	const { user } = useSelector((state: RootState) => state.auth);
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 
@@ -97,11 +100,15 @@ export default function Vertical() {
 					}
 					overlayClassName="v-menu_extra"
 				>
-					<img
-						src="https://i.pinimg.com/280x280_RS/89/25/21/892521367eb8ad12465499931156e384.jpg"
-						alt="user"
-						className="rounded-full w-8 h-8 cursor-pointer"
-					/>
+					{user?.isBeta ? (
+						<img
+							src="https://cdn.pixabay.com/photo/2016/02/25/18/26/man-1222621_960_720.jpg"
+							alt="user"
+							className="rounded-full w-8 h-8 cursor-pointer"
+						/>
+					) : (
+						<UserCircleIcon className="w-7 h-7 cursor-pointer" />
+					)}
 				</Popover>
 			</div>
 		</div>

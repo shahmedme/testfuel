@@ -1,5 +1,7 @@
+import { XIcon } from "@heroicons/react/outline";
 import { useMutation } from "@tanstack/react-query";
 import { Col, Drawer, Form, Row } from "antd";
+import { Icons } from "components";
 import { Button, Label, Spinner, Textarea, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -63,6 +65,8 @@ export default function ProjectCreateDrawer({
 			onClose={onClose}
 			visible={visible}
 			className="drawer_project-create"
+			closeIcon={<XIcon className="w-5 h-5" />}
+			// closeIcon={<Icons.Close />}
 			footer={
 				<div className="flex items-center justify-end">
 					<Button

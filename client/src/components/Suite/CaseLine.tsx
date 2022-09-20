@@ -9,6 +9,10 @@ type Props = {
 };
 
 export default function CaseLine({ title, onUpdate, onDelete }: Props) {
+	const handleUpdate = (e: any) => {
+		onUpdate(e.target.value);
+	};
+
 	return (
 		<div className="group border-b py-1 flex items-center justify-between">
 			<div className="flex items-center">
@@ -16,8 +20,8 @@ export default function CaseLine({ title, onUpdate, onDelete }: Props) {
 				<Input
 					defaultValue={title}
 					className="p-0 text-[15px] border-none outline-none focus:ring-0"
-					onPressEnter={onUpdate}
-					onBlur={(e) => onUpdate(e.target.value)}
+					onPressEnter={handleUpdate}
+					onBlur={handleUpdate}
 				/>
 			</div>
 			<div className="invisible group-hover:visible">

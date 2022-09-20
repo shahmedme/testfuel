@@ -81,7 +81,7 @@ export default function SuiteArchived() {
 				<Empty
 					description="No archived suite found"
 					image={Empty.PRESENTED_IMAGE_SIMPLE}
-					className="w-2/3 mt-20"
+					className="w-full mt-28"
 				/>
 			)}
 		</div>

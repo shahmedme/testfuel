@@ -3,7 +3,7 @@ import React from "react";
 
 type HorizontalProps = {
 	title?: React.ReactElement | string;
-	extra?: React.ReactElement;
+	extra?: React.ReactElement | null;
 	breadcrumb?: any;
 };
 
