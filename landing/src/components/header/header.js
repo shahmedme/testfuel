@@ -32,13 +32,15 @@ export default function Header({ className }) {
 						))}
 					</Flex>
 
-					<Link
-						path="/"
-						ml={2}
-						label="Try for free"
-						sx={styles.headerBtn}
-						variant="buttons.primary"
-					/>
+					<a href="https://app.testfuel.io/" target="_blank">
+						<Link
+							path="https://app.testfuel.io"
+							ml={2}
+							label="Try for free"
+							sx={styles.headerBtn}
+							variant="buttons.primary"
+						/>
+					</a>
 
 					<MobileDrawer />
 				</Container>
