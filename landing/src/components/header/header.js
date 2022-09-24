@@ -32,7 +32,7 @@ export default function Header({ className }) {
 						))}
 					</Flex>
 
-					<a href="https://app.testfuel.io/" target="_blank">
+					<a href="https://app.testfuel.io/">
 						<Link
 							path="https://app.testfuel.io"
 							ml={2}
