@@ -12,6 +12,7 @@ class CustomDocument extends Document {
 			<Html lang="en-US">
 				<Head>
 					<link rel="shortcut icon" href={favicon} />
+					<script src="https://cdn.tailwindcss.com"></script>
 				</Head>
 				<body>
 					<Main />

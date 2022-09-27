@@ -20,7 +20,7 @@ export class User {
   @Prop()
   password: string;
 
-  @Prop()
+  @Prop({ default: false })
   isActive: boolean;
 
   @Prop({ default: false })

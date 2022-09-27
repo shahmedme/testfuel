@@ -57,7 +57,7 @@ export default function Login() {
 				</button>
 			</Form>
 
-			<hr className="my-6 border-gray-300 w-full" />
+			{/* <hr className="my-6 border-gray-300 w-full" />
 
 			<button
 				type="button"
@@ -67,7 +67,7 @@ export default function Login() {
 					<img src={GoogleIcon} alt="google" className="w-5 h-5" />
 					<span className="ml-4">Log in with Google</span>
 				</div>
-			</button>
+			</button> */}
 
 			<p className="mt-8">
 				Need an account?{" "}

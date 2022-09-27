@@ -1,15 +1,14 @@
-import React from "react";
-import { Box, Container, Image, Heading } from "theme-ui";
 import { keyframes } from "@emotion/core";
-import logoImage from "assets/banner-logo.png";
-import bannerImage from "assets/banner-mockup.png";
 import bannerIcon1 from "assets/banner-icon-1-1.svg";
 import bannerIcon2 from "assets/banner-icon-1-2.svg";
 import bannerIcon3 from "assets/banner-icon-1-3.svg";
 import bannerIcon4 from "assets/banner-icon-1-4.svg";
 import bannerIcon5 from "assets/banner-icon-1-5.svg";
 import bannerIcon6 from "assets/banner-icon-1-6.svg";
+import bannerImage from "assets/banner-mockup.png";
 import bannerIcon7 from "assets/dot-pattern.svg";
+import { Link } from "components/link";
+import { Box, Container, Image } from "theme-ui";
 
 const Banner = () => {
 	return (
@@ -58,10 +57,21 @@ const Banner = () => {
 					src={bannerIcon7}
 				/>
 
-				{/* <Image sx={styles.logo} src={logoImage} alt="logo image" /> */}
-				<div style={{ height: 100 }} />
-				<Heading as="h2">Your Quality Assurance Made Simple</Heading>
-				<Image src={bannerImage} sx={styles.bannerImage} alt="banner moc" />
+				<div className="mt-24 mb-32">
+					<h2>Your Quality Assurance Made Simple</h2>
+
+					<a href="https://app.testfuel.io/join" className="mt-7 inline-block">
+						<Link
+							path="https://app.testfuel.io"
+							ml={2}
+							label="Try for free"
+							sx={styles.headerBtn}
+							variant="buttons.primary"
+						/>
+					</a>
+				</div>
+
+				{/* <Image src={bannerImage} sx={styles.bannerImage} alt="banner moc" /> */}
 			</Container>
 		</Box>
 	);
@@ -143,7 +153,6 @@ const styles = {
 			maxWidth: ["100%", null, null, "55%", "500px", "640px", "851px"],
 			mx: "auto",
 			mt: "30px",
-			mb: ["40px", null, null, "65px"],
 		},
 	},
 	logo: {
@@ -197,5 +206,20 @@ const styles = {
 	bannerIcon7: {
 		bottom: "30%",
 		right: "0%",
+	},
+	headerBtn: {
+		backgroundColor: "black",
+		fontSize: "16px",
+		fontWeight: "bold",
+		letterSpacing: "-0.16px",
+		borderRadius: "5px",
+		color: "#ffffff",
+		padding: "5px 20px",
+		display: ["none", null, null, null, "inline-block"],
+		ml: ["0", null, null, "auto", "0"],
+		mr: ["0", null, null, "20px", "0"],
+		"&:hover": {
+			color: "#fff",
+		},
 	},
 };

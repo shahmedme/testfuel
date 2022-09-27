@@ -10,42 +10,64 @@ import logo from "assets/logo.png";
 
 export default function Header({ className }) {
 	return (
-		<DrawerProvider>
-			<header sx={styles.header} className={className}>
-				<Container sx={styles.container}>
-					<Logo image={logo} />
+		<>
+			<DrawerProvider>
+				<header sx={styles.header} className={className}>
+					<Container sx={styles.container}>
+						<Logo image={logo} />
 
-					<Flex as="nav" sx={styles.nav}>
-						{menuItems.map(({ path, label }, i) => (
-							<ScrollLink
-								activeClass="active"
-								sx={styles.nav.navLink}
-								to={path}
-								spy={true}
-								smooth={true}
-								offset={-70}
-								duration={500}
-								key={i}
-							>
-								{label}
-							</ScrollLink>
-						))}
-					</Flex>
+						<Flex as="nav" sx={styles.nav}>
+							{menuItems.map(({ path, label }, i) => (
+								<ScrollLink
+									activeClass="active"
+									sx={styles.nav.navLink}
+									to={path}
+									spy={true}
+									smooth={true}
+									offset={-70}
+									duration={500}
+									key={i}
+								>
+									{label}
+								</ScrollLink>
+							))}
+						</Flex>
 
-					<a href="https://app.testfuel.io/">
-						<Link
-							path="https://app.testfuel.io"
-							ml={2}
-							label="Try for free"
-							sx={styles.headerBtn}
-							variant="buttons.primary"
-						/>
-					</a>
+						<a
+							href="https://app.testfuel.io/"
+							style={styles.nav.navLink}
+							className="login"
+						>
+							Login
+						</a>
+						<a href="https://app.testfuel.io/join">
+							<Link
+								path="https://app.testfuel.io"
+								ml={2}
+								label="Try for free"
+								sx={styles.headerBtn}
+								variant="buttons.primary"
+							/>
+						</a>
 
-					<MobileDrawer />
-				</Container>
-			</header>
-		</DrawerProvider>
+						<MobileDrawer />
+					</Container>
+				</header>
+			</DrawerProvider>
+
+			<style jsx>{`
+				.login {
+					text-decoration: none;
+					margin-right: 12px;
+					padding: 11px 20px;
+					border-radius: 5px;
+				}
+
+				.login:hover {
+					background: rgba(15, 33, 55, 0.1);
+				}
+			`}</style>
+		</>
 	);
 }
 
@@ -57,7 +79,7 @@ const styles = {
 		letterSpacing: "-0.16px",
 		borderRadius: "5px",
 		color: "#ffffff",
-		padding: "6.5px 24px",
+		padding: "5px 20px",
 		display: ["none", null, null, null, "inline-block"],
 		ml: ["0", null, null, "auto", "0"],
 		mr: ["0", null, null, "20px", "0"],
