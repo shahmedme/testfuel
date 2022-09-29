@@ -5,16 +5,21 @@ import {
   Param,
   Post,
   Put,
+  Query,
+  Req,
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { MemberType } from 'core/models';
+import { MailService } from 'mail/mail.service';
 import { WorkspaceService } from 'workspace/workspace.service';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { UserService } from './services';
 import { AuthService } from './services/auth.service';
+import { EmailConfirmationService } from './services/emailConfirmation.service';
 
 @Controller('users')
 export class AccountController {
@@ -22,6 +27,9 @@ export class AccountController {
     private readonly userService: UserService,
     private readonly authService: AuthService,
     private readonly workspaceService: WorkspaceService,
+    private readonly mailService: MailService,
+    private readonly jwtService: JwtService,
+    private readonly emailConfirmationService: EmailConfirmationService,
   ) {}
 
   @UseGuards(JwtAuthGuard)
@@ -38,21 +46,30 @@ export class AccountController {
 
   @Post('signup')
   async create(@Body() createUserDto: CreateUserDto) {
-    const createdUser = await this.userService.create(createUserDto);
+    const user = await this.userService.create(createUserDto);
+    await this.workspaceService.createForUser(user);
+    this.emailConfirmationService.sendVerificationLink(user);
+    return user;
+  }
 
-    await this.workspaceService.create({
-      name: `${createdUser.firstName}'s Workspace`,
-      description: 'This is default workspace',
-      members: [
-        {
-          role: MemberType.ADMIN,
-          user: createdUser._id,
-        },
-      ],
-      projects: [],
-    });
+  @Get('send-mail')
+  async sendConfirmationEmail() {
+    const user = { name: 'Shakil Ahmed', email: 'shakilahmed6055@gmail.com' };
+    const token = this.jwtService.sign(
+      { email: user.email },
+      { expiresIn: 21600 },
+    );
 
-    return createdUser;
+    return this.mailService.sendUserConfirmation(user, token);
+  }
+
+  @Get('confirm')
+  async confirm(@Query('token') token: string) {
+    const email = await this.emailConfirmationService.decodeConfirmationToken(
+      token,
+    );
+
+    return await this.emailConfirmationService.confirmEmail(email);
   }
 
   @Get(':id')
@@ -63,5 +80,11 @@ export class AccountController {
   @Post('signin')
   async login(@Body() authLoginDto: AuthLoginDto) {
     return this.authService.login(authLoginDto);
+  }
+
+  @Post('resend-confirmation-link')
+  @UseGuards(JwtAuthGuard)
+  async resendConfirmationLink(@Req() request: any) {
+    await this.emailConfirmationService.resendConfirmationLink(request.user.id);
   }
 }

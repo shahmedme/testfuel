@@ -12,7 +12,8 @@ export default function Signup() {
 	const handleSignUp = async (values: SignUpPayload) => {
 		try {
 			await signup(values);
-			navigate("/login");
+			message.info(`We've sent a verification link to ${values.email}`, 10);
+			setTimeout(() => navigate("/login"), 2000);
 		} catch (err) {
 			message.error("Something went wrong");
 			return;

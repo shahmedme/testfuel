@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AccountModule } from 'account/account.module';
 import { CaseModule } from 'case/case.module';
+import { MailModule } from 'mail/mail.module';
 import { ProjectModule } from 'project/project.module';
 import { ReleaseModule } from 'release/release.module';
 import { SuiteModule } from 'suite/suite.module';
@@ -12,7 +13,9 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     MongooseModule.forRoot(process.env.DB_STRING),
     AccountModule,
     ProjectModule,
@@ -20,6 +23,7 @@ import { AppService } from './app.service';
     ReleaseModule,
     SuiteModule,
     CaseModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

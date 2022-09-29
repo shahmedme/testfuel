@@ -11,6 +11,8 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   password: string;
+
+  isActive: boolean;
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}

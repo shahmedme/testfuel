@@ -8,14 +8,15 @@ import { WorkspaceService } from 'workspace/workspace.service';
 import { AccountController } from './account.controller';
 import { UserSchemaHook } from './schemas/user.schema';
 import { AuthService, JwtStrategy, UserService } from './services';
+import { EmailConfirmationService } from './services/emailConfirmation.service';
 
 @Module({
   imports: [
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async () => ({
-        secret: process.env.SECRET_KEY,
+      useFactory: async (config: ConfigService) => ({
+        secret: config.get('SECRET_KEY'),
       }),
       inject: [ConfigService],
     }),
@@ -25,6 +26,12 @@ import { AuthService, JwtStrategy, UserService } from './services';
     MongooseModule.forFeatureAsync([UserSchemaHook]),
   ],
   controllers: [AccountController],
-  providers: [UserService, JwtStrategy, AuthService, WorkspaceService],
+  providers: [
+    UserService,
+    JwtStrategy,
+    AuthService,
+    WorkspaceService,
+    EmailConfirmationService,
+  ],
 })
 export class AccountModule {}

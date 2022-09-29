@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'account/schemas/user.schema';
+import { MemberType } from 'core/models';
 import { Model, Types } from 'mongoose';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
@@ -44,6 +45,19 @@ export class WorkspaceService {
     });
 
     return workspace;
+  }
+
+  async createForUser(user: User & { _id: any }) {
+    const name = `${user.firstName}'s Workspace`;
+    const description = 'This is default workspace';
+    const members = [
+      {
+        role: MemberType.ADMIN,
+        user: user._id,
+      },
+    ];
+
+    return this.create({ name, description, members, projects: [] });
   }
 
   // async createProject(workspaceId: string, project: Project) {

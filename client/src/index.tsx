@@ -6,6 +6,7 @@ import PrivateRoute from "components/PrivateRoute";
 import NotFound from "pages/404";
 import Billing from "pages/billing";
 import Chat from "pages/chat";
+import EmailVerification from "pages/EmailVerification";
 import Home from "pages/home";
 import Login from "pages/login";
 import Navigation from "pages/navigation";
@@ -51,6 +52,7 @@ root.render(
 							<Route>
 								<Route path="login" element={<Login />} />
 								<Route path="join" element={<Signup />} />
+								<Route path="auth/confirm" element={<EmailVerification />} />
 							</Route>
 							<Route path="*" element={<NotFound />} />
 						</Routes>

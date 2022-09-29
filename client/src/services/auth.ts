@@ -27,3 +27,7 @@ export const fetchAccount = async () => {
 export const toggleBetaMode = async (payload: any) => {
 	return await coreAxios.put("/users", { isBeta: payload });
 };
+
+export const verifyEmail = async (token: string) => {
+	return coreAxios.get(`/users/confirm?token=${token}`);
+};
