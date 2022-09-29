@@ -23,9 +23,9 @@ export default function IndexPage() {
 					<SEO title="Testfuel - Your QA made simple" />
 					<Banner />
 					<Services />
-					<Jackpot />
-					<CallToAction />
-					<Featured />
+					{/* <Jackpot /> */}
+					{/* <CallToAction /> */}
+					{/* <Featured /> */}
 					<Pricing />
 					<Testimonials />
 					<Blogs />

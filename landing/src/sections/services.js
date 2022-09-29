@@ -12,37 +12,37 @@ import serviceImage6 from "assets/service-6.png";
 const SERVICES_DATA = [
 	{
 		image: serviceImage1,
-		text: "Get your info tests delivered at home collect a sample from the your progress tests.",
+		text: "Create test cases, organize them by group, make them more accessible to your team.",
 		heading: "Test case management",
 		path: "#",
 	},
 	{
 		image: serviceImage2,
-		text: "Get your info tests delivered at home collect a sample from the your progress tests.",
+		text: "Test each of your releases or branch and view their real-time status.",
 		heading: "Release tests",
 		path: "#",
 	},
 	{
 		image: serviceImage3,
-		text: "Get your info tests delivered at home collect a sample from the your progress tests.",
+		text: "Track your issues on built in issue tracking board or 3rd party integration.",
 		heading: "Defects tracking",
 		path: "#",
 	},
 	{
 		image: serviceImage4,
-		text: "Get your info tests delivered at home collect a sample from the your progress tests.",
+		text: "Validate your releases against test cases with our real-time test run feature.",
 		heading: "Test run",
 		path: "#",
 	},
 	{
 		image: serviceImage5,
-		text: "Get your info tests delivered at home collect a sample from the your progress tests.",
+		text: "Get test result and analytics and share them with your team seamlessly.",
 		heading: "Report & analytics",
 		path: "#",
 	},
 	{
 		image: serviceImage6,
-		text: "Get your info tests delivered at home collect a sample from the your progress tests.",
+		text: "Team collaboration is now more easier with report, analytics and tracking.",
 		heading: "Collaborate with team",
 		path: "#",
 	},
@@ -52,8 +52,8 @@ const Services = () => {
 		<Box as="section" id="services" sx={styles.services}>
 			<Container>
 				<BlockTitle
-					title="What the features of product"
-					text="Features are highlighted here"
+					title="What we're offering"
+					text="Release high quality product with these features"
 				/>
 				<Grid sx={styles.grid}>
 					{SERVICES_DATA.map(({ image, text, heading, path }, index) => (

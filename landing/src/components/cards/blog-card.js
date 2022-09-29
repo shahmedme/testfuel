@@ -14,24 +14,28 @@ const BlogCard = ({ image, title, description, path, linkLabel }) => {
 		>
 			{image !== null && (
 				<Box sx={styles.image}>
-					<Image src={image} alt={title} />
+					<a href={path} target="_blank">
+						<Image src={image} alt={title} />
+					</a>
 				</Box>
 			)}
 
 			<Box sx={styles.content} className="blogContent">
 				<Heading as="h3">
-					<Link path={path}>{title}</Link>
+					<a href={path} target="_blank">
+						{title}
+					</a>
 				</Heading>
 				{description !== null && <Text as="p">{description}</Text>}
 				{linkLabel !== null && (
-					<Link sx={styles.linkLabel} path={path}>
+					<a href={path} target="_blank" style={styles.linkLabel}>
 						{linkLabel}{" "}
 						<img
 							src={arrowAngle}
 							alt="angle icon"
 							className="inline-block -mt-0.5"
 						/>
-					</Link>
+					</a>
 				)}
 			</Box>
 		</Box>

@@ -12,14 +12,14 @@ const ServiceCard = ({ image, text, heading, path }) => {
 			<Box sx={styles.content}>
 				<Heading as="h3">{heading}</Heading>
 				<Text as="p">{text}</Text>
-				<Link sx={styles.link} path={path}>
+				{/* <Link sx={styles.link} path={path}>
 					Learn More{" "}
 					<img
 						src={arrowAngle}
 						alt="angle icon"
 						className="inline-block -mt-0.5"
 					/>
-				</Link>
+				</Link> */}
 			</Box>
 		</Box>
 	);
@@ -47,7 +47,7 @@ const styles = {
 		},
 		p: {
 			fontSize: "16px",
-			lineHeight: 1.87,
+			lineHeight: 1.8,
 			color: "#343D48",
 			mt: "12px",
 			mb: "12px",
