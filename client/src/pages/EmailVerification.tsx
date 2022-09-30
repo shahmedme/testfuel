@@ -14,14 +14,14 @@ export default function EmailVerification() {
 				try {
 					await verifyEmail(token);
 					message.success("Email verified successfully");
-					navigate("login");
 				} catch (err) {
 					console.log("🚀 ~ file: EmailVerification.tsx ~ line 19 ~ err", err);
 					// message.error("Something went wrong");
 				}
+				navigate("login");
 			}
 		})();
 	}, [token]);
 
-	return <div>EmailVerification</div>;
+	return <div />;
 }
