@@ -75,3 +75,7 @@ textarea {
 	background-color: #1c64f2;
 	color: white;
 }
+
+.crisp-client #crisp-chatbox {
+	z-index: 999 !important;
+}
