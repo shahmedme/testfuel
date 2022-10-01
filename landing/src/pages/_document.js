@@ -18,7 +18,6 @@ class CustomDocument extends Document {
 				<body>
 					<Main />
 					<NextScript />
-					<Crisp />
 				</body>
 			</Html>
 		);

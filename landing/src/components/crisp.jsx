@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export default function crisp() {
+export default function Crisp() {
 	useEffect(() => {
 		window.$crisp = [];
 		window.CRISP_WEBSITE_ID = process.env.NEXT_PUBLIC_CRISP_ID;
@@ -13,5 +13,5 @@ export default function crisp() {
 		})();
 	}, []);
 
-	return <div>crisp</div>;
+	return <div />;
 }
