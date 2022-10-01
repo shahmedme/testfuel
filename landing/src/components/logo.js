@@ -14,7 +14,7 @@ export default function Logo({ image }) {
 		>
 			<Image
 				src={image}
-				alt="Testfuel - Your QA made simple"
+				alt="Testfuel - Your software QA made simple"
 				style={{ height: 32 }}
 			/>
 		</Link>

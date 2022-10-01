@@ -126,7 +126,7 @@ const styles = {
 			lineHeight: "1.2",
 			mr: "48px",
 			transition: "500ms",
-			":last-child": {
+			":lastChild": {
 				mr: "0",
 			},
 			"&:hover, &.active": {

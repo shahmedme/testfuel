@@ -1,5 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import favicon from "assets/favicon.png";
+import Crisp from "components/crisp";
 
 class CustomDocument extends Document {
 	static async getInitialProps(ctx) {
@@ -17,6 +18,7 @@ class CustomDocument extends Document {
 				<body>
 					<Main />
 					<NextScript />
+					<Crisp />
 				</body>
 			</Html>
 		);

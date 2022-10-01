@@ -14,13 +14,18 @@ import Testimonials from "sections/testimonials";
 import Blogs from "sections/blogs";
 import FAQ from "sections/faq";
 import Subscribe from "sections/subscribe";
+import dynamic from "next/dynamic";
+
+const CrispWithNoSSR = dynamic(() => import("../components/crisp"), {
+	ssr: false,
+});
 
 export default function IndexPage() {
 	return (
 		<ThemeProvider theme={theme}>
 			<StickyProvider>
 				<Layout>
-					<SEO title="Testfuel - Your QA made simple" />
+					<SEO title="Testfuel - Your software QA made simple" />
 					<Banner />
 					<Services />
 					{/* <Jackpot /> */}
@@ -32,6 +37,8 @@ export default function IndexPage() {
 					<FAQ />
 					<Subscribe />
 				</Layout>
+
+				<CrispWithNoSSR />
 			</StickyProvider>
 		</ThemeProvider>
 	);

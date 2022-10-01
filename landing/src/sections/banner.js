@@ -58,7 +58,7 @@ const Banner = () => {
 				/>
 
 				<div className="mt-24 mb-32">
-					<h2>Your Quality Assurance Made Simple</h2>
+					<h2>Your Software QA Made Simple</h2>
 
 					<a href="https://app.testfuel.io/join" className="mt-7 inline-block">
 						<Link
