@@ -7,7 +7,7 @@ const ServiceCard = ({ image, text, heading, path }) => {
 	return (
 		<Box sx={styles.serviceCard}>
 			<Box sx={styles.image}>
-				<Image src={image} alt={heading} />
+				<Image src={image} alt={heading} className="service-logo" />
 			</Box>
 			<Box sx={styles.content}>
 				<Heading as="h3">{heading}</Heading>
@@ -35,6 +35,8 @@ const styles = {
 	},
 	image: {
 		flexShrink: 0,
+		// display: "flex",
+		// justifyContent: "center",
 	},
 	content: {
 		ml: ["0", null, null, "30px"],

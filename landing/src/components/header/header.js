@@ -36,7 +36,7 @@ export default function Header({ className }) {
 						<a
 							href="https://app.testfuel.io/"
 							style={styles.nav.navLink}
-							className="login"
+							className="hidden md:inline-block login"
 						>
 							Login
 						</a>

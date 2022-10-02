@@ -16,6 +16,7 @@ const Subscribe = () => {
 						id="subscribeEmail"
 						sx={styles.input}
 					/>
+
 					<Button type="submit" sx={styles.button}>
 						Subscribe
 					</Button>
@@ -57,7 +58,7 @@ const styles = {
 		maxWidth: ["555px"],
 		mx: ["auto"],
 		display: ["flex"],
-		// flexWrap: ["wrap"],
+		flexWrap: ["wrap"],
 		mt: ["30px", null, null, null, "60px"],
 	},
 	input: {
