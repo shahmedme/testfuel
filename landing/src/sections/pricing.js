@@ -57,14 +57,14 @@ const PRICE_MONTHLY_DATA = [
 		recommended: null,
 		title: "For Team",
 		icon: priceIcon1,
-		amount: "5.00/u/mo",
+		amount: "$5.00/u/mo",
 		options: TEAM_OPTIONS,
 	},
 	{
 		recommended: "Recommended",
 		title: "For Business",
 		icon: priceIcon2,
-		amount: "20.0/u/mo",
+		amount: "$20.0/u/mo",
 		options: BUSINESS_OPTIONS,
 	},
 ];
@@ -74,14 +74,14 @@ const PRICE_YEARLY_DATA = [
 		recommended: null,
 		title: "For Team",
 		icon: priceIcon1,
-		amount: "50.0/u/yr",
+		amount: "$50.0/u/yr",
 		options: TEAM_OPTIONS,
 	},
 	{
 		recommended: "Recommended",
 		title: "For Business",
 		icon: priceIcon2,
-		amount: "220.0/u/yr",
+		amount: "$220.0/u/yr",
 		options: BUSINESS_OPTIONS,
 	},
 ];
