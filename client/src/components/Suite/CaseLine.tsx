@@ -15,7 +15,7 @@ export default function CaseLine({ title, onUpdate, onDelete }: Props) {
 
 	return (
 		<div className="group border-b py-1 flex items-center justify-between">
-			<div className="flex items-center">
+			<div className="flex items-center w-full">
 				<Icons.ArrowUp className="w-3 h-3 mr-2 text-red-500" />{" "}
 				<Input
 					defaultValue={title}
