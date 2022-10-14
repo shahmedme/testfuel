@@ -60,7 +60,7 @@ const Blogs = () => {
 			<Container>
 				<BlockTitle
 					title="Popular blog post we updated"
-					text="Updete contents from our blog"
+					text="Update contents from our blog"
 				/>
 				<Box as={Masonry} options={masonryOptions} sx={styles.blogWrapper}>
 					{BLOG_DATA.map(
