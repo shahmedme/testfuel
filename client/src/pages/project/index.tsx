@@ -24,7 +24,7 @@ export default function Project() {
 
 	return (
 		<div className="flex">
-			<div className="bg-slate-100 h-screen w-60 py-6 px-4">
+			<div className="bg-slate-100 h-screen fixed w-60 py-6 px-4">
 				<h2 className="font-semibold text-lg pl-2.5">
 					{!isLoading ? (
 						data?.data.name
@@ -51,6 +51,8 @@ export default function Project() {
 					))}
 				</div>
 			</div>
+
+			<div style={{ width: 240, height: "100vh" }} />
 
 			<div className="flex-1 py-7 px-9">
 				<Routes>

@@ -5,19 +5,25 @@ type HorizontalProps = {
 	title?: React.ReactElement | string;
 	extra?: React.ReactElement | null;
 	breadcrumb?: any;
+	className?: string;
 };
 
 export default function Horizontal({
 	title,
 	extra,
 	breadcrumb,
+	className,
 }: HorizontalProps) {
 	return (
 		<div
-			className={classNames("flex justify-between mb-4", {
-				"items-end": breadcrumb,
-				"items-center": !breadcrumb,
-			})}
+			className={classNames(
+				"flex justify-between mb-4",
+				{
+					"items-end": breadcrumb,
+					"items-center": !breadcrumb,
+				},
+				className
+			)}
 		>
 			<div>
 				{breadcrumb}

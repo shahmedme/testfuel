@@ -122,6 +122,7 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 								onCreateSuite,
 								onUpdateSuite,
 								suiteUpdateHandler,
+								name,
 							}}
 						/>
 						{suite?._id ? (
@@ -178,9 +179,11 @@ const SaveOrUpdateBtn = ({
 	onCreateSuite,
 	onUpdateSuite,
 	suiteUpdateHandler,
+	name,
 }: any) => {
 	return !suite ? (
 		<Button
+			disabled={!name}
 			icon={suiteHandler.isLoading ? <Spinner size="sm" light={true} /> : null}
 			onClick={onCreateSuite}
 		>
@@ -188,6 +191,7 @@ const SaveOrUpdateBtn = ({
 		</Button>
 	) : (
 		<Button
+			disabled={!name}
 			icon={
 				suiteUpdateHandler.isLoading ? <Spinner size="sm" light={true} /> : null
 			}

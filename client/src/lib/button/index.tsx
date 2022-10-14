@@ -18,7 +18,8 @@ export default function Button({
 	...props
 }: ButtonProps | any) {
 	const className = classNames(
-		"bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg hover:text-white flex items-center",
+		"bg-blue-400 text-white font-medium px-4 py-2 rounded-lg hover:text-white flex items-center",
+		{ "!bg-blue-600 hover:bg-blue-700": !props.disabled },
 		cn
 	);
 

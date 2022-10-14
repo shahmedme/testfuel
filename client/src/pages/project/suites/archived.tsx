@@ -20,7 +20,7 @@ export default function SuiteArchived() {
 		[location]
 	);
 
-	const onArchiveSuite = async (_id: string) => {
+	const onUnarchiveSuite = async (_id: string) => {
 		await updateSuite({ _id, isArchive: false });
 		navigate(`/${projectKey}/suites`);
 	};
@@ -56,10 +56,10 @@ export default function SuiteArchived() {
 											style={{ width: 150 }}
 											items={[
 												{
-													label: <span className="ml-0.5">Archive</span>,
-													key: "archive",
+													label: <span className="ml-0.5">Unarchive</span>,
+													key: "unarchive",
 													icon: <PencilIcon className="w-4 h-4" />,
-													onClick: () => onArchiveSuite(suite._id as string),
+													onClick: () => onUnarchiveSuite(suite._id as string),
 												},
 												{
 													label: <span className="ml-0.5">Delete</span>,

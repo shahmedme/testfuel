@@ -23,15 +23,18 @@ export default function Suites({ project }: any) {
 				title="Suites"
 				extra={
 					!isLoading ? (
-						activeSuites?.length ? (
-							<Button href="archived" state={{ suites: data?.data }}>
-								View archived
-							</Button>
-						) : (
-							<Button href="new" state={{ project }}>
-								Create suite
-							</Button>
-						)
+						<div className="flex items-center gap-2">
+							{data?.data.length ? (
+								<Button href="archived" state={{ suites: data?.data }}>
+									View archived
+								</Button>
+							) : null}
+							{!activeSuites?.length ? (
+								<Button href="new" state={{ project }}>
+									Create suite
+								</Button>
+							) : null}
+						</div>
 					) : null
 				}
 			/>
