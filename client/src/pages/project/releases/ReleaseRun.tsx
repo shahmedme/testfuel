@@ -42,19 +42,19 @@ export default function ReleaseRun() {
 					<div className="grid grid-cols-3 gap-1 mb-7">
 						<Button
 							icon={<Icons.Check className="w-4 h-4 -mt-0.5" />}
-							className="col-span-1 text-sm bg-green-400 hover:bg-green-500"
+							className="col-span-1 text-sm !bg-green-400 hover:!bg-green-500"
 						>
 							Passed
 						</Button>
 						<Button
 							icon={<Icons.Cross className="w-4 h-4 -mt-0.5" />}
-							className="col-span-1 text-sm bg-red-400 hover:bg-red-500"
+							className="col-span-1 text-sm !bg-red-400 hover:!bg-red-500"
 						>
 							Failed
 						</Button>
 						<Button
 							icon={<Icons.Warning className="w-4 h-4 -mt-0.5" />}
-							className="col-span-1 text-sm bg-yellow-400 hover:bg-yellow-500"
+							className="col-span-1 text-sm !bg-yellow-400 hover:!bg-yellow-500"
 						>
 							Blocked
 						</Button>

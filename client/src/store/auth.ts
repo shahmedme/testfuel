@@ -12,7 +12,7 @@ export interface AuthState {
 const initialState: AuthState = {
 	user: undefined,
 	authRequired: false,
-	workspaces: undefined,
+	workspaces: [],
 };
 
 const authSlice = createSlice({
@@ -26,7 +26,7 @@ const authSlice = createSlice({
 			state.authRequired = action.payload;
 		},
 		setWorkspaces: (state, action) => {
-			state.workspaces = { ...state.workspaces, ...action.payload };
+			state.workspaces = action.payload;
 			storage.set("workspaces", state.workspaces);
 		},
 		setBetaMode: (state, action) => {

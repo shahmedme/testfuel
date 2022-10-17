@@ -15,7 +15,6 @@ export default function Security() {
 			<Option
 				title="Tags"
 				subtitle="These are notifications for when someone tags you in a comment, post or story"
-				onChange={() => {}}
 			/>
 			{/* <Divider /> */}
 			<div className="h-8" />
@@ -23,7 +22,6 @@ export default function Security() {
 				title="Comments"
 				subtitle="These are notificaions for comments on your posts and replies to your
 		comments"
-				onChange={() => {}}
 			/>
 		</div>
 	);

@@ -47,11 +47,14 @@ textarea {
 
 				button {
 					box-shadow: none !important;
+					padding-left: 12px;
+					padding-right: 12px;
 				}
 			}
 		}
 	}
 }
+
 .v-menu_notification {
 	.ant-popover-content {
 		transform: translateX(6px);

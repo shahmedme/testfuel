@@ -1,5 +1,5 @@
 import { Divider } from "antd";
-import Beta from "components/Beta";
+import { Switch } from "lib";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleBetaMode } from "services/auth";
 import { RootState } from "store";
@@ -27,11 +27,10 @@ export default function Developer() {
 			<Option
 				title="Beta mode"
 				subtitle="Turn on beta mode to access more features that to be release soon"
-				value={user?.isBeta}
-				onChange={toggleBeta}
+				elem={<Switch value={user?.isBeta} onChange={toggleBeta} />}
 			/>
 
-			<div className="h-8" />
+			{/* <div className="h-8" />
 			<Beta>
 				<Option
 					title="Comments"
@@ -39,7 +38,7 @@ export default function Developer() {
 					comments"
 					onChange={() => {}}
 				/>
-			</Beta>
+			</Beta> */}
 		</>
 	);
 }

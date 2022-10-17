@@ -7,10 +7,13 @@ type Props = {
 
 export default function Sidebar({ children, title }: Props) {
 	return (
-		<aside className="w-64 h-screen px-3 py-4 overflow-y-auto rounded bg-gray-50">
-			<div className="font-semibold text-lg mb-4 ml-1.5">{title}</div>
-			<div className="space-y-1.5">{children}</div>
-		</aside>
+		<div>
+			<div className="w-60 h-screen fixed px-3 py-4 overflow-y-auto rounded bg-gray-50">
+				<div className="font-semibold text-lg mb-4 ml-1.5">{title}</div>
+				<div className="space-y-1.5">{children}</div>
+			</div>
+			<div className="w-60" />
+		</div>
 	);
 }
 

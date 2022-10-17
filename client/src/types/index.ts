@@ -33,6 +33,7 @@ export interface IWorkspace {
 	_id: string;
 	name: string;
 	description: string;
+	logo: string;
 	isActive: boolean;
 	members: {
 		role: string;

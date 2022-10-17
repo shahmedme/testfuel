@@ -1,15 +1,12 @@
 import { Divider } from "antd";
 import Option from "./_views/Option";
 
-export default function Integration() {
+export default function Members() {
 	return (
 		<div>
 			<div>
-				<h3 className="font-medium text-lg">Integration</h3>
-				<p className="text-sm">
-					We may still send you important notificaions about your account
-					outside your notification settings
-				</p>
+				<h3 className="font-medium text-lg">Members</h3>
+				<p className="text-sm">Manage members of this workspace here</p>
 			</div>
 			<Divider />
 			<Option
