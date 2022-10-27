@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import _ from "lodash";
 import { storage } from "services";
 import { fetchAccount } from "services/auth";
 import { IUser, IWorkspace } from "types";
+import { getActiveWorkspace } from "utils/workspace";
 
 export interface AuthState {
 	user?: IUser;
@@ -26,7 +28,10 @@ const authSlice = createSlice({
 			state.authRequired = action.payload;
 		},
 		setWorkspaces: (state, action) => {
-			state.workspaces = action.payload;
+			const activeWorkspace = getActiveWorkspace();
+			state.workspaces = _.cloneDeep(action.payload).sort((a: any) =>
+				a._id === activeWorkspace?._id ? -1 : 1
+			);
 			storage.set("workspaces", state.workspaces);
 		},
 		setBetaMode: (state, action) => {

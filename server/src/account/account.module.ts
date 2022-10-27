@@ -1,10 +1,9 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
-import { Workspace, WorkspaceSchema } from 'workspace/schemas/workspace.schema';
-import { WorkspaceService } from 'workspace/workspace.service';
+import { WorkspaceModule } from 'workspace/workspace.module';
 import { AccountController } from './account.controller';
 import { UserSchemaHook } from './schemas/user.schema';
 import { AuthService, JwtStrategy, UserService } from './services';
@@ -20,18 +19,11 @@ import { EmailConfirmationService } from './services/emailConfirmation.service';
       }),
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([
-      { name: Workspace.name, schema: WorkspaceSchema },
-    ]),
     MongooseModule.forFeatureAsync([UserSchemaHook]),
+    forwardRef(() => WorkspaceModule),
   ],
+  exports: [UserService],
   controllers: [AccountController],
-  providers: [
-    UserService,
-    JwtStrategy,
-    AuthService,
-    WorkspaceService,
-    EmailConfirmationService,
-  ],
+  providers: [UserService, JwtStrategy, AuthService, EmailConfirmationService],
 })
 export class AccountModule {}

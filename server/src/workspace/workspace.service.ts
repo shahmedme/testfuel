@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'account/schemas/user.schema';
+import { UserService } from 'account/services';
 import { MemberType } from 'core/models';
 import { Model, Types } from 'mongoose';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
+import { CreateInviteDto } from './dto/invite.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import { Workspace, WorkspaceDocument } from './schemas/workspace.schema';
 
@@ -12,6 +14,8 @@ export class WorkspaceService {
   constructor(
     @InjectModel(Workspace.name)
     private workspaceModel: Model<WorkspaceDocument>,
+    @Inject(forwardRef(() => UserService))
+    private userService: UserService,
   ) {}
 
   async create(createWorkspaceDto: CreateWorkspaceDto): Promise<Workspace> {
@@ -19,12 +23,15 @@ export class WorkspaceService {
     return createdWorkspace.save();
   }
 
-  async findAll(): Promise<Workspace[]> {
+  async findAll(_id?: string): Promise<Workspace[]> {
+    if (_id) {
+      return this.workspaceModel.find({ _id }).exec();
+    }
     return this.workspaceModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} workspace`;
+  findOne(_id: string) {
+    return this.workspaceModel.findOne({ _id }).populate('members.user');
   }
 
   async update(id: string, updateWorkspaceDto: UpdateWorkspaceDto) {
@@ -69,4 +76,23 @@ export class WorkspaceService {
 
   //   return updated;
   // }
+
+  async invite(workspaceId: string, invitee: CreateInviteDto) {
+    const users = await this.userService.getUsersByEmails(
+      invitee.invitee.map((member) => member.email),
+    );
+
+    await this.workspaceModel.updateOne(
+      { _id: workspaceId },
+      {
+        $push: {
+          members: {
+            $each: users.map((user) => ({ role: 'ADMIN', user: user._id })),
+          },
+        },
+      },
+    );
+
+    return 'hello world';
+  }
 }

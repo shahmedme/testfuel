@@ -7,11 +7,8 @@ import { ProjectService } from './project.service';
 import { ProjectM } from './schemas/project.schema';
 
 @Module({
+  imports: [MongooseModule.forFeature([ProjectM])],
   controllers: [ProjectController],
-  providers: [ProjectService, WorkspaceService],
-  imports: [
-    MongooseModule.forFeature([ProjectM]),
-    MongooseModule.forFeature([WorkspaceM]),
-  ],
+  providers: [ProjectService],
 })
 export class ProjectModule {}

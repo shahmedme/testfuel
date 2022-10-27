@@ -6,7 +6,6 @@ import {
 	PuzzleIcon,
 	ShieldCheckIcon,
 	UserCircleIcon,
-	UserGroupIcon,
 } from "@heroicons/react/outline";
 import withBeta from "components/hoc/withBeta";
 import Sidebar, { MenuItem } from "components/Navbar/Sidebar";
@@ -29,7 +28,8 @@ export default function Settings() {
 						<MenuItem key={item.to} {...item}>
 							{label}
 						</MenuItem>,
-						isBeta
+						isBeta,
+						{ key: item.to }
 					)
 				)}
 			</Sidebar>

@@ -1,15 +1,16 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { WorkspaceService } from './workspace.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
+import { CreateInviteDto } from './dto/invite.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
+import { WorkspaceService } from './workspace.service';
 
 @Controller('workspace')
 export class WorkspaceController {
@@ -27,7 +28,7 @@ export class WorkspaceController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.workspaceService.findOne(+id);
+    return this.workspaceService.findOne(id);
   }
 
   @Patch(':id')
@@ -41,5 +42,10 @@ export class WorkspaceController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.workspaceService.remove(+id);
+  }
+
+  @Post('invite/:id')
+  invite(@Param('id') id: string, @Body() createInviteDto: CreateInviteDto) {
+    return this.workspaceService.invite(id, createInviteDto);
   }
 }

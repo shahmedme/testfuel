@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateUserDto, UpdateUserDto } from 'account/dto';
 import { User, UserDocument } from 'account/schemas/user.schema';
@@ -9,6 +9,7 @@ import { WorkspaceService } from 'workspace/workspace.service';
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @Inject(forwardRef(() => WorkspaceService))
     private workspaceService: WorkspaceService,
   ) {}
 
@@ -29,6 +30,11 @@ export class UserService {
     const workspace = await this.workspaceService.getWorkspaceByUser(_user._id);
     const user = await this.findById(_user._id);
     return { workspace, user };
+  }
+
+  async getUsersByEmails(emails: string[]) {
+    const users = await this.userModel.find({ email: { $in: emails } });
+    return users;
   }
 
   async update(_id: string, UpdateUserDto: UpdateUserDto) {

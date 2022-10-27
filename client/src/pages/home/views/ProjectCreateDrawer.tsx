@@ -1,13 +1,11 @@
 import { XIcon } from "@heroicons/react/outline";
 import { useMutation } from "@tanstack/react-query";
 import { Col, Drawer, Form, Row } from "antd";
-import { Icons } from "components";
 import { Button, Label, Spinner, Textarea, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { createProject, updateProject } from "services/project";
-import { RootState } from "store";
 import { IProject } from "types";
+import { getActiveWorkspace } from "utils/workspace";
 
 type Props = {
 	visible: boolean;
@@ -25,7 +23,6 @@ export default function ProjectCreateDrawer({
 	const [okLoading, setOkLoading] = useState(false);
 	const projectCreateHandler = useMutation(createProject);
 	const [form] = Form.useForm();
-	const { workspaces } = useSelector((state: RootState) => state.auth);
 
 	useEffect(() => {
 		if (updateData) {
@@ -46,7 +43,7 @@ export default function ProjectCreateDrawer({
 		} else {
 			await projectCreateHandler.mutateAsync({
 				...form.getFieldsValue(),
-				workspace: workspaces?.[0]._id,
+				workspace: getActiveWorkspace()?._id,
 			});
 		}
 

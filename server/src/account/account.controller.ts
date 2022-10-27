@@ -11,7 +11,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { MemberType } from 'core/models';
 import { MailService } from 'mail/mail.service';
 import { WorkspaceService } from 'workspace/workspace.service';
 import { CreateUserDto, UpdateUserDto } from './dto';

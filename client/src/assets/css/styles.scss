@@ -82,3 +82,10 @@ textarea {
 .crisp-client #crisp-chatbox {
 	z-index: 999 !important;
 }
+
+.custom-modal {
+	.ant-modal-content {
+		border-radius: 8px;
+		overflow: hidden;
+	}
+}

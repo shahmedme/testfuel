@@ -6,13 +6,14 @@ import { Button } from "lib";
 import { useState } from "react";
 import { storage } from "services";
 import { deleteProject, fetchProjects } from "services/project";
+import { getActiveWorkspace } from "utils/workspace";
 import ProjectCreateDrawer from "./views/ProjectCreateDrawer";
 import TableRow from "./views/TableRow";
 
 export default function Home() {
 	const { isLoading, data, refetch } = useQuery(["projects"], async () => {
 		const workspaces = storage.get("workspaces");
-		return await fetchProjects(workspaces[0]._id);
+		return await fetchProjects(getActiveWorkspace()?._id ?? workspaces[0]._id);
 	});
 	const [projectUpdateData, setProjectUpdateData] = useState<string | null>(
 		null

@@ -14,7 +14,10 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { storage } from "services";
 import { RootState } from "store";
+import { IWorkspace } from "types";
+import { getAvatarFromName } from "utils/misc";
 import { adjustExtraMenuPosition } from "./utils";
 
 export default function Vertical() {
@@ -179,61 +182,52 @@ const NOTIFICATIONS = [
 	},
 ];
 
-const _workspaces = [
-	{
-		_id: "6333b0ce3b53b179cfca4554",
-		name: "Shakil's Workspace",
-		description: "This is default workspace",
-		logo: "https://media-exp1.licdn.com/dms/image/C4E0BAQEo6dismeD3Vg/company-logo_200_200/0/1619461057931?e=2147483647&v=beta&t=JMCgQyj3Y9ZG9mWUKSWcccpwKr-BWxuqEOOnKnZdGb8",
-	},
-	{
-		_id: "6333b0ce3b53b179cfca45da54",
-		name: "PlanetScale",
-		logo: "https://www.finsmes.com/wp-content/uploads/2021/06/planetscale.jpg",
-	},
-	{
-		_id: "6333b0ce3b53b179cfca4dafddd554",
-		name: "Netflix",
-		logo: "https://cdn.hashnode.com/res/hashnode/image/upload/v1647410910018/spTELtuIz.jpeg",
-	},
-];
-
 const WorkspaceSwitcher = () => {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const { workspaces } = useSelector((state: RootState) => state.auth);
 
-	const toggleWorkspaceList = () => {
-		setIsExpanded(!isExpanded);
-		adjustExtraMenuPosition(!isExpanded, _workspaces?.length ?? 0);
-	};
+	const toggleWorkspaceList =
+		(activeWorkspace: IWorkspace, shouldExpand: boolean) => () => {
+			if (shouldExpand) {
+				setIsExpanded(!isExpanded);
+				adjustExtraMenuPosition(!isExpanded, workspaces?.length ?? 0);
+			} else {
+				storage.setAppConfig({ activeWorkspace });
+				window.location.href = "/";
+			}
+		};
 
 	return (
 		<div className="mb-0.5 workspace-switcher">
-			{_workspaces
-				.slice(0, isExpanded ? _workspaces.length : 1)
-				?.map((workspace) => (
-					<ListGroup.Item key={workspace._id} onClick={toggleWorkspaceList}>
-						<div className="flex items-center justify-between w-full group">
-							<div className="flex items-center gap-2">
-								<img
-									src={workspace.logo}
-									alt="Workspace logo"
-									className="w-6 h-6 rounded"
-								/>
-								<span className="font-semibold">
-									{_.truncate(workspace.name, { length: 18 })}
-								</span>
+			{workspaces
+				?.slice(0, isExpanded ? workspaces.length : 1)
+				.map((workspace) => (
+					<div key={workspace._id} className="group">
+						<ListGroup.Item
+							onClick={toggleWorkspaceList(workspace, !isExpanded)}
+						>
+							<div className="flex items-center justify-between w-full">
+								<div className="flex items-center gap-2">
+									<img
+										src={workspace.logo ?? getAvatarFromName(workspace.name)}
+										alt="Workspace logo"
+										className="w-6 h-6 rounded"
+									/>
+									<span className="font-semibold">
+										{_.truncate(workspace.name, { length: 18 })}
+									</span>
+								</div>
+								<div
+									className={classNames("group-hover:block", {
+										"hidden group-hover:hidden": isExpanded,
+									})}
+								>
+									<ChevronUpIcon className="w-2.5 h-2.w-2.5 transform translate-y-0.5" />
+									<ChevronDownIcon className="w-2.5 h-2.w-2.5 transform -translate-y-0.5" />
+								</div>
 							</div>
-							<div
-								className={classNames("group-hover:block", {
-									hidden: isExpanded,
-								})}
-							>
-								<ChevronUpIcon className="w-2.5 h-2.w-2.5 transform translate-y-0.5" />
-								<ChevronDownIcon className="w-2.5 h-2.w-2.5 transform -translate-y-0.5" />
-							</div>
-						</div>
-					</ListGroup.Item>
+						</ListGroup.Item>
+					</div>
 				))}
 		</div>
 	);
