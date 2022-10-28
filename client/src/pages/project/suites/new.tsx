@@ -158,6 +158,7 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 				}
 			/>
 			<input
+				autoFocus={window.location.href.includes("new")}
 				placeholder="Untitled"
 				value={name}
 				className="text-2xl font-medium focus:outline-none mt-1 w-full"

@@ -1,3 +1,4 @@
+import { BookmarkAltIcon, ViewBoardsIcon } from "@heroicons/react/outline";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "antd";
 import { Icons } from "components";
@@ -87,6 +88,18 @@ const _menuItems = [
 		beta: true,
 	},
 	{ key: "suites", label: "Suites", icon: <Icons.Briefcase />, beta: false },
+	{
+		key: "issues",
+		label: "Issues",
+		icon: <ViewBoardsIcon className="w-6 h-6" />,
+		beta: false,
+	},
+	{
+		key: "shortcuts",
+		label: "Shortcuts",
+		icon: <BookmarkAltIcon className="w-6 h-6" />,
+		beta: false,
+	},
 	{ key: "members", label: "Members", icon: <Icons.Users />, beta: true },
 	{ key: "settings", label: "Settings", icon: <Icons.Cog />, beta: true },
 ];

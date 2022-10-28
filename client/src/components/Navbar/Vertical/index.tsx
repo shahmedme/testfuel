@@ -199,6 +199,9 @@ const WorkspaceSwitcher = () => {
 
 	return (
 		<div className="mb-0.5 workspace-switcher">
+			{isExpanded && (
+				<small className="px-3 text-gray-600 font-normal">All workspaces</small>
+			)}
 			{workspaces
 				?.slice(0, isExpanded ? workspaces.length : 1)
 				.map((workspace) => (
@@ -229,6 +232,10 @@ const WorkspaceSwitcher = () => {
 						</ListGroup.Item>
 					</div>
 				))}
+
+			{/* {isExpanded && workspaces && workspaces?.length === 1 ? (
+				<div style={{ height: 4 }} />
+			) : null} */}
 		</div>
 	);
 };

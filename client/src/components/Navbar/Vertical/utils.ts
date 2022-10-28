@@ -3,7 +3,8 @@ export const adjustExtraMenuPosition = (
 	workspaceCount: number
 ) => {
 	const wrapperNode = document.querySelector(".v-menu_extra") as HTMLElement;
-	const height = 40 * (workspaceCount - 1);
+	const height =
+		40 * (workspaceCount - 1) + 20 + (workspaceCount === 1 ? 0 : 0);
 
 	if (wrapperNode) {
 		wrapperNode.style.top = isExpanded
