@@ -5,6 +5,7 @@ import "swiper/swiper-bundle.min.css";
 import "rc-drawer/assets/index.css";
 import "typeface-dm-sans";
 import "assets/css/styles.scss";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 export default function CustomApp({ Component, pageProps }) {
 	useEffect(() => {
@@ -13,5 +14,10 @@ export default function CustomApp({ Component, pageProps }) {
 		Router.events.on("routeChangeComplete", logPageView);
 	}, []);
 
-	return <Component {...pageProps} />;
+	return (
+		<>
+			<Component {...pageProps} />
+			<GoogleAnalytics trackPageViews />
+		</>
+	);
 }
