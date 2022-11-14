@@ -15,7 +15,7 @@ export default function EmailVerification() {
 					await verifyEmail(token);
 					message.success("Email verified successfully");
 				} catch (err) {
-					console.log("🚀 ~ file: EmailVerification.tsx ~ line 19 ~ err", err);
+					// console.log("🚀 ~ file: EmailVerification.tsx ~ line 19 ~ err", err);
 					// message.error("Something went wrong");
 				}
 				navigate("login");

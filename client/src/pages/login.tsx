@@ -1,5 +1,4 @@
 import { Form } from "antd";
-import GoogleIcon from "assets/images/google.png";
 import { Layout } from "components";
 import { useAuth } from "hooks";
 import { Link } from "react-router-dom";
