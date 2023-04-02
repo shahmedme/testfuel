@@ -12,18 +12,22 @@ type TableRowProps = {
 	onDelete: any;
 };
 
-const TableRow = ({ name, slug, onEdit, onDelete }: TableRowProps) => {
+const TableRow = ({
+	name,
+	slug,
+	onEdit,
+	onDelete,
+	...props
+}: TableRowProps | any) => {
 	return (
 		<tr>
 			<td className="align-middle py-2.5 text-left">
-				<Link to={`/${slug}`} className="text-lg font-semibold">
-					{name}
-				</Link>
-				<Beta>
+				<Link to={`/${slug}`}>
+					<span className="text-lg font-semibold">{name}</span>
 					<small className="block">
-						52 test cases | 21 suites | 29 active runs
+						{props.suitesCount} suites | {props.testCasesCount} test cases
 					</small>
-				</Beta>
+				</Link>
 			</td>
 			<Beta>
 				<td className="align-middle text-sm py-2.5 text-blue-600">
@@ -41,6 +45,7 @@ const TableRow = ({ name, slug, onEdit, onDelete }: TableRowProps) => {
 				<div className="inline-block cursor-pointer">
 					<ContextMenu
 						trigger={["click"]}
+						placement="bottomRight"
 						menu={
 							<Menu
 								style={{ width: 150 }}

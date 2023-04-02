@@ -1,10 +1,23 @@
-import { Avatar, Tooltip } from "antd";
-import { Icons, Navbar } from "components";
-import { Button } from "lib";
-import React from "react";
-import { Link } from "react-router-dom";
+import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
+import { useQuery } from "@tanstack/react-query";
+import { Avatar, Empty, Menu, Spin, Tooltip } from "antd";
+import { Navbar } from "components";
+import Beta from "components/Beta";
+import { Button, ContextMenu } from "lib";
+import { Link, useParams } from "react-router-dom";
+import releaseService from "services/release";
 
 export default function Releases() {
+	const { projectKey } = useParams();
+	const { data, isLoading, refetch } = useQuery(["releases", projectKey], () =>
+		releaseService.get(projectKey as string)
+	);
+
+	const handleDelete = async (id: string) => {
+		await releaseService.delete(id);
+		refetch();
+	};
+
 	return (
 		<div>
 			<Navbar.Horizontal
@@ -22,34 +35,54 @@ export default function Releases() {
 					<tr>
 						<th className="py-3 text-xs font-medium text-left">Project name</th>
 						<th className="py-3 text-xs font-medium text-left">Status</th>
-						<th className="py-3 text-xs font-medium text-left">Team members</th>
+						<Beta>
+							<th className="py-3 text-xs font-medium text-left">
+								Team members
+							</th>
+						</Beta>
 						<th className="py-3 text-xs font-medium text-left"></th>
 					</tr>
 				</thead>
 				<tbody>
-					{_projects.map((item) => (
-						<TableRow key={item.releaseId} {...item} href={item.releaseId} />
+					{data?.data.map((item) => (
+						<TableRow
+							key={item._id}
+							{...item}
+							onEdit={handleDelete}
+							onDelete={handleDelete}
+						/>
 					))}
 				</tbody>
 			</table>
+
+			{isLoading ? (
+				<Spin className="h-80 w-full flex items-center justify-center" />
+			) : data?.data.length === 0 ? (
+				<Empty
+					description="No releases"
+					image={Empty.PRESENTED_IMAGE_SIMPLE}
+					className="mt-20"
+				/>
+			) : null}
 		</div>
 	);
 }
 
 type TableRowProps = {
 	title: string;
-	subtitle: string;
-	href: string;
+	onEdit: any;
+	onDelete: any;
+	_id: string;
 };
 
-const TableRow = ({ title, subtitle, href }: TableRowProps) => {
+const TableRow = ({ title, onEdit, onDelete, ...props }: TableRowProps) => {
 	return (
 		<tr>
 			<td className="align-middle py-2.5 text-left">
-				<Link to={href} className="text-lg font-semibold">
-					{title}
+				<Link to={props._id}>
+					<span className="text-lg font-semibold">{title}</span>
+					<small className="block">TIME-1244 - Ticket title here</small>
 				</Link>
-				<small className="block">{subtitle}</small>
 			</td>
 			<td className="align-middle text-sm py-2.5">
 				<div className="flex items-center">
@@ -70,74 +103,45 @@ const TableRow = ({ title, subtitle, href }: TableRowProps) => {
 					</Tooltip>
 				</div>
 			</td>
-			<td className="align-middle text-sm py-2.5">
-				<Avatar.Group>
-					{_avatars.map((avatar, idx) => (
-						<Avatar key={idx} src={avatar} />
-					))}
-				</Avatar.Group>
-			</td>
+			<Beta>
+				<td className="align-middle text-sm py-2.5">
+					<Avatar.Group>
+						{_avatars.map((avatar, idx) => (
+							<Avatar key={idx} src={avatar} />
+						))}
+					</Avatar.Group>
+				</td>
+			</Beta>
 			<td className="align-middle text-base text-right py-2.5">
 				<div className="inline-block cursor-pointer">
-					<Icons.DotHorizontal />
+					<ContextMenu
+						trigger={["click"]}
+						placement="bottomRight"
+						menu={
+							<Menu
+								style={{ width: 150 }}
+								items={[
+									{
+										label: <span className="ml-0.5">Edit</span>,
+										key: "edit",
+										icon: <PencilIcon className="w-4 h-4" />,
+										onClick: () => onEdit(props._id),
+									},
+									{
+										label: <span className="ml-0.5">Delete</span>,
+										key: "delete",
+										icon: <TrashIcon className="w-4 h-4" />,
+										onClick: () => onDelete(props._id),
+									},
+								]}
+							/>
+						}
+					/>
 				</div>
 			</td>
 		</tr>
 	);
 };
-
-const _projects = [
-	{
-		title: "feat: added workspace",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "5682",
-	},
-	{
-		title: "feat: new event filter",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "73",
-	},
-	{
-		title: "ui: added app page",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "2342",
-	},
-	{
-		title: "feat: billing and pricing",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "231525",
-	},
-	{
-		title: "fix: chart ui update",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "5431",
-	},
-	{
-		title: "Analytics Client",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "678",
-	},
-	{
-		title: "Chrome Extension",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "77",
-	},
-	{
-		title: "Year End Review",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "1234",
-	},
-	{
-		title: "PHP Backend",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "php-backend",
-	},
-	{
-		title: "Java Backend",
-		subtitle: "TIME-1244 - Ticket title here",
-		releaseId: "76833",
-	},
-];
 
 const _avatars = [
 	"https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80",

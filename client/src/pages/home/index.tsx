@@ -3,6 +3,7 @@ import { Empty, Skeleton } from "antd";
 import { Navbar } from "components";
 import Beta from "components/Beta";
 import { Button } from "lib";
+import _ from "lodash";
 import { useState } from "react";
 import { storage } from "services";
 import { deleteProject, fetchProjects } from "services/project";
@@ -51,16 +52,18 @@ export default function Home() {
 				<tbody>
 					{!isLoading ? (
 						data?.data.length ? (
-							data?.data?.map((project: any) => (
-								<TableRow
-									key={project._id}
-									slug={project._id}
-									refetch={refetch}
-									onDelete={onDelete}
-									onEdit={setProjectUpdateData}
-									{...project}
-								/>
-							))
+							_.cloneDeep(data?.data)
+								.sort((a, b) => (a.name > b.name ? 1 : -1))
+								?.map((project: any) => (
+									<TableRow
+										key={project._id}
+										slug={project._id}
+										refetch={refetch}
+										onDelete={onDelete}
+										onEdit={setProjectUpdateData}
+										{...project}
+									/>
+								))
 						) : null
 					) : (
 						<tr>

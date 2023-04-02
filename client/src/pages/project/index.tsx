@@ -73,7 +73,7 @@ export default function Project() {
 						<Route path="new" element={<SuiteNew />} />
 						<Route path="archived" element={<SuiteArchived />} />
 					</Route>
-					<Route index element={<Navigate replace to="suites" />} />
+					<Route index element={<Navigate replace to="releases" />} />
 				</Routes>
 			</div>
 		</div>
@@ -85,9 +85,8 @@ const _menuItems = [
 		key: "releases",
 		label: "Releases",
 		icon: <Icons.Collection />,
-		beta: true,
 	},
-	{ key: "suites", label: "Suites", icon: <Icons.Briefcase />, beta: false },
+	{ key: "suites", label: "Suites", icon: <Icons.Briefcase /> },
 	{
 		key: "issues",
 		label: "Issues",

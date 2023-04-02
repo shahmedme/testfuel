@@ -10,6 +10,9 @@ export class Release {
   @Prop({ required: true })
   title: string;
 
+  // @Prop({ required: true })
+  // subtitle: string;
+
   @Prop({
     type: mongoose.Schema.Types.Array,
     required: true,

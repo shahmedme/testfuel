@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Project, ProjectDocument } from './schemas/project.schema';
@@ -17,7 +17,42 @@ export class ProjectService {
   }
 
   async findAll(workspaceId: string) {
-    return this.projectModel.find({ workspace: workspaceId });
+    const projectsWithCounts = await this.projectModel.aggregate([
+      { $match: { workspace: new mongoose.Types.ObjectId(workspaceId) } },
+      { $sort: { createdAt: -1 } },
+      {
+        $lookup: {
+          from: 'suites',
+          localField: '_id',
+          foreignField: 'project',
+          as: 'suites',
+        },
+      },
+      {
+        $group: {
+          _id: '$_id',
+          name: { $first: '$name' },
+          description: { $first: '$description' },
+          isActive: { $first: '$isActive' },
+          workspace: { $first: '$workspace' },
+          createdAt: { $first: '$createdAt' },
+          suitesCount: { $sum: { $size: '$suites' } },
+          testCasesCount: {
+            $sum: {
+              $size: {
+                $reduce: {
+                  input: '$suites',
+                  initialValue: [],
+                  in: { $concatArrays: ['$$value', '$$this.cases'] },
+                },
+              },
+            },
+          },
+        },
+      },
+    ]);
+
+    return projectsWithCounts;
   }
 
   async findOne(_id: string) {

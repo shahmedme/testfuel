@@ -11,10 +11,10 @@ export default [
 		path: "pricing",
 		label: "Pricing",
 	},
-	{
-		path: "testimonials",
-		label: "Testimonials",
-	},
+	// {
+	// 	path: "testimonials",
+	// 	label: "Testimonials",
+	// },
 	{
 		path: "news",
 		label: "Blogs",

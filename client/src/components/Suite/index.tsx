@@ -1,17 +1,18 @@
 import { TrashIcon } from "@heroicons/react/outline";
 import { Icons } from "components";
+import Beta from "components/Beta";
 import { useState } from "react";
 import CaseLine from "./CaseLine";
 
 type Props = {
-	title?: string;
+	name?: string;
 	cases: any[];
 	onCreate?: Function;
 	onUpdate?: Function;
 	onDelete?: Function;
 };
 
-const Suite = ({ title, cases, onCreate, onUpdate, onDelete }: Props) => {
+const Suite = ({ name, cases, onCreate, onUpdate, onDelete }: Props) => {
 	const [newCase, setNewCase] = useState<string>("");
 
 	const handleCaseCreate = (e: any) => {
@@ -23,13 +24,15 @@ const Suite = ({ title, cases, onCreate, onUpdate, onDelete }: Props) => {
 
 	return (
 		<div className="mb-1">
-			{title ? (
+			{name ? (
 				<div className="flex items-center bg-gray-100 rounded px-2.5 py-1 group">
-					<h3 className="font-semibold text-base">{title}</h3>
-					<div className="ml-7 flex items-center text-gray-500">
-						<Icons.Pen className="w-4 h-4 mr-3 cursor-pointer" />
-						<TrashIcon className="w-4 h-4 cursor-pointer" />
-					</div>
+					<h3 className="font-semibold text-base">{name}</h3>
+					<Beta>
+						<div className="ml-7 flex items-center text-gray-500">
+							<Icons.Pen className="w-4 h-4 mr-3 cursor-pointer" />
+							<TrashIcon className="w-4 h-4 cursor-pointer" />
+						</div>
+					</Beta>
 				</div>
 			) : null}
 

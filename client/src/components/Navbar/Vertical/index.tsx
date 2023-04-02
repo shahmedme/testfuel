@@ -57,8 +57,6 @@ export default function Vertical() {
 					</Beta>
 				</div>
 
-				{/* jsx-1004058353 mr-3 p-1 rounded-full text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white */}
-
 				<div className="flex flex-col items-center">
 					<Beta>
 						<Popover

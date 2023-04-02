@@ -40,3 +40,11 @@ export interface IWorkspace {
 	};
 	createdAt: string;
 }
+
+export interface IRelase {
+	_id: string;
+	title: string;
+	suites: ISuite[];
+	project: string;
+	createdAt: string;
+}

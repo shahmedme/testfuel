@@ -1,6 +1,5 @@
 import { Icons, Navbar, Suite } from "components";
 import { Button } from "lib";
-import React from "react";
 import { _suites } from "./ReleaseSingle";
 
 export default function ReleaseRun() {

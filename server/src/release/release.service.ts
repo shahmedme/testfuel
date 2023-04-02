@@ -28,8 +28,8 @@ export class ReleaseService {
     return this.releaseModel.find({ project: projectId });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} release`;
+  findOne(id: string) {
+    return this.releaseModel.findOne({ _id: id });
   }
 
   async update(_id: string, updateReleaseDto: UpdateReleaseDto) {

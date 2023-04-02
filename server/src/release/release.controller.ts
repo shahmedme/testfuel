@@ -28,7 +28,8 @@ export class ReleaseController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.releaseService.findOne(+id);
+    console.log('finding one------------->>>>>>>>>>>>>');
+    return this.releaseService.findOne(id);
   }
 
   @Put(':id')
