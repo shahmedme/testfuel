@@ -4,7 +4,7 @@ import { Avatar, Empty, Menu, Spin, Tooltip } from "antd";
 import { Navbar } from "components";
 import Beta from "components/Beta";
 import { Button, ContextMenu } from "lib";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import releaseService from "services/release";
 
 export default function Releases() {
@@ -12,6 +12,11 @@ export default function Releases() {
 	const { data, isLoading, refetch } = useQuery(["releases", projectKey], () =>
 		releaseService.get(projectKey as string)
 	);
+	const navigate = useNavigate();
+
+	const handleEdit = (releaseId: string) => {
+		navigate(releaseId);
+	};
 
 	const handleDelete = async (id: string) => {
 		await releaseService.delete(id);
@@ -48,7 +53,7 @@ export default function Releases() {
 						<TableRow
 							key={item._id}
 							{...item}
-							onEdit={handleDelete}
+							onEdit={handleEdit}
 							onDelete={handleDelete}
 						/>
 					))}
