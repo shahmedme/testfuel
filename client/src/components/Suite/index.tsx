@@ -37,7 +37,7 @@ const Suite = ({ name, cases, onCreate, onUpdate, onDelete }: Props) => {
 			) : null}
 
 			<div className="pt-2 pb-4">
-				{cases.length
+				{cases?.length
 					? cases.map((_case, idx) => (
 							<CaseLine
 								key={_case.title + idx}

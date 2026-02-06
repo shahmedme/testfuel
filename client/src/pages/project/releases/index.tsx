@@ -51,7 +51,7 @@ export default function Releases() {
 				<tbody>
 					{data?.data.map((item) => (
 						<TableRow
-							key={item._id}
+							key={item.id}
 							{...item}
 							onEdit={handleEdit}
 							onDelete={handleDelete}
@@ -77,14 +77,14 @@ type TableRowProps = {
 	title: string;
 	onEdit: any;
 	onDelete: any;
-	_id: string;
+	id: number;
 };
 
 const TableRow = ({ title, onEdit, onDelete, ...props }: TableRowProps) => {
 	return (
 		<tr>
 			<td className="align-middle py-2.5 text-left">
-				<Link to={props._id}>
+				<Link to={props.id?.toString() ?? ""}>
 					<span className="text-lg font-semibold">{title}</span>
 					<small className="block">TIME-1244 - Ticket title here</small>
 				</Link>
@@ -130,13 +130,13 @@ const TableRow = ({ title, onEdit, onDelete, ...props }: TableRowProps) => {
 										label: <span className="ml-0.5">Edit</span>,
 										key: "edit",
 										icon: <PencilIcon className="w-4 h-4" />,
-										onClick: () => onEdit(props._id),
+										onClick: () => onEdit(props.id),
 									},
 									{
 										label: <span className="ml-0.5">Delete</span>,
 										key: "delete",
 										icon: <TrashIcon className="w-4 h-4" />,
-										onClick: () => onDelete(props._id),
+										onClick: () => onDelete(props.id),
 									},
 								]}
 							/>

@@ -1,4 +1,4 @@
-import { IProject, ISuite } from "types";
+import { IProject, ISuite, SuiteCreateDto, SuiteUpdateDto } from "types";
 import { coreAxios } from "utils";
 
 export const fetchProjects = async (workspace: string) => {
@@ -15,7 +15,7 @@ export const createProject = async (payload: IProject) => {
 	return await coreAxios.post<IProject>("/project", payload);
 };
 
-export const updateProject = async (id: string, payload: Partial<IProject>) => {
+export const updateProject = async (id: number, payload: Partial<IProject>) => {
 	return await coreAxios.put(`/project/${id}`, payload);
 };
 
@@ -33,14 +33,14 @@ export const fetchSuite = async (id: string) => {
 	return await coreAxios.get<ISuite>(`/suite/${id}`);
 };
 
-export const createSuite = async (payload: Partial<ISuite>) => {
+export const createSuite = async (payload: SuiteCreateDto) => {
 	return await coreAxios.post<ISuite>("/suite", payload);
 };
 
-export const updateSuite = async ({ _id, ...payload }: Partial<ISuite>) => {
-	return await coreAxios.put<ISuite>(`/suite/${_id}`, payload);
+export const updateSuite = async ({ id, ...payload }: SuiteUpdateDto) => {
+	return await coreAxios.put<ISuite>(`/suite/${id}`, payload);
 };
 
-export const deleteSuite = async (id: string) => {
+export const deleteSuite = async (id: number) => {
 	return await coreAxios.delete(`/suite/${id}`);
 };

@@ -1,53 +1,56 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-export type UserDocument = User & Document;
-
-@Schema()
+@Entity('users')
 export class User {
-  @Prop()
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ nullable: true })
   firstName: string;
 
-  @Prop()
+  @Column({ nullable: true })
   lastName: string;
 
-  @Prop()
+  @Column({ unique: true, nullable: true })
   username: string;
 
-  @Prop()
+  @Column({ unique: true })
   email: string;
 
-  @Prop()
+  @Column()
   password: string;
 
-  @Prop({ default: false })
+  @Column({ default: false })
   isActive: boolean;
 
-  @Prop({ default: false })
+  @Column({ default: false })
   isBeta: boolean;
 
-  @Prop()
-  createdAt: string;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @Prop()
-  updatedAt: string;
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    if (this.password) {
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+    }
+  }
+
+  async validatePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
+  }
 }
-
-export const UserSchema = SchemaFactory.createForClass(User);
-
-export const UserSchemaHook = {
-  name: User.name,
-  useFactory: () => {
-    const schema = UserSchema;
-    schema.pre('save', async function (this: any, next: any) {
-      try {
-        const salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, salt);
-        next();
-      } catch (err) {
-        console.log(err);
-      }
-    });
-    return schema;
-  },
-};

@@ -1,46 +1,46 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { CreateUserDto, UpdateUserDto } from 'account/dto';
-import { User, UserDocument } from 'account/schemas/user.schema';
-import { Model } from 'mongoose';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, In } from 'typeorm';
+import { CreateUserDto } from 'account/dto';
+import { User } from 'account/schemas/user.schema';
 import { WorkspaceService } from 'workspace/workspace.service';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectRepository(User) private userRepository: Repository<User>,
     @Inject(forwardRef(() => WorkspaceService))
     private workspaceService: WorkspaceService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const createdUser = await this.userModel.create(createUserDto);
-    return createdUser;
+    const user = this.userRepository.create(createUserDto);
+    return await this.userRepository.save(user);
   }
 
-  async findById(id: string) {
-    return await this.userModel.findById(id);
+  async findById(id: number) {
+    return await this.userRepository.findOne({ where: { id } });
   }
 
   async findByEmail(email: string) {
-    return await this.userModel.findOne({ email });
+    return await this.userRepository.findOne({ where: { email } });
   }
 
-  async getAccount(_user: User & { _id: string }) {
-    const workspace = await this.workspaceService.getWorkspaceByUser(_user._id);
-    const user = await this.findById(_user._id);
-    return { workspace, user };
+  async getAccount(user: User) {
+    const workspace = await this.workspaceService.getWorkspaceByUser(user.id);
+    const userData = await this.findById(user.id);
+    return { workspace, user: userData };
   }
 
   async getUsersByEmails(emails: string[]) {
-    const users = await this.userModel.find({ email: { $in: emails } });
+    const users = await this.userRepository.find({
+      where: { email: In(emails) },
+    });
     return users;
   }
 
-  async update(_id: string, UpdateUserDto: UpdateUserDto) {
-    return await this.userModel.findOneAndUpdate({ _id }, UpdateUserDto, {
-      upsert: true,
-      new: true,
-    });
+  async update(id: number, updateUserDto: Partial<User>) {
+    await this.userRepository.update(id, updateUserDto);
+    return await this.findById(id);
   }
 }

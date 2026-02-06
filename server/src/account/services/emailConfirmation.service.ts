@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { MailService } from 'mail/mail.service';
 import { UserService } from './user.service';
+import { User } from 'account/schemas/user.schema';
 
 @Injectable()
 export class EmailConfirmationService {
@@ -13,7 +14,7 @@ export class EmailConfirmationService {
     private readonly mailService: MailService,
   ) {}
 
-  public async sendVerificationLink(user: any) {
+  public async sendVerificationLink(user: User) {
     const token = this.jwtService.sign(
       { email: user.email },
       { expiresIn: 21600 },
@@ -29,8 +30,7 @@ export class EmailConfirmationService {
       throw new BadRequestException('Email already confirmed');
     }
 
-    // @ts-ignore
-    return await this.userService.update(user?._id, { isActive: true });
+    return await this.userService.update(user?.id, { isActive: true });
   }
 
   public async decodeConfirmationToken(token: string) {
@@ -51,11 +51,11 @@ export class EmailConfirmationService {
     }
   }
 
-  public async resendConfirmationLink(userId: string) {
+  public async resendConfirmationLink(userId: number) {
     const user = await this.userService.findById(userId);
     if (user.isActive) {
       throw new BadRequestException('Email already confirmed');
     }
-    await this.sendVerificationLink(user.email);
+    await this.sendVerificationLink(user);
   }
 }

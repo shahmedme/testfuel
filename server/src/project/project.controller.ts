@@ -8,36 +8,35 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
 import { ProjectService } from './project.service';
+import { Project } from './schemas/project.schema';
 
 @Controller('project')
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Post()
-  create(@Body() createProjectDto: CreateProjectDto) {
+  create(@Body() createProjectDto: Partial<Project>) {
     return this.projectService.create(createProjectDto);
   }
 
   @Get()
-  findAll(@Query('workspace') workspaceId: string) {
+  findAll(@Query('workspace') workspaceId: number) {
     return this.projectService.findAll(workspaceId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.projectService.findOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
+  update(@Param('id') id: number, @Body() updateProjectDto: Partial<Project>) {
     return this.projectService.update(id, updateProjectDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.projectService.remove(id);
   }
 }

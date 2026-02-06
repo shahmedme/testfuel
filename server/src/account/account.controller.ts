@@ -19,6 +19,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { UserService } from './services';
 import { AuthService } from './services/auth.service';
 import { EmailConfirmationService } from './services/emailConfirmation.service';
+import { User } from './schemas/user.schema';
 
 @Controller('users')
 export class AccountController {
@@ -39,8 +40,8 @@ export class AccountController {
 
   @UseGuards(JwtAuthGuard)
   @Put()
-  update(@Request() req, @Body() updateProjectDto: UpdateUserDto) {
-    return this.userService.update(req.user._id, updateProjectDto);
+  update(@Request() req, @Body() updateUserDto: Partial<User>) {
+    return this.userService.update(req.user.id, updateUserDto);
   }
 
   @Post('signup')
@@ -53,7 +54,11 @@ export class AccountController {
 
   @Get('send-mail')
   async sendConfirmationEmail() {
-    const user = { name: 'Shakil Ahmed', email: 'shakilahmed6055@gmail.com' };
+    const user = {
+      firstName: 'Shakil',
+      lastName: 'Ahmed',
+      email: 'shakilahmed6055@gmail.com',
+    };
     const token = this.jwtService.sign(
       { email: user.email },
       { expiresIn: 21600 },
@@ -72,7 +77,7 @@ export class AccountController {
   }
 
   @Get(':id')
-  get(@Param('id') id: string) {
+  get(@Param('id') id: number) {
     return this.userService.findById(id);
   }
 

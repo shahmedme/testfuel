@@ -32,7 +32,7 @@ export default function ManageAccess() {
 
 		if (!hasError) {
 			try {
-				await inviteToWorkspace(activeWorkspace?._id, _invitees);
+				await inviteToWorkspace(activeWorkspace?.id, _invitees);
 				message.success("Invited to workspace successfully");
 				setInviteModalVisible(false);
 				setInvitees([""]);

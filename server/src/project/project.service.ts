@@ -1,72 +1,54 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
-import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
-import { Project, ProjectDocument } from './schemas/project.schema';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Project } from './schemas/project.schema';
 
 @Injectable()
 export class ProjectService {
   constructor(
-    @InjectModel(Project.name) private projectModel: Model<ProjectDocument>,
+    @InjectRepository(Project) private projectRepository: Repository<Project>,
   ) {}
 
-  async create(createProjectDto: CreateProjectDto) {
-    const createdProject = new this.projectModel(createProjectDto);
-    return createdProject.save();
+  async create(createProjectDto: Partial<Project>) {
+    const project = this.projectRepository.create(createProjectDto);
+    return await this.projectRepository.save(project);
   }
 
-  async findAll(workspaceId: string) {
-    const projectsWithCounts = await this.projectModel.aggregate([
-      { $match: { workspace: new mongoose.Types.ObjectId(workspaceId) } },
-      { $sort: { createdAt: -1 } },
-      {
-        $lookup: {
-          from: 'suites',
-          localField: '_id',
-          foreignField: 'project',
-          as: 'suites',
-        },
-      },
-      {
-        $group: {
-          _id: '$_id',
-          name: { $first: '$name' },
-          description: { $first: '$description' },
-          isActive: { $first: '$isActive' },
-          workspace: { $first: '$workspace' },
-          createdAt: { $first: '$createdAt' },
-          suitesCount: { $sum: { $size: '$suites' } },
-          testCasesCount: {
-            $sum: {
-              $size: {
-                $reduce: {
-                  input: '$suites',
-                  initialValue: [],
-                  in: { $concatArrays: ['$$value', '$$this.cases'] },
-                },
-              },
-            },
-          },
-        },
-      },
-    ]);
+  async findAll(workspaceId: number) {
+    const projects = await this.projectRepository
+      .createQueryBuilder('project')
+      .leftJoinAndSelect('project.suites', 'suite')
+      .leftJoinAndSelect('suite.cases', 'case')
+      .where('project.workspaceId = :workspaceId', { workspaceId })
+      .orderBy('project.createdAt', 'DESC')
+      .getMany();
 
-    return projectsWithCounts;
+    return projects.map((project) => ({
+      id: project.id,
+      name: project.name,
+      description: project.description,
+      isActive: project.isActive,
+      workspace: project.workspace,
+      createdAt: project.createdAt,
+      suitesCount: project.suites?.length || 0,
+      testCasesCount:
+        project.suites?.reduce(
+          (total, suite) => total + (suite.cases?.length || 0),
+          0,
+        ) || 0,
+    }));
   }
 
-  async findOne(_id: string) {
-    return await this.projectModel.findOne({ _id });
+  async findOne(id: number) {
+    return await this.projectRepository.findOne({ where: { id } });
   }
 
-  async update(_id: string, updateProjectDto: UpdateProjectDto) {
-    return await this.projectModel.findOneAndUpdate({ _id }, updateProjectDto, {
-      upsert: true,
-      new: true,
-    });
+  async update(id: number, updateProjectDto: Partial<Project>) {
+    await this.projectRepository.update(id, updateProjectDto);
+    return await this.findOne(id);
   }
 
-  async remove(_id: string): Promise<any> {
-    return await this.projectModel.deleteOne({ _id });
+  async remove(id: number): Promise<any> {
+    return await this.projectRepository.delete(id);
   }
 }

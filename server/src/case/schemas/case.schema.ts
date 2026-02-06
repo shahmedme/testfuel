@@ -1,12 +1,24 @@
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Suite } from 'suite/schemas/suite.schema';
 
-export type CaseDocument = Case & Document;
-
+@Entity('cases')
 export class Case {
-  @Prop({ required: true })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
   title: string;
+
+  @Column()
+  suiteId: number;
+
+  @ManyToOne(() => Suite, (suite) => suite.cases, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'suiteId' })
+  suite: Suite;
 }
-
-export const CaseSchema = SchemaFactory.createForClass(Case);
-
-export const CaseM = { name: Case.name, schema: CaseSchema };

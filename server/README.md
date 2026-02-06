@@ -1,73 +1,98 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Testfuel Server
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+NestJS REST API for **Testfuel** — the test case management backend. Uses TypeORM with PostgreSQL for workspaces, projects, releases, suites, and test cases.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- **Account** — Registration, login, JWT auth, email confirmation
+- **Workspace** — CRUD, members, access control
+- **Project** — CRUD, scoped to workspaces
+- **Release** — CRUD, linked to projects and suite IDs
+- **Suite** — CRUD, archiving, linked to projects
+- **Case** — CRUD, linked to suites
+- **Mail** — Transactional email (e.g. verification) via Nodemailer
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tech stack
 
-## Installation
+- **NestJS 8**
+- **TypeScript**
+- **TypeORM** + **PostgreSQL**
+- **Passport** + **JWT**
+- **class-validator** / **class-transformer**
+- **Nodemailer** (with Handlebars templates)
+
+## Prerequisites
+
+- Node.js v16+
+- PostgreSQL
+
+## Setup
 
 ```bash
-$ npm install
+npm install
 ```
+
+Copy environment template and configure:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with at least:
+
+- `SECRET_KEY` — Secret for JWT signing
+- Database: either `DB_STRING` or `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`
+- `CLIENT_URL` — Frontend origin (for CORS)
+- Optionally `SMTP_USER` and `SMTP_PASSWORD` for email
+
+Create the database (e.g. `createdb testfuel`), then run the app; TypeORM can create/sync tables in non-production when `NODE_ENV !== 'production'`.
+
+## Scripts
+
+| Command           | Description              |
+|-------------------|--------------------------|
+| `npm run start`   | Start app                |
+| `npm run start:dev` | Start in watch mode   |
+| `npm run start:prod` | Run production build  |
+| `npm run build`   | Build for production     |
+| `npm run test`    | Unit tests               |
+| `npm run test:e2e` | E2E tests               |
+| `npm run test:cov` | Test coverage           |
+| `npm run lint`    | Lint and fix             |
+| `npm run format`  | Prettier format          |
 
 ## Running the app
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
+**Development (watch):**
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:dev
 ```
 
-## Support
+**Production:**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+npm run build
+npm run start:prod
+```
 
-## Stay in touch
+By default the API listens on the port set in your Nest/Node config (often 3000).
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Project structure (high level)
+
+- `src/account/` — Auth, user, email confirmation
+- `src/workspace/` — Workspaces and members
+- `src/project/` — Projects
+- `src/release/` — Releases
+- `src/suite/` — Suites
+- `src/case/` — Test cases
+- `src/mail/` — Mail service and templates
+- `src/app/` — App module, TypeORM config
+
+## API overview
+
+REST endpoints are grouped by resource (account, workspaces, projects, releases, suites, cases). Auth-protected routes use the `Authorization: Bearer <token>` header. See controller files under each module for exact paths and DTOs.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+Part of the Testfuel project. See root [README](../README.md).

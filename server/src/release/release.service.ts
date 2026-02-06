@@ -1,45 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { SuiteService } from 'suite/suite.service';
 import { CreateReleaseDto } from './dto/create-release.dto';
 import { UpdateReleaseDto } from './dto/update-release.dto';
-import { Release, ReleaseDocument } from './schemas/release.schema';
+import { Release } from './schemas/release.schema';
 
 @Injectable()
 export class ReleaseService {
   constructor(
-    @InjectModel(Release.name)
-    private releaseModel: Model<ReleaseDocument>,
+    @InjectRepository(Release)
+    private releaseRepository: Repository<Release>,
     private suiteService: SuiteService,
   ) {}
 
   async create(createReleaseDto: CreateReleaseDto) {
     const suites = await this.suiteService.findByIds(createReleaseDto.suites);
 
-    const createdRelease = new this.releaseModel({
-      ...createReleaseDto,
-      suites,
+    const release = this.releaseRepository.create({
+      title: createReleaseDto.title,
+      projectId: createReleaseDto.project,
+      suites: suites.map((suite) => suite.id),
     });
-    return createdRelease.save();
+    return await this.releaseRepository.save(release);
   }
 
-  findAll(projectId: string) {
-    return this.releaseModel.find({ project: projectId });
+  findAll(projectId: number) {
+    return this.releaseRepository.find({ where: { projectId } });
   }
 
-  findOne(id: string) {
-    return this.releaseModel.findOne({ _id: id });
+  findOne(id: number) {
+    return this.releaseRepository.findOne({ where: { id } });
   }
 
-  async update(_id: string, updateReleaseDto: UpdateReleaseDto) {
-    return await this.releaseModel.findOneAndUpdate({ _id }, updateReleaseDto, {
-      upsert: true,
-      new: true,
-    });
+  async update(id: number, updateReleaseDto: Partial<Release>) {
+    await this.releaseRepository.update(id, updateReleaseDto);
+    return await this.findOne(id);
   }
 
-  async remove(_id: string): Promise<any> {
-    return await this.releaseModel.deleteOne({ _id });
+  async remove(id: number): Promise<any> {
+    return await this.releaseRepository.delete(id);
   }
 }

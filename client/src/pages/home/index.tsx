@@ -10,13 +10,16 @@ import { deleteProject, fetchProjects } from "services/project";
 import { getActiveWorkspace } from "utils/workspace";
 import ProjectCreateDrawer from "./views/ProjectCreateDrawer";
 import TableRow from "./views/TableRow";
+import { IProject } from "types";
 
 export default function Home() {
 	const { isLoading, data, refetch } = useQuery(["projects"], async () => {
 		const workspaces = storage.get("workspaces");
-		return await fetchProjects(getActiveWorkspace()?._id ?? workspaces[0]._id);
+		return await fetchProjects(
+			getActiveWorkspace()?.id?.toString() ?? workspaces[0].id.toString()
+		);
 	});
-	const [projectUpdateData, setProjectUpdateData] = useState<string | null>(
+	const [projectData, setProjectData] = useState<Partial<IProject> | null>(
 		null
 	);
 
@@ -30,9 +33,7 @@ export default function Home() {
 			<Navbar.Horizontal
 				title="Projects"
 				extra={
-					<Button onClick={() => setProjectUpdateData("true")}>
-						Create new project
-					</Button>
+					<Button onClick={() => setProjectData({})}>Create new project</Button>
 				}
 			/>
 
@@ -56,11 +57,11 @@ export default function Home() {
 								.sort((a, b) => (a.name > b.name ? 1 : -1))
 								?.map((project: any) => (
 									<TableRow
-										key={project._id}
-										slug={project._id}
+										key={project.id}
+										slug={project.id}
 										refetch={refetch}
 										onDelete={onDelete}
-										onEdit={setProjectUpdateData}
+										onEdit={setProjectData}
 										{...project}
 									/>
 								))
@@ -80,10 +81,10 @@ export default function Home() {
 			) : null}
 
 			<ProjectCreateDrawer
-				visible={!!projectUpdateData}
-				setVisible={setProjectUpdateData}
+				visible={!!projectData}
+				setVisible={setProjectData}
 				updateData={
-					data?.data.find((project) => project._id === projectUpdateData)!
+					data?.data.find((project) => project.id === projectData?.id)!
 				}
 				refetch={refetch}
 			/>

@@ -1,42 +1,51 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectRepository } from '@nestjs/typeorm';
+import { In, Repository } from 'typeorm';
+import { Suite } from './schemas/suite.schema';
 import { CreateSuiteDto } from './dto/create-suite.dto';
 import { UpdateSuiteDto } from './dto/update-suite.dto';
-import { Suite, SuiteDocument } from './schemas/suite.schema';
 
 @Injectable()
 export class SuiteService {
   constructor(
-    @InjectModel(Suite.name)
-    private suiteModel: Model<SuiteDocument>,
+    @InjectRepository(Suite)
+    private suiteRepository: Repository<Suite>,
   ) {}
 
   create(createSuiteDto: CreateSuiteDto) {
-    const createdSuite = new this.suiteModel(createSuiteDto);
-    return createdSuite.save();
+    const suite = this.suiteRepository.create(createSuiteDto);
+    return this.suiteRepository.save(suite);
   }
 
-  findAll(projectId: string) {
-    return this.suiteModel.find({ project: projectId });
+  findAll(projectId: number, includeCases: boolean = false) {
+    const options: any = { where: { projectId } };
+    if (includeCases) {
+      options.relations = ['cases'];
+    }
+    return this.suiteRepository.find(options);
   }
 
-  findOne(id: string) {
-    return this.suiteModel.findOne({ _id: id });
-  }
-
-  async update(_id: string, updateSuiteDto: UpdateSuiteDto) {
-    return await this.suiteModel.findOneAndUpdate({ _id }, updateSuiteDto, {
-      upsert: true,
-      new: true,
+  findOne(id: number) {
+    return this.suiteRepository.findOne({
+      where: { id },
+      relations: ['cases'],
     });
   }
 
-  async remove(_id: string): Promise<any> {
-    return await this.suiteModel.deleteOne({ _id });
+  async update(id: number, updateSuiteDto: UpdateSuiteDto) {
+    await this.suiteRepository.update(id, updateSuiteDto);
+    return await this.findOne(id);
   }
 
-  async findByIds(ids: string[]) {
-    return await this.suiteModel.find({ _id: { $in: ids } });
+  async remove(id: number): Promise<any> {
+    return await this.suiteRepository.delete(id);
+  }
+
+  async findByIds(ids: number[], includeCases: boolean = false) {
+    const options: any = { where: { id: In(ids) } };
+    if (includeCases) {
+      options.relations = ['cases'];
+    }
+    return await this.suiteRepository.find(options);
   }
 }

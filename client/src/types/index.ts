@@ -1,5 +1,5 @@
 export interface IUser {
-	_id: string;
+	id: number;
 	firstName: string;
 	lastName: string;
 	email: string;
@@ -8,7 +8,7 @@ export interface IUser {
 }
 
 export interface IProject {
-	_id: string;
+	id: number;
 	name: string;
 	description: string;
 	isActive: boolean;
@@ -17,20 +17,26 @@ export interface IProject {
 }
 
 export interface ISuite {
-	_id?: string;
+	id?: number;
 	name: string;
 	cases: ICase[];
-	isArchive: boolean;
+	isArchive?: boolean;
 	project?: string;
 	createdAt?: string;
 }
+
+export type SuiteCreateDto = Omit<ISuite, "id" | "createdAt" | "project"> & {
+	projectId: number;
+};
+
+export type SuiteUpdateDto = Partial<SuiteCreateDto> & { id: number };
 
 export interface ICase {
 	title: string;
 }
 
 export interface IWorkspace {
-	_id: string;
+	id: number;
 	name: string;
 	description: string;
 	logo: string;
@@ -42,7 +48,7 @@ export interface IWorkspace {
 }
 
 export interface IRelase {
-	_id: string;
+	id: number;
 	title: string;
 	suites: ISuite[];
 	project: string;

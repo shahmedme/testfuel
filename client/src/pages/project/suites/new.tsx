@@ -55,29 +55,35 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 		await suiteHandler.mutateAsync({
 			name,
 			cases,
-			project: projectKey ?? "",
+			projectId: Number(projectKey),
 		});
 
 		navigate(`/${projectKey}/suites`);
 	};
 
 	const onUpdateSuite = async () => {
-		await suiteUpdateHandler.mutateAsync({
-			_id: suite?._id,
-			name,
-			cases,
-			project: projectKey ?? "",
-		});
+		if (suite?.id) {
+			await suiteUpdateHandler.mutateAsync({
+				id: suite?.id,
+				name,
+				cases,
+				projectId: Number(projectKey),
+			});
+		}
 	};
 
 	const onArchiveSuite = async () => {
-		await updateSuite({ _id: suite?._id, isArchive: true });
-		navigate(`/${projectKey}/suites`);
+		if (suite?.id) {
+			await updateSuite({ id: suite.id, isArchive: true });
+			navigate(`/${projectKey}/suites`);
+		}
 	};
 
 	const onDelete = async () => {
-		await deleteSuite(suite?._id as string);
-		navigate(`/${projectKey}/suites`);
+		if (suite?.id) {
+			await deleteSuite(suite.id);
+			navigate(`/${projectKey}/suites`);
+		}
 	};
 
 	const onCaseDelete = (idx: number) => {
@@ -125,7 +131,7 @@ export default function SuiteNew({ suite }: { suite?: ISuite }) {
 								name,
 							}}
 						/>
-						{suite?._id ? (
+						{suite?.id ? (
 							<ContextMenu
 								placement="bottomRight"
 								trigger={["click"]}

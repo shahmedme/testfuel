@@ -9,8 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateReleaseDto } from './dto/create-release.dto';
-import { UpdateReleaseDto } from './dto/update-release.dto';
 import { ReleaseService } from './release.service';
+import { Release } from './schemas/release.schema';
 
 @Controller('release')
 export class ReleaseController {
@@ -22,23 +22,22 @@ export class ReleaseController {
   }
 
   @Get()
-  findAll(@Query('project') projectId: string) {
+  findAll(@Query('project') projectId: number) {
     return this.releaseService.findAll(projectId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    console.log('finding one------------->>>>>>>>>>>>>');
+  findOne(@Param('id') id: number) {
     return this.releaseService.findOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateReleaseDto: UpdateReleaseDto) {
+  update(@Param('id') id: number, @Body() updateReleaseDto: Partial<Release>) {
     return this.releaseService.update(id, updateReleaseDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.releaseService.remove(id);
   }
 }

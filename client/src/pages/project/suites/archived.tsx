@@ -20,13 +20,13 @@ export default function SuiteArchived() {
 		[location]
 	);
 
-	const onUnarchiveSuite = async (_id: string) => {
-		await updateSuite({ _id, isArchive: false });
+	const onUnarchiveSuite = async (id: number) => {
+		await updateSuite({ id, isArchive: false });
 		navigate(`/${projectKey}/suites`);
 	};
 
-	const onDelete = async (_id: string) => {
-		await deleteSuite(_id);
+	const onDelete = async (id: number) => {
+		await deleteSuite(id);
 		navigate(`/${projectKey}/suites`);
 	};
 
@@ -37,7 +37,7 @@ export default function SuiteArchived() {
 				<div className="grid grid-cols-12 gap-6">
 					{archivedSuites.map((suite: ISuite) => (
 						<div
-							key={suite._id}
+							key={suite.id}
 							className="col-span-2 bg-gray-200 rounded p-5 h-56 flex flex-col justify-end relative"
 							onMouseEnter={() => setContextBtnVisible(true)}
 							onMouseLeave={() => setContextBtnVisible(false)}
@@ -59,13 +59,13 @@ export default function SuiteArchived() {
 													label: <span className="ml-0.5">Unarchive</span>,
 													key: "unarchive",
 													icon: <PencilIcon className="w-4 h-4" />,
-													onClick: () => onUnarchiveSuite(suite._id as string),
+													onClick: () => onUnarchiveSuite(suite.id as number),
 												},
 												{
 													label: <span className="ml-0.5">Delete</span>,
 													key: "delete",
 													icon: <TrashIcon className="w-4 h-4" />,
-													onClick: () => onDelete(suite._id as string),
+													onClick: () => onDelete(suite.id as number),
 												},
 											]}
 										/>

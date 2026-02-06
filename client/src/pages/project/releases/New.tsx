@@ -27,7 +27,7 @@ export default function NewRelease() {
 				project: projectKey,
 			});
 			message.success("Release created successfully");
-			navigate(`/${projectKey}/releases/${release._id}`);
+			navigate(`/${projectKey}/releases/${release.id}`);
 		} catch (err) {
 			console.log("🚀 ~ file: New.tsx:26 ~ handleSuiteCreate ~ err:", err);
 			message.error("Something wen't wrong");
@@ -75,7 +75,7 @@ export default function NewRelease() {
 									}}
 								>
 									{activeSuites?.map((suite) => (
-										<option key={suite._id} value={suite._id}>
+										<option key={suite.id} value={suite.id}>
 											{suite.name}
 										</option>
 									))}

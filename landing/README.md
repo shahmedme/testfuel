@@ -1,30 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+# Testfuel Landing
 
-## Getting Started
+Next.js marketing and landing site for **Testfuel** — the open source test case management system. Used for the public website (features, pricing, testimonials, etc.).
 
-First, run the development server:
+## Tech stack
+
+- **Next.js** (v9.x)
+- **React** + **SASS**
+- **Framer Motion** — animations
+- **Theme UI** — theming
+- **next-sitemap** — sitemap generation after build
+
+## Prerequisites
+
+- Node.js v16+
+
+## Setup
+
+```bash
+npm install
+```
+
+## Scripts
+
+| Command        | Description                    |
+|----------------|--------------------------------|
+| `npm run dev`  | Start dev server (port 3001)   |
+| `npm run build`| Production build               |
+| `npm run serve`| Start production server        |
+| `npm run export` | Static export (if configured) |
+| `npm run postbuild` | Runs next-sitemap after build |
+
+## Development
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Opens at [http://localhost:3001](http://localhost:3001).
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Project structure (high level)
 
-## Learn More
+- `src/pages/` — Next.js pages (`_app`, `_document`, `index`)
+- `src/sections/` — Page sections (banner, services, pricing, testimonials, FAQ, etc.)
+- `src/components/` — Header, footer, cards, accordion, layout
+- `src/contexts/` — App and drawer state
+- `src/theme/` — Theme configuration
+- `src/assets/` — Styles, images, icons
+- `public/` — Static assets, favicon, robots.txt
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on ZEIT Now
-
-The easiest way to deploy your Next.js app is to use the [ZEIT Now Platform](https://zeit.co/) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Part of the Testfuel project. See root [README](../README.md).

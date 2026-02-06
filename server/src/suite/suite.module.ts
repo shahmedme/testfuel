@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { SuiteService } from './suite.service';
 import { SuiteController } from './suite.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { SuiteM } from './schemas/suite.schema';
+import { Suite } from './schemas/suite.schema';
+import { Case } from 'case/schemas/case.schema';
 
 @Module({
   controllers: [SuiteController],
   providers: [SuiteService],
-  imports: [MongooseModule.forFeature([SuiteM])],
+  imports: [TypeOrmModule.forFeature([Suite, Case])],
 })
 export class SuiteModule {}

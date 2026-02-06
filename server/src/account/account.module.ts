@@ -1,11 +1,11 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { WorkspaceModule } from 'workspace/workspace.module';
 import { AccountController } from './account.controller';
-import { UserSchemaHook } from './schemas/user.schema';
+import { User } from './schemas/user.schema';
 import { AuthService, JwtStrategy, UserService } from './services';
 import { EmailConfirmationService } from './services/emailConfirmation.service';
 
@@ -19,7 +19,7 @@ import { EmailConfirmationService } from './services/emailConfirmation.service';
       }),
       inject: [ConfigService],
     }),
-    MongooseModule.forFeatureAsync([UserSchemaHook]),
+    TypeOrmModule.forFeature([User]),
     forwardRef(() => WorkspaceModule),
   ],
   exports: [UserService],

@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { WorkspaceM } from 'workspace/schemas/workspace.schema';
-import { WorkspaceService } from 'workspace/workspace.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProjectController } from './project.controller';
 import { ProjectService } from './project.service';
-import { ProjectM } from './schemas/project.schema';
+import { Project } from './schemas/project.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([ProjectM])],
+  imports: [TypeOrmModule.forFeature([Project])],
   controllers: [ProjectController],
   providers: [ProjectService],
 })

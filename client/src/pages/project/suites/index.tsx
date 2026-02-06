@@ -52,9 +52,8 @@ export default function Suites({ project }: any) {
 							</Link>
 							{activeSuites?.map((suite) => (
 								<Link
-									// @ts-ignore
-									to={suite._id}
-									key={suite._id}
+									to={suite.id?.toString() ?? ""}
+									key={suite.id}
 									className="col-span-2 bg-gray-200 rounded p-5 h-56 flex flex-col justify-end"
 									state={{ project, suite }}
 								>

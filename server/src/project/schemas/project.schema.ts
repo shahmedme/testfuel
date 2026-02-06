@@ -1,45 +1,45 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
 import { Release } from 'release/schemas/release.schema';
 import { Suite } from 'suite/schemas/suite.schema';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Workspace } from 'workspace/schemas/workspace.schema';
 
-export type ProjectDocument = Project & Document;
-
-@Schema()
+@Entity('projects')
 export class Project {
-  @Prop({ required: true })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
   name: string;
 
-  @Prop()
+  @Column({ nullable: true })
   description: string;
 
-  @Prop({ default: true })
-  isActive?: boolean;
+  @Column({ default: true })
+  isActive: boolean;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Release.name,
-  })
-  releases?: Release[];
+  @OneToMany(() => Release, (release) => release.project)
+  releases: Release[];
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Suite.name,
-  })
-  suites?: Suite[];
+  @OneToMany(() => Suite, (suite) => suite.project)
+  suites: Suite[];
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Workspace.name,
-    required: true,
+  @Column()
+  workspaceId: number;
+
+  @ManyToOne(() => Workspace, (workspace) => workspace.projects, {
+    onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'workspaceId' })
   workspace: Workspace;
 
-  @Prop({ default: Date.now() })
-  createdAt?: string;
+  @CreateDateColumn()
+  createdAt: Date;
 }
-
-export const ProjectSchema = SchemaFactory.createForClass(Project);
-
-export const ProjectM = { name: Project.name, schema: ProjectSchema };

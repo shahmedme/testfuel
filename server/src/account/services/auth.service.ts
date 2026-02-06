@@ -16,11 +16,11 @@ export class AuthService {
     const user = await this.validateUser(email, password);
 
     if (user?.isActive) {
-      const { _id, firstName, lastName, username, email, isBeta } = user;
+      const { id, firstName, lastName, username, email, isBeta } = user;
 
       return {
         token: this.jwtService.sign({
-          _id,
+          id,
           firstName,
           lastName,
           username,
@@ -33,10 +33,7 @@ export class AuthService {
     }
   }
 
-  async validateUser(
-    email: string,
-    password: string,
-  ): Promise<User & { _id: any }> {
+  async validateUser(email: string, password: string): Promise<User> {
     const user = await this.userService.findByEmail(email);
 
     if (user && (await bcrypt.compare(password, user.password))) {

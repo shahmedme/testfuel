@@ -203,7 +203,7 @@ const WorkspaceSwitcher = () => {
 			{workspaces
 				?.slice(0, isExpanded ? workspaces.length : 1)
 				.map((workspace) => (
-					<div key={workspace._id} className="group">
+					<div key={workspace.id} className="group">
 						<ListGroup.Item
 							onClick={toggleWorkspaceList(workspace, !isExpanded)}
 						>

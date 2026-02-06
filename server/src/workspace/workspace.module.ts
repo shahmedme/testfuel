@@ -1,13 +1,14 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountModule } from 'account/account.module';
-import { WorkspaceSchema } from './schemas/workspace.schema';
+import { Workspace } from './schemas/workspace.schema';
+import { Member } from './schemas/member.schema';
 import { WorkspaceController } from './workspace.controller';
 import { WorkspaceService } from './workspace.service';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'Workspace', schema: WorkspaceSchema }]),
+    TypeOrmModule.forFeature([Workspace, Member]),
     forwardRef(() => AccountModule),
   ],
   exports: [WorkspaceService],

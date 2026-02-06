@@ -1,36 +1,38 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { Case } from 'case/schemas/case.schema';
-import mongoose, { PromiseProvider, Types } from 'mongoose';
+import { Project } from 'project/schemas/project.schema';
 
-export type SuiteDocument = Suite & Document;
-
-@Schema()
+@Entity('suites')
 export class Suite {
-  @Prop({ required: true })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
   name: string;
 
-  @Prop({
-    type: Case,
-    name: Case.name,
-    required: true,
-  })
-  cases: [Case];
+  @OneToMany(() => Case, (case_) => case_.suite, { cascade: true })
+  cases: Case[];
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  })
-  project: Types.ObjectId;
+  @Column()
+  projectId: number;
 
-  @Prop({
-    default: false,
+  @ManyToOne(() => Project, (project) => project.suites, {
+    onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'projectId' })
+  project: Project;
+
+  @Column({ default: false })
   isArchive: boolean;
 
-  @Prop({ default: Date.now() })
-  createdAt: string;
+  @CreateDateColumn()
+  createdAt: Date;
 }
-
-export const SuiteSchema = SchemaFactory.createForClass(Suite);
-
-export const SuiteM = { name: Suite.name, schema: SuiteSchema };

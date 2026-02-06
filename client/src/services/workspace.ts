@@ -1,6 +1,6 @@
 import { coreAxios } from "utils";
 
-export const inviteToWorkspace = async (id: string, invitees: string[]) => {
+export const inviteToWorkspace = async (id: number, invitees: string[]) => {
 	const payload = {
 		invitee: invitees.map((invitee) => ({
 			role: "ADMIN",

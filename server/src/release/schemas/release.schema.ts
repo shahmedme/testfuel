@@ -1,35 +1,33 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Project } from 'project/schemas/project.schema';
-import { Suite } from 'suite/schemas/suite.schema';
 
-export type ReleaseDocument = Release & Document;
-
-@Schema()
+@Entity('releases')
 export class Release {
-  @Prop({ required: true })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
   title: string;
 
-  // @Prop({ required: true })
-  // subtitle: string;
+  @Column('simple-array', { nullable: true })
+  suites: number[];
 
-  @Prop({
-    type: mongoose.Schema.Types.Array,
-    required: true,
-  })
-  suites: any[];
+  @Column()
+  projectId: number;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Project',
-    required: true,
+  @ManyToOne(() => Project, (project) => project.releases, {
+    onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'projectId' })
   project: Project;
 
-  @Prop({ default: Date.now() })
-  createdAt: string;
+  @CreateDateColumn()
+  createdAt: Date;
 }
-
-export const ReleaseSchema = SchemaFactory.createForClass(Release);
-
-export const ReleaseM = { name: Release.name, schema: ReleaseSchema };

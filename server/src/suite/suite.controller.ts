@@ -22,22 +22,25 @@ export class SuiteController {
   }
 
   @Get()
-  findAll(@Query('project') projectId: string) {
-    return this.suiteService.findAll(projectId);
+  findAll(
+    @Query('project') projectId: number,
+    @Query('includeCases') includeCases: boolean = false,
+  ) {
+    return this.suiteService.findAll(projectId, includeCases);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.suiteService.findOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSuiteDto: UpdateSuiteDto) {
+  update(@Param('id') id: number, @Body() updateSuiteDto: UpdateSuiteDto) {
     return this.suiteService.update(id, updateSuiteDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.suiteService.remove(id);
   }
 }

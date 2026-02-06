@@ -131,7 +131,7 @@ export default function ReleaseSingle() {
 							</h4>
 							<div className="mt-2">
 								{release?.suites.map((suite) => (
-									<SuiteMenuItem key={suite._id} count={suite.cases.length}>
+									<SuiteMenuItem key={suite.id} count={suite.cases?.length}>
 										{suite.name}
 									</SuiteMenuItem>
 								))}
@@ -143,9 +143,9 @@ export default function ReleaseSingle() {
 								<Suite
 									key={idx}
 									{...suite}
-									onCreate={createCase(suite._id)}
-									onUpdate={updateCase(suite._id)}
-									onDelete={deleteCase(suite._id)}
+									onCreate={createCase(suite.id)}
+									onUpdate={updateCase(suite.id)}
+									onDelete={deleteCase(suite.id)}
 								/>
 							))}
 						</div>
@@ -193,12 +193,10 @@ export const _suites = [
 	},
 ];
 
-const performOperation = (release: IRelase, suiteId: string, cb: any) => {
+const performOperation = (release: IRelase, suiteId: number, cb: any) => {
 	const _release = _.cloneDeep(release);
 
-	const _suiteIdx = _release?.suites.findIndex(
-		(suite) => suite._id === suiteId
-	);
+	const _suiteIdx = _release?.suites.findIndex((suite) => suite.id === suiteId);
 
 	if (typeof _suiteIdx === "number" && _suiteIdx > -1) {
 		const _suite = _release?.suites[_suiteIdx];

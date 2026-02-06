@@ -30,7 +30,7 @@ const authSlice = createSlice({
 		setWorkspaces: (state, action) => {
 			const activeWorkspace = getActiveWorkspace();
 			state.workspaces = _.cloneDeep(action.payload).sort((a: any) =>
-				a._id === activeWorkspace?._id ? -1 : 1
+				a.id === activeWorkspace?.id ? -1 : 1
 			);
 			storage.set("workspaces", state.workspaces);
 		},

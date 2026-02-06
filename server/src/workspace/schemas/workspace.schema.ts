@@ -1,41 +1,33 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { MemberType } from 'core/models';
-import { Types } from 'mongoose';
+import { Project } from 'project/schemas/project.schema';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Member } from './member.schema';
 
-export type WorkspaceDocument = Workspace & Document;
-
-@Schema()
-class MemberSchema extends Member {
-  @Prop({ required: true })
-  role: MemberType;
-
-  @Prop({ required: true })
-  user: Types.ObjectId;
-}
-
-@Schema()
+@Entity('workspaces')
 export class Workspace {
-  @Prop({ required: true })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
   name: string;
 
-  @Prop()
+  @Column({ nullable: true })
   description: string;
 
-  @Prop({ default: true })
+  @Column({ default: true })
   isActive: boolean;
 
-  @Prop({
-    type: Types.Array,
-    schema: MemberSchema,
-    required: true,
-  })
+  @OneToMany(() => Member, (member) => member.workspace, { cascade: true })
   members: Member[];
 
-  @Prop({ default: Date.now() })
-  createdAt: string;
+  @OneToMany(() => Project, (project) => project.workspace)
+  projects: Project[];
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
-
-export const WorkspaceSchema = SchemaFactory.createForClass(Workspace);
-
-export const WorkspaceM = { name: Workspace.name, schema: WorkspaceSchema };

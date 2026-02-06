@@ -1,29 +1,42 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { MemberType } from 'core/models';
-import mongoose, { Types } from 'mongoose';
+import { User } from 'account/schemas/user.schema';
+import { Workspace } from './workspace.schema';
 
-// interface MemberEntity {
-//   role: string;
-//   user: object;
-// }
-
-// class User {
-//   role: string;
-// }
-
-@Schema()
+@Entity('members')
 export class Member {
-  @Prop({ required: true, enum: MemberType })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({
+    type: 'enum',
+    enum: MemberType,
+  })
   role: MemberType;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
+  @Column()
+  userId: number;
+
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
+  user: User;
+
+  @Column()
+  workspaceId: number;
+
+  @ManyToOne(() => Workspace, (workspace) => workspace.members, {
+    onDelete: 'CASCADE',
   })
-  user: Types.ObjectId;
+  @JoinColumn({ name: 'workspaceId' })
+  workspace: Workspace;
 
-  @Prop({ default: Date.now() })
-  createdAt?: string;
+  @CreateDateColumn()
+  createdAt: Date;
 }
-
-export const MemberSchema = SchemaFactory.createForClass(Member);

@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateCaseDto } from './dto/create-case.dto';
 import { UpdateCaseDto } from './dto/update-case.dto';
+import { Case } from './schemas/case.schema';
 
 @Injectable()
 export class CaseService {
+  constructor(
+    @InjectRepository(Case) private caseRepository: Repository<Case>,
+  ) {}
+
   create(createCaseDto: CreateCaseDto) {
-    return 'This action adds a new case';
+    const case_ = this.caseRepository.create(createCaseDto);
+    return this.caseRepository.save(case_);
   }
 
   findAll() {
-    return `This action returns all case`;
+    return this.caseRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} case`;
+    return this.caseRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateCaseDto: UpdateCaseDto) {
-    return `This action updates a #${id} case`;
+  async update(id: number, updateCaseDto: UpdateCaseDto) {
+    await this.caseRepository.update(id, updateCaseDto);
+    return await this.findOne(id);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} case`;
+    return this.caseRepository.delete(id);
   }
 }

@@ -39,11 +39,11 @@ export default function ProjectCreateDrawer({
 		setOkLoading(true);
 
 		if (updateData) {
-			await updateProject(updateData._id, form.getFieldsValue());
+			await updateProject(updateData.id, form.getFieldsValue());
 		} else {
 			await projectCreateHandler.mutateAsync({
 				...form.getFieldsValue(),
-				workspace: getActiveWorkspace()?._id,
+				workspaceId: getActiveWorkspace()?.id,
 			});
 		}
 

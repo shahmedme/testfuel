@@ -1,0 +1,106 @@
+# Testfuel
+
+**Testfuel** is an open source test case management system for software development teams. Organize test suites, track releases, and collaborate with your team in workspaces and projects.
+
+## Features
+
+- **Workspaces** — Team spaces with member access and multiple projects
+- **Projects** — Group test suites and releases by product or service
+- **Releases** — Define releases and associate test suites for test runs
+- **Suites** — Organize test cases into suites; support for archiving
+- **Test cases** — Create and manage individual test cases within suites
+- **Authentication** — JWT-based auth with email verification
+- **Multi-tenant** — Workspace-based isolation and access control
+
+## Project structure
+
+| Package   | Description |
+|----------|-------------|
+| **client**  | React web app — main application UI |
+| **server**  | NestJS API — REST API, PostgreSQL, TypeORM |
+| **landing** | Next.js marketing/landing site |
+
+## Tech stack
+
+- **Client:** React 18, TypeScript, Redux Toolkit, TanStack Query, React Router, Ant Design, Tailwind CSS
+- **Server:** NestJS 8, TypeScript, TypeORM, PostgreSQL, Passport JWT, Nodemailer
+- **Landing:** Next.js, React, SASS, Framer Motion
+
+## Prerequisites
+
+- **Node.js** (v16+)
+- **PostgreSQL** (for the API)
+- **npm** or **yarn**
+
+## Quick start
+
+### 1. Clone and install
+
+```bash
+git clone https://github.com/your-org/testfuel.git
+cd testfuel
+```
+
+### 2. Server (API)
+
+```bash
+cd server
+cp .env.example .env
+# Edit .env: set SECRET_KEY, DB_STRING (or DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME), CLIENT_URL, SMTP if needed
+npm install
+npm run start:dev
+```
+
+API runs at `http://localhost:3000` (or the port in your config).
+
+### 3. Client (web app)
+
+```bash
+cd client
+npm install
+# Create .env with REACT_APP_API_URL pointing to your server (e.g. http://localhost:3000)
+npm run dev
+```
+
+App runs at `http://localhost:3000` (or the port React assigns).
+
+### 4. Landing (optional)
+
+```bash
+cd landing
+npm install
+npm run dev
+```
+
+Landing runs at `http://localhost:3001` by default.
+
+## Environment variables
+
+### Server (`server/.env`)
+
+| Variable     | Description |
+|-------------|-------------|
+| `SECRET_KEY` | JWT signing secret |
+| `DB_STRING`  | Full PostgreSQL connection string (alternative to below) |
+| `DB_HOST`    | PostgreSQL host (default: localhost) |
+| `DB_PORT`    | PostgreSQL port (default: 5432) |
+| `DB_USERNAME` | DB user |
+| `DB_PASSWORD` | DB password |
+| `DB_NAME`    | Database name (e.g. testfuel) |
+| `CLIENT_URL` | Frontend origin for CORS (e.g. https://app.testfuel.io) |
+| `SERVER_ENV` | Set when running server (e.g. true) |
+| `SMTP_USER` / `SMTP_PASSWORD` | For email (e.g. verification emails) |
+
+### Client (`client/.env`)
+
+| Variable            | Description |
+|--------------------|-------------|
+| `REACT_APP_API_URL` | Base URL of the Testfuel API |
+
+## Contributing
+
+Contributions are welcome. Please open an issue or pull request on the repository.
+
+## License
+
+See [LICENSE](LICENSE) in the repository.

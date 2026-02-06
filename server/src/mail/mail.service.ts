@@ -1,6 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { User } from 'account/schemas/user.schema';
 
 @Injectable()
 export class MailService {
@@ -9,7 +10,7 @@ export class MailService {
     private readonly configService: ConfigService,
   ) {}
 
-  async sendUserConfirmation(user: any, token: string) {
+  async sendUserConfirmation(user: Partial<User>, token: string) {
     const url = `${this.configService.get(
       'CLIENT_URL',
     )}/auth/confirm?token=${token}`;
@@ -20,7 +21,7 @@ export class MailService {
       subject: 'Welcome to Testfuel. Confirm your Email',
       template: './confirmation',
       context: {
-        name: user.name,
+        name: user.firstName + ' ' + user.lastName,
         url,
       },
     });
