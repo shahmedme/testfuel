@@ -1,0 +1,57 @@
+services:
+  server:
+    image: testfuel-server:latest
+    build:
+      context: ./server
+      dockerfile: Dockerfile.prod
+    container_name: testfuel-server
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      SECRET_KEY: ${SECRET_KEY}
+      CLIENT_URL: ${CLIENT_URL}
+      DB_HOST: ${DB_HOST:-central-postgres}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_USERNAME: ${DB_USERNAME:-testfuel}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME:-testfuel}
+      DB_SYNCHRONIZE: ${DB_SYNCHRONIZE:-true}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+    ports:
+      - "8000:8000"
+    networks:
+      - default
+      - postgres-central
+
+  client:
+    image: testfuel-client:latest
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+      args:
+        REACT_APP_SERVICE_URL: ${REACT_APP_SERVICE_URL}
+        REACT_APP_GA_PROPERTY_ID: ${REACT_APP_GA_PROPERTY_ID:-G-XVK54E1dWLF}
+        REACT_APP_CRISP_ID: ${REACT_APP_CRISP_ID:-78bde369-9481dds-4ff9-8e89-7be0a11b3870}
+    container_name: testfuel-client
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "3000:80"
+
+  landing:
+    image: testfuel-landing:latest
+    build:
+      context: ./landing
+      dockerfile: Dockerfile.prod
+    container_name: testfuel-landing
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+
+networks:
+  postgres-central:
+    external: true
+    name: postgres-central

@@ -1,0 +1,73 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_branch:
+        description: Git branch to deploy to production
+        type: string
+        required: true
+        default: revamp
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm deploy target
+        run: |
+          echo "Deploying branch: ${{ github.event.inputs.deploy_branch }}"
+          if [ -z "${{ github.event.inputs.deploy_branch }}" ]; then
+            echo "deploy_branch is required."
+            exit 1
+          fi
+
+      - name: Pull selected branch and deploy to production
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          PRODUCTION_APP_DIR: ${{ secrets.PRODUCTION_APP_DIR }}
+          DEPLOY_BRANCH: ${{ github.event.inputs.deploy_branch }}
+        with:
+          host: ${{ secrets.PRODUCTION_HOST }}
+          username: ${{ secrets.PRODUCTION_USER }}
+          key: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
+          envs: PRODUCTION_APP_DIR,DEPLOY_BRANCH
+          script_stop: true
+          command_timeout: 45m
+          script: |
+            set -euo pipefail
+
+            APP_DIR="${PRODUCTION_APP_DIR:-~/testfuel}"
+            APP_DIR="${APP_DIR/#\~/$HOME}"
+
+            if [[ ! -d "${APP_DIR}/.git" ]]; then
+              echo "Repository not found at ${APP_DIR}"
+              echo "Clone it first, e.g.:"
+              echo "  git clone <repo-url> ${APP_DIR}"
+              exit 1
+            fi
+
+            cd "${APP_DIR}"
+
+            echo "==> Fetching latest ${DEPLOY_BRANCH}..."
+            git fetch origin "${DEPLOY_BRANCH}"
+            if ! git show-ref --verify --quiet "refs/remotes/origin/${DEPLOY_BRANCH}"; then
+              echo "Branch origin/${DEPLOY_BRANCH} not found on remote."
+              exit 1
+            fi
+            git reset --hard "origin/${DEPLOY_BRANCH}"
+            echo "==> Checked out $(git rev-parse --short HEAD) on ${DEPLOY_BRANCH}"
+
+            if [[ ! -f .env.production ]]; then
+              echo "Missing .env.production on server."
+              echo "Create it from .env.production.example with production secrets."
+              exit 1
+            fi
+
+            echo "==> Building and starting application..."
+            bash .github/scripts/start.sh
+
+            echo "==> Deploy complete."

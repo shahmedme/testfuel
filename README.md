@@ -34,6 +34,66 @@
 
 ## Quick start
 
+### Docker Compose (local)
+
+Start PostgreSQL separately (lives outside this repo at `~/Projects/postgres`), then run the app:
+
+```bash
+~/Projects/postgres/start.sh
+docker compose --env-file .env up --build
+```
+
+Copy `.env.example` to `.env` and set your database credentials.
+
+Services:
+
+| Service | URL |
+|---------|-----|
+| Client app | http://localhost:3000 |
+| Landing site | http://localhost:3001 |
+| API server | http://localhost:8000 |
+
+PostgreSQL is managed in a separate project (`~/Projects/postgres`). Each app connects with its own database/user on that shared instance.
+
+### Production
+
+PostgreSQL must already be running on the server (see `~/Projects/postgres`).
+
+#### GitHub Actions (recommended)
+
+Manual deploy from the `revamp` branch (no merge to `main` required yet):
+
+1. **One-time server setup**
+   ```bash
+   git clone -b revamp https://github.com/<org>/testfuel.git ~/testfuel
+   cd ~/testfuel
+   cp .env.production.example .env.production
+   # Edit .env.production with production secrets (DB, SECRET_KEY, etc.)
+   ```
+
+2. **GitHub repository secrets** (Settings → Secrets and variables → Actions)
+
+   | Secret | Example |
+   |--------|---------|
+   | `PRODUCTION_HOST` | `155.133.27.10` |
+   | `PRODUCTION_USER` | `root` |
+   | `PRODUCTION_SSH_PRIVATE_KEY` | Contents of your SSH private key |
+   | `PRODUCTION_APP_DIR` | `~/testfuel` (optional) |
+
+3. **Run deploy** — Actions → **Deploy to Production** → **Run workflow**
+   - **Use workflow from:** branch that contains this workflow (e.g. `revamp`)
+   - **Git branch to deploy to production:** any branch you want on the server (e.g. `revamp`, `main`, or a feature branch)
+
+The workflow SSHs into the production server, runs `git fetch` + `git reset` to the branch you chose, then builds and starts Docker containers on the server.
+
+#### Local deploy (optional)
+
+```bash
+SSH_PASSWORD=your-password ./scripts/deploy.sh
+```
+
+Create `.env.production` from `.env.production.example` before first deploy.
+
 ### 1. Clone and install
 
 ```bash
@@ -95,7 +155,7 @@ Landing runs at `http://localhost:3001` by default.
 
 | Variable            | Description |
 |--------------------|-------------|
-| `REACT_APP_API_URL` | Base URL of the Testfuel API |
+| `REACT_APP_SERVICE_URL` | Base URL of the Testfuel API |
 
 ## Contributing
 
