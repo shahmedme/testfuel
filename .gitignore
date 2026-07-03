@@ -1,1 +1,29 @@
 .vscode
+
+# Local deploy/ops scripts (not committed)
+/scripts/
+
+# Environment files with secrets — never commit
+.env
+.env.local
+.env.production
+.env.prod
+!/.env.example
+!/.env.production.example
+server/.env
+client/.env
+
+# Allow templates without secrets
+!**/.env.example
+!client/.env.development
+
+# Dependencies and build output
+node_modules/
+**/node_modules/
+dist/
+build/
+.next/
+coverage/
+
+# OS
+.DS_Store
